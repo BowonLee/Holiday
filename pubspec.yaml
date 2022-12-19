@@ -39,6 +39,10 @@ dependencies:
   retrofit:
   logger:
   dio:
+  sqflite:
+  path:
+  flutter_bloc:
+
 
 dev_dependencies:
   flutter_test:
