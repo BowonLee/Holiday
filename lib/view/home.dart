@@ -61,9 +61,9 @@ class _HomePageState extends State<HomePage> {
     return nextYear;
   }
 
-  void _changeState(YEAR_STATE year) {
+  void _changeState(YearState year) {
     setState(() {
-      if (year == YEAR_STATE.CURRENT) {
+      if (year == YearState.current) {
         _currentState = _currentYear;
       } else {
         _currentState = _nextYear;
@@ -89,10 +89,10 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 TextButton(
-                    onPressed: () => _changeState(YEAR_STATE.CURRENT),
+                    onPressed: () => _changeState(YearState.current),
                     child: Text("${_currentYear.year}")),
                 TextButton(
-                    onPressed: () => _changeState(YEAR_STATE.NEXT),
+                    onPressed: () => _changeState(YearState.next),
                     child: Text("${_nextYear.year}")),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
@@ -116,8 +116,12 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          ..._currentState.closeHoliday.map((e) => Row(
-                children: [Text(e.date), Text(e.dateName), Text(e.dateKind)],
+          ..._currentState.closeHoliday.map((item) => Row(
+                children: [
+                  Text(item.date),
+                  Text(item.dateName),
+                  Text(item.dateKind)
+                ],
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               )),
         ],
@@ -126,4 +130,4 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-enum YEAR_STATE { CURRENT, NEXT }
+enum YearState { current, next }
