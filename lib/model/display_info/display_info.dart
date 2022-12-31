@@ -42,11 +42,11 @@ extension DisplayInfoExtension on List<Holiday> {
         remainingCount: currentRemaining.length,
         closeHoliday: currentRemaining);
 
-    List<Holiday> nextWithout = getWithoutWeekend(current);
-    List<Holiday> nextRemaining = getRemaining(currentWithout);
+    List<Holiday> nextWithout = getWithoutWeekend(next);
+    List<Holiday> nextRemaining = getRemaining(nextWithout);
 
     DisplayInfo nextInfo = DisplayInfo(
-        year: year,
+        year: year + 1,
         totalCount: nextWithout.length,
         remainingCount: nextRemaining.length,
         closeHoliday: nextRemaining);

@@ -42,7 +42,8 @@ dependencies:
   sqflite:
   path:
   flutter_bloc:
-
+  equatable: ^2.0.5
+  rxdart:
 
 dev_dependencies:
   flutter_test:

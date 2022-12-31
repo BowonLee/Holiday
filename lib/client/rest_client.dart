@@ -4,7 +4,7 @@ import 'package:retrofit/http.dart';
 
 part 'rest_client.g.dart';
 
-@RestApi(baseUrl: "http://localhost:8080/api/holiday")
+@RestApi(baseUrl: "http://10.0.2.2:8080/api/holiday")
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
