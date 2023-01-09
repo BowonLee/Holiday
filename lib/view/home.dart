@@ -42,8 +42,7 @@ class _HomePageState extends State<HomePage> {
     Dio dio = Dio();
     HiveHelper helper = HiveHelper();
     RestClient client = RestClient(dio);
-    HolidayRepository repository =
-        HolidayRepository(hiveHelper: helper, client: client);
+    HolidayRepository repository = HolidayRepository(client: client);
 
     List<Holiday> result = await repository.getHolidayList();
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:holiday/database/hive_helper.dart';
 import 'package:holiday/view/home.dart';
+
+import 'database/hive_helper.dart';
 
 void main() async {
   await preInit();
@@ -13,5 +14,5 @@ Future<void> preInit() async {
    * 정보 업데이트해야하는지 확인
    *
    */
-  await HiveHelper.initHiveManager();
+  await HiveHelper().initHiveManager();
 }

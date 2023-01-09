@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:holiday/model/holiday/holiday.dart';
+import 'package:logger/logger.dart';
 
 const String HOLIDAY_BOX = "HOLYDAY_BOX";
 
@@ -12,27 +13,39 @@ class HiveHelper {
   HiveHelper._internal();
 
   Box<Holiday>? holidayBox;
-  static initHiveManager() async {
-    if (Platform.isAndroid || Platform.isIOS) {
-      await Hive.initFlutter();
-    } else {
-      Hive.initFlutter();
-    }
-  }
 
   factory HiveHelper() {
     return _singleton;
   }
 
-  Future openHolidayBox() async {
-    holidayBox = await Hive.openBox(HOLIDAY_BOX);
+  initHiveManager() async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      Logger().i("device");
+      await Hive.initFlutter();
+    } else {
+      await Hive.initFlutter();
+    }
+
+    Hive.registerAdapter(HolidayAdapter());
+    await openHolidayBox();
   }
 
-  Future create(Holiday value) async {
+  Future openHolidayBox() async {
+    holidayBox = await Hive.openBox(HOLIDAY_BOX);
+    Logger().i(holidayBox);
+  }
+
+  Future save(Holiday value) async {
     return holidayBox?.add(value);
   }
 
-  Future<List<Holiday>> read() async {
+  Future saveAll(List<Holiday> values) async {
+    Logger().i(holidayBox);
+
+    return holidayBox?.addAll(values);
+  }
+
+  Future<List<Holiday>> readAll() async {
     return holidayBox?.values.toList() ?? [];
   }
 

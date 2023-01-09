@@ -60,6 +60,7 @@ dev_dependencies:
   freezed: ^2.2.1
   json_serializable: ^6.5.4
   retrofit_generator:
+  hive_generator:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

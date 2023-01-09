@@ -9,8 +9,8 @@ part 'holiday.freezed.dart';
 part 'holiday.g.dart';
 
 @freezed
-class Holiday with _$Holiday {
-  @HiveType(typeId: 0, adapterName: "HolidayAdapter")
+abstract class Holiday with _$Holiday {
+  @HiveType(typeId: 1, adapterName: "HolidayAdapter")
   factory Holiday(
       {@JsonKey(name: "date", required: true)
       @HiveField(0)
