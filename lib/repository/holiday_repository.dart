@@ -1,24 +1,22 @@
 import '../client/rest_client.dart';
-import '../database/sql_manager.dart';
+import '../database/hive_helper.dart';
 import '../model/holiday/holiday.dart';
 
 class HolidayRepository {
-  SQLManager manager;
+  HiveHelper hiveHelper;
   RestClient client;
 
-  HolidayRepository({required this.manager, required this.client});
+  HolidayRepository({required this.hiveHelper, required this.client});
 
-  Future<List<Map<String, dynamic>>> getHolidayList() async {
-    List<Holiday>? result;
+  Future setHolidayList() async {}
 
-    final fromDB = await manager.getHoliday();
-    if (fromDB.isEmpty) {
-      result = await client.getHolidayList();
-      manager.insertHolidayList(result);
+  Future<List<Holiday>> getHolidayList() async {
+    List<Holiday> fromHive = await hiveHelper.read();
+
+    if (fromHive.isEmpty) {
+      return client.getHolidayList();
     } else {
-      // result = fromDB.map<Holiday>((e) => Holiday.fromJson(e));
+      return fromHive;
     }
-
-    return [];
   }
 }

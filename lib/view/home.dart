@@ -2,10 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday/model/display_info/display_info.dart';
-import 'package:logger/logger.dart';
 
 import '../client/rest_client.dart';
+import '../database/hive_helper.dart';
 import '../model/holiday/holiday.dart';
+import '../repository/holiday_repository.dart';
 
 /// 홈 화면 구성
 /// 1. 오늘 Datetime
@@ -38,19 +39,17 @@ class _HomePageState extends State<HomePage> {
       year: 1234, totalCount: 0, remainingCount: 0, closeHoliday: []);
 
   Future<DisplayInfo> getHoliday() async {
-    final dio = Dio();
+    Dio dio = Dio();
+    HiveHelper helper = HiveHelper();
+    RestClient client = RestClient(dio);
+    HolidayRepository repository =
+        HolidayRepository(hiveHelper: helper, client: client);
 
-    final client = RestClient(dio);
-    final logger = Logger();
-    List<Holiday> result = await client.getHolidayList();
+    List<Holiday> result = await repository.getHolidayList();
 
     List<DisplayInfo> displayInfo = result.toDisplayInfo();
     DisplayInfo currentYear = displayInfo[0];
     DisplayInfo nextYear = displayInfo[1];
-
-    logger.i(nextYear.toString());
-
-    logger.i(currentYear.toString());
 
     setState(() {
       _currentYear = currentYear;

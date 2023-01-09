@@ -39,11 +39,12 @@ dependencies:
   retrofit:
   logger:
   dio:
-  sqflite:
   path:
   flutter_bloc:
   equatable: ^2.0.5
   rxdart:
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

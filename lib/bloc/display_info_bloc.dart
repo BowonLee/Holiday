@@ -23,7 +23,7 @@ class DisplayInfoBloc extends Bloc<HolidayEvent, HolidayState> {
       yield Loading();
       final resp = await this.repository.getHolidayList();
 
-      resp.map<Holiday>((el) => Holiday.fromJson(el));
+      resp.map<Holiday>((el) => el);
 
       // Loaded(holidayList: resp);
     } catch (e) {

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive/hive.dart';
 
 /// date : "2022-01-01"
 /// dateName : "1월1일"
@@ -9,11 +10,17 @@ part 'holiday.g.dart';
 
 @freezed
 class Holiday with _$Holiday {
+  @HiveType(typeId: 0, adapterName: "HolidayAdapter")
   factory Holiday(
-      {required String date,
-      required String dateName,
-      required String dateKind,
-      required bool isHoliday}) = _Holiday;
+      {@JsonKey(name: "date", required: true)
+      @HiveField(0)
+          required String date,
+      @HiveField(1)
+          required String dateName,
+      @HiveField(2)
+          required String dateKind,
+      @HiveField(3)
+          required bool isHoliday}) = _Holiday;
 
   factory Holiday.fromJson(Map<String, dynamic> json) =>
       _$HolidayFromJson(json);
