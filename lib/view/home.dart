@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc.dart';
 import 'package:holiday/bloc/holiday_state.dart';
 import 'package:holiday/model/display_info/display_info.dart';
+import 'package:holiday/model/display_info/display_info_extention.dart';
 import 'package:holiday/view/custom_error_widget.dart';
+import 'package:logger/logger.dart';
 
 import '../bloc/holiday_event.dart';
 import '../client/rest_client.dart';
@@ -84,15 +85,29 @@ class _HomePageState extends State<_HomePage> {
   }
 }
 
-// Scaffold body widget
-// now date
-// change year buttons
-// infoContainer
-// listContainer
-
-class _HomeBody extends StatelessWidget {
+class _HomeBody extends StatefulWidget {
   List<DisplayInfo> displayInfoList;
-  _HomeBody({Key? key, required this.displayInfoList}) : super(key: key);
+  late int _currentYear;
+  _HomeBody({Key? key, required this.displayInfoList}) : super(key: key) {
+    _currentYear = displayInfoList[0].year;
+  }
+
+  @override
+  State<_HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<_HomeBody> {
+  _onClickYearButton(int year) {
+    setState(() {
+      widget._currentYear = year;
+      Logger().i(year);
+    });
+  }
+
+  DisplayInfo _getCurrentInfo() {
+    return widget.displayInfoList
+        .singleWhere((element) => element.year == widget._currentYear);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +116,56 @@ class _HomeBody extends StatelessWidget {
         Text(DateTime.now().toString()),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: displayInfoList
+          children: widget.displayInfoList
               .map<Widget>((e) => TextButton(
-                  onPressed: () => {}, child: Text(e.year.toString())))
+                  onPressed: () => {_onClickYearButton(e.year)},
+                  child: Text(e.year.toString())))
               .toList(),
         ),
+        _InfoContainer(displayInfo: _getCurrentInfo()).build(),
+        Expanded(
+            child: ListView.separated(
+          itemBuilder: (_, index) =>
+              Text("${_getCurrentInfo().closeHoliday[index]}"),
+          separatorBuilder: (_, index) => const Divider(
+            height: 1,
+            color: Colors.black,
+          ),
+          itemCount: _getCurrentInfo().closeHoliday.length,
+        ))
       ],
     );
+    ;
   }
 }
 
-enum YearState { current, next }
+class _InfoContainer {
+  DisplayInfo displayInfo;
+  _InfoContainer({required this.displayInfo});
+
+  Widget build() {
+    Logger().i(displayInfo.year);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      child: Column(
+        children: [
+          Center(
+            child: Text("${displayInfo.year} 의 휴일입니다."),
+          ),
+          Row(
+            children: [
+              const Text("총 휴일 수 : "),
+              Text(displayInfo.totalCount.toString())
+            ],
+          ),
+          Row(
+            children: [
+              const Text("남은 휴일 수 : "),
+              Text(displayInfo.remainingCount.toString())
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
