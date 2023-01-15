@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:holiday/bloc/holiday_bloc.dart';
+import 'package:holiday/bloc/holiday_state.dart';
 import 'package:holiday/model/display_info/display_info.dart';
+import 'package:holiday/view/custom_error_widget.dart';
 
+import '../bloc/holiday_event.dart';
 import '../client/rest_client.dart';
-import '../database/hive_helper.dart';
-import '../model/holiday/holiday.dart';
 import '../repository/holiday_repository.dart';
 
 /// 홈 화면 구성
@@ -18,112 +21,92 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    Dio dio = Dio();
+    RestClient _client = RestClient(dio);
+
+    return BlocProvider(
+      create: (_) =>
+          HolidayBloc(repository: HolidayRepository(client: _client)),
+      child: const MaterialApp(home: _HomePage()),
+    );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class _HomePage extends StatefulWidget {
+  const _HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<_HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  DisplayInfo _nextYear = DisplayInfo(
-      year: 1234, totalCount: 0, remainingCount: 0, closeHoliday: []);
-  DisplayInfo _currentYear = DisplayInfo(
-      year: 1234, totalCount: 0, remainingCount: 0, closeHoliday: []);
-
-  DisplayInfo _currentState = DisplayInfo(
-      year: 1234, totalCount: 0, remainingCount: 0, closeHoliday: []);
-
-  Future<DisplayInfo> getHoliday() async {
-    Dio dio = Dio();
-    HiveHelper helper = HiveHelper();
-    RestClient client = RestClient(dio);
-    HolidayRepository repository = HolidayRepository(client: client);
-
-    List<Holiday> result = await repository.getHolidayList();
-
-    List<DisplayInfo> displayInfo = result.toDisplayInfo();
-    DisplayInfo currentYear = displayInfo[0];
-    DisplayInfo nextYear = displayInfo[1];
-
-    setState(() {
-      _currentYear = currentYear;
-      _nextYear = nextYear;
-      _currentState = currentYear;
-    });
-
-    return nextYear;
-  }
-
-  void _changeState(YearState year) {
-    setState(() {
-      if (year == YearState.current) {
-        _currentState = _currentYear;
-      } else {
-        _currentState = _nextYear;
-      }
-    });
-  }
-
+class _HomePageState extends State<_HomePage> {
   @override
   void initState() {
     super.initState();
-    getHoliday();
+    BlocProvider.of<HolidayBloc>(context)
+        .add(ListHolidayEvent(holidayList: []));
   }
 
   @override
   Widget build(BuildContext context) {
+    return buildScaffold();
+  }
+
+  Scaffold buildScaffold() {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("쉬는 날"),
+        title: const Text("올해의 쉬는 날"),
       ),
-      body: Column(
-        children: [
-          Center(
-            child: Row(
-              children: [
-                TextButton(
-                    onPressed: () => _changeState(YearState.current),
-                    child: Text("${_currentYear.year}")),
-                TextButton(
-                    onPressed: () => _changeState(YearState.next),
-                    child: Text("${_nextYear.year}")),
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("올해 총 휴일은 ? "),
-                Text("${_currentState.totalCount}")
-              ],
-            ),
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("올해 남은 휴일은 ? "),
-                Text("${_currentState.remainingCount}")
-              ],
-            ),
-          ),
-          ..._currentState.closeHoliday.map((item) => Row(
-                children: [
-                  Text(item.date),
-                  Text(item.dateName),
-                  Text(item.dateKind)
-                ],
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              )),
-        ],
+      body: BlocBuilder<HolidayBloc, HolidayState>(
+        builder: (_, state) {
+          // Logger().i(state);
+          if (state is Error) {
+            // error
+            state.message;
+            return CustomErrorWidget(
+              message: state.message,
+            );
+          } else if (state is Loading) {
+            // loading indicator
+            return const CircularProgressIndicator();
+          } else if (state is Empty) {
+            // empty container
+            return const Text("정보 없음");
+          } else if (state is Loaded) {
+            return _HomeBody(
+                displayInfoList: state.holidayList.toDisplayInfo());
+          }
+
+          return Container();
+        },
       ),
+    );
+  }
+}
+
+// Scaffold body widget
+// now date
+// change year buttons
+// infoContainer
+// listContainer
+
+class _HomeBody extends StatelessWidget {
+  List<DisplayInfo> displayInfoList;
+  _HomeBody({Key? key, required this.displayInfoList}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(DateTime.now().toString()),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: displayInfoList
+              .map<Widget>((e) => TextButton(
+                  onPressed: () => {}, child: Text(e.year.toString())))
+              .toList(),
+        ),
+      ],
     );
   }
 }

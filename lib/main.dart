@@ -5,6 +5,7 @@ import 'database/hive_helper.dart';
 
 void main() async {
   await preInit();
+
   runApp(const HomeWidget());
 }
 

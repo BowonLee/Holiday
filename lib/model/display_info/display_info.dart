@@ -20,7 +20,7 @@ class DisplayInfo with _$DisplayInfo {
 }
 
 extension DisplayInfoExtension on List<Holiday> {
-  toDisplayInfo() {
+  List<DisplayInfo> toDisplayInfo() {
     final year = DateTime.now().year;
     List<Holiday> current = [];
     List<Holiday> next = [];
@@ -36,7 +36,7 @@ extension DisplayInfoExtension on List<Holiday> {
     List<Holiday> currentWithout = getWithoutWeekend(current);
     List<Holiday> currentRemaining = getRemaining(currentWithout);
 
-    DisplayInfo currentInfo = DisplayInfo(
+    DisplayInfo currentYear = DisplayInfo(
         year: year,
         totalCount: current.length,
         remainingCount: currentRemaining.length,
@@ -45,13 +45,13 @@ extension DisplayInfoExtension on List<Holiday> {
     List<Holiday> nextWithout = getWithoutWeekend(next);
     List<Holiday> nextRemaining = getRemaining(nextWithout);
 
-    DisplayInfo nextInfo = DisplayInfo(
+    DisplayInfo nextYear = DisplayInfo(
         year: year + 1,
         totalCount: nextWithout.length,
         remainingCount: nextRemaining.length,
         closeHoliday: nextRemaining);
 
-    return [currentInfo, nextInfo];
+    return [currentYear, nextYear];
   }
 
   // 주말을 제외한 휴일

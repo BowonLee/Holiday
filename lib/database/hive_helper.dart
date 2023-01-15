@@ -23,7 +23,7 @@ class HiveHelper {
       Logger().i("device");
       await Hive.initFlutter();
     } else {
-      await Hive.initFlutter();
+      // await Hive.init(path);
     }
 
     Hive.registerAdapter(HolidayAdapter());
@@ -62,4 +62,9 @@ class HiveHelper {
  * isHoliday
  *
  *
+ */
+
+
+/**
+ *  해당 정보를 받은 시점
  */
