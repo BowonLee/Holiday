@@ -1,3 +1,5 @@
+import 'package:holiday/util/datetime_extentions.dart';
+
 import '../consecutive_holidays/consecutive_holidays.dart';
 import 'holiday.dart';
 
@@ -17,7 +19,7 @@ extension HolidayListDivideExtension on List<Holiday> {
     Map<int, List<Holiday>> result = {};
 
     forEach((element) {
-      int year = DateTime.parse(element.date).year;
+      int year = element.toDatetime().year;
       if (result.containsKey(year)) {
         result[year]?.add(element);
       } else {
@@ -33,7 +35,7 @@ extension HolidayListDivideExtension on List<Holiday> {
     Map<int, List<Holiday>> result = {};
 
     forEach((element) {
-      int month = DateTime.parse(element.date).month;
+      int month = element.toDatetime().month;
       if (result.containsKey(month)) {
         result[month]?.add(element);
       } else {
@@ -49,8 +51,8 @@ extension HolidayListDivideExtension on List<Holiday> {
     Map<int, List<Holiday>> result = {};
 
     forEach((element) {
-      int year = DateTime.parse(element.date).year;
-      int month = DateTime.parse(element.date).month;
+      int year = element.toDatetime().year;
+      int month = element.toDatetime().month;
 
       int format = year * 100 + month;
       if (result.containsKey(format)) {
@@ -66,8 +68,8 @@ extension HolidayListDivideExtension on List<Holiday> {
   /// 주말을 제외한 모든 휴일
   List<Holiday> toWithoutWeekend() {
     return where((element) {
-      return DateTime.parse(element.date).weekday != 6 &&
-          DateTime.parse(element.date).weekday != 7;
+      return element.toDatetime().weekday != 6 &&
+          element.toDatetime().weekday != 7;
     }).toList();
   }
 
@@ -92,7 +94,7 @@ extension HolidayListDivideExtension on List<Holiday> {
 
   List<Holiday> _toRemainingList() {
     return where((element) {
-      return DateTime.parse(element.date).isAfter(DateTime.now());
+      return element.toDatetime().isAfter(DateTime.now());
     }).toList();
   }
 
@@ -104,17 +106,33 @@ extension HolidayListDivideExtension on List<Holiday> {
   }
 
   List<Holiday> _getBeforeDays(Holiday pivotDay) {
-    //
+    // 1. 반복문 시작
+    // 2. 하루씩 뒤로 간다.
+    // 3. 해당일이 휴일아면 result 에 추가한 뒤 1로
+    // 4. 해당일이 휴일이 아니면 반복 종료
+    List<Holiday> result = [pivotDay];
+    Holiday current = pivotDay.copyWith();
+
+    while (_isHoliday(current)) {
+      // result.
+    }
     return [];
   }
 
   List<Holiday> _getAfterDays(Holiday pivotDay) {
+    // 1. 반복문 시작
+    // 2. 하루씩 앞으로 간다.
+    // 3. 해당일이 휴일아면 result 에 추가한 뒤 1로
+    // 4. 해당일이 휴일이 아니면 반복 종료
     return [];
   }
 
-  bool _isHoliday(DateTime dateTime) {
-    bool isWeekend = dateTime.weekday == 6 || dateTime.weekday == 6;
-    // firstWhere((element) => element.date == dateTime.);
-    return false;
+  bool _isHoliday(Holiday holiday) {
+    DateTime dateTime = holiday.toDatetime();
+    bool isWeekend = dateTime.weekday == 6 || dateTime.weekday == 7;
+    int find =
+        indexWhere((element) => dateTime.compareDateString(element.date) == 0);
+
+    return isWeekend && find != -1;
   }
 }

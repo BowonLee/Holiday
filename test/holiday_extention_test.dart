@@ -47,4 +47,10 @@ void main() {
         mockList.divideByYearAndMonth()[202301]?.toRemainingList();
     expect(4, withOutWeekend?.length);
   });
+
+  test("toDateTIme", () {
+    var temp = Holiday(
+        date: "20230120", dateName: "test", dateKind: "test", isHoliday: true);
+    expect(temp.toDatetime(), DateTime(2023, 1, 20));
+  });
 }
