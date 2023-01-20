@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:holiday/view/home.dart';
 
 import 'database/hive_helper.dart';
+import 'layout/home.dart';
 
 void main() async {
   await preInit();

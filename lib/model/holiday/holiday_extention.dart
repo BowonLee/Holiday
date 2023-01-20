@@ -70,8 +70,13 @@ extension HolidayListDivideExtension on List<Holiday> {
     }).toList();
   }
 
-  /// 주말로 인해 날아간 휴일 수
   /// 대체공휴일 수
+  List<Holiday> getSubstituteList() {
+    return where((element) {
+      return element.dateName == "대체 공휴일";
+    }).toList();
+  }
+
   /// 남은 휴일 수
   List<Holiday> getRemainingList() {
     return where((element) {

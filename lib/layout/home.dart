@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc.dart';
 import 'package:holiday/bloc/holiday_state.dart';
-import 'package:holiday/model/display_info/display_info.dart';
-import 'package:holiday/model/display_info/display_info_extention.dart';
-import 'package:holiday/view/custom_error_widget.dart';
+import 'package:holiday/model/holiday/holiday.dart';
+import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:logger/logger.dart';
 
 import '../bloc/holiday_event.dart';
 import '../client/rest_client.dart';
 import '../repository/holiday_repository.dart';
+import 'custom_error_widget.dart';
 
 /// 홈 화면 구성
 /// 1. 오늘 Datetime
@@ -74,8 +74,7 @@ class _HomePageState extends State<_HomePage> {
             // empty container
             return const Text("정보 없음");
           } else if (state is Loaded) {
-            return _HomeBody(
-                displayInfoList: state.holidayList.toDisplayInfo());
+            return _HomeBody(holidayList: state.holidayList);
           }
 
           return Container();
@@ -86,10 +85,12 @@ class _HomePageState extends State<_HomePage> {
 }
 
 class _HomeBody extends StatefulWidget {
-  List<DisplayInfo> displayInfoList;
+  List<Holiday> holidayList;
+  late Map<int, List<Holiday>> _holidayListMapByYear;
   late int _currentYear;
-  _HomeBody({Key? key, required this.displayInfoList}) : super(key: key) {
-    _currentYear = displayInfoList[0].year;
+  _HomeBody({Key? key, required this.holidayList}) : super(key: key) {
+    _holidayListMapByYear = holidayList.divideByYear();
+    _currentYear = _holidayListMapByYear.keys.first;
   }
 
   @override
@@ -104,9 +105,8 @@ class _HomeBodyState extends State<_HomeBody> {
     });
   }
 
-  DisplayInfo _getCurrentInfo() {
-    return widget.displayInfoList
-        .singleWhere((element) => element.year == widget._currentYear);
+  List<Holiday> _getCurrentList() {
+    return widget._holidayListMapByYear[widget._currentYear] ?? [];
   }
 
   @override
@@ -116,22 +116,23 @@ class _HomeBodyState extends State<_HomeBody> {
         Text(DateTime.now().toString()),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: widget.displayInfoList
-              .map<Widget>((e) => TextButton(
-                  onPressed: () => {_onClickYearButton(e.year)},
-                  child: Text(e.year.toString())))
+          children: widget._holidayListMapByYear.keys
+              .map<Widget>((year) => TextButton(
+                  onPressed: () => {_onClickYearButton(year)},
+                  child: Text(year.toString())))
               .toList(),
         ),
-        _InfoContainer(displayInfo: _getCurrentInfo()).build(),
+        _InfoContainer(
+                year: widget._currentYear, holidayList: _getCurrentList())
+            .build(),
         Expanded(
             child: ListView.separated(
-          itemBuilder: (_, index) =>
-              Text("${_getCurrentInfo().closeHoliday[index]}"),
+          itemBuilder: (_, index) => Text("${_getCurrentList()[index]}"),
           separatorBuilder: (_, index) => const Divider(
             height: 1,
             color: Colors.black,
           ),
-          itemCount: _getCurrentInfo().closeHoliday.length,
+          itemCount: _getCurrentList().length,
         ))
       ],
     );
@@ -140,28 +141,39 @@ class _HomeBodyState extends State<_HomeBody> {
 }
 
 class _InfoContainer {
-  DisplayInfo displayInfo;
-  _InfoContainer({required this.displayInfo});
+  List<Holiday> holidayList;
+  int year;
+  _InfoContainer({required this.year, required this.holidayList});
 
   Widget build() {
-    Logger().i(displayInfo.year);
+    // Logger().i(displayInfo.year);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Column(
         children: [
           Center(
-            child: Text("${displayInfo.year} 의 휴일입니다."),
+            child: Text("$year 의 휴일입니다."),
           ),
           Row(
             children: [
               const Text("총 휴일 수 : "),
-              Text(displayInfo.totalCount.toString())
+              Text(holidayList.length.toString())
+            ],
+          ),
+          Row(
+            children: [
+              const Text("주말을 제외한 휴일 수 : "),
+              Text(holidayList.getWithoutWeekend().length.toString())
             ],
           ),
           Row(
             children: [
               const Text("남은 휴일 수 : "),
-              Text(displayInfo.remainingCount.toString())
+              Text(holidayList
+                  .getWithoutWeekend()
+                  .getRemainingList()
+                  .length
+                  .toString())
             ],
           )
         ],
