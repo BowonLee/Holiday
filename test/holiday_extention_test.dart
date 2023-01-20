@@ -38,13 +38,13 @@ void main() {
 
   test("weekend", () {
     var withOutWeekend =
-        mockList.divideByYearAndMonth()[202301]?.getWithoutWeekend();
+        mockList.divideByYearAndMonth()[202301]?.toWithoutWeekend();
     expect(2, withOutWeekend?.length);
   });
 
   test("remaining", () {
     var withOutWeekend =
-        mockList.divideByYearAndMonth()[202301]?.getRemainingList();
+        mockList.divideByYearAndMonth()[202301]?.toRemainingList();
     expect(4, withOutWeekend?.length);
   });
 }

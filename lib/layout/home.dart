@@ -136,7 +136,6 @@ class _HomeBodyState extends State<_HomeBody> {
         ))
       ],
     );
-    ;
   }
 }
 
@@ -163,15 +162,15 @@ class _InfoContainer {
           Row(
             children: [
               const Text("주말을 제외한 휴일 수 : "),
-              Text(holidayList.getWithoutWeekend().length.toString())
+              Text(holidayList.toWithoutWeekend().length.toString())
             ],
           ),
           Row(
             children: [
               const Text("남은 휴일 수 : "),
               Text(holidayList
-                  .getWithoutWeekend()
-                  .getRemainingList()
+                  .toWithoutWeekend()
+                  .toRemainingList()
                   .length
                   .toString())
             ],

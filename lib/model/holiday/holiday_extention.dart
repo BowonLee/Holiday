@@ -1,3 +1,4 @@
+import '../consecutive_holidays/consecutive_holidays.dart';
 import 'holiday.dart';
 
 /// list를 사용하여 표현되는 타입
@@ -63,27 +64,57 @@ extension HolidayListDivideExtension on List<Holiday> {
   }
 
   /// 주말을 제외한 모든 휴일
-  List<Holiday> getWithoutWeekend() {
+  List<Holiday> toWithoutWeekend() {
     return where((element) {
       return DateTime.parse(element.date).weekday != 6 &&
           DateTime.parse(element.date).weekday != 7;
     }).toList();
   }
 
-  /// 대체공휴일 수
-  List<Holiday> getSubstituteList() {
+  /// 대체공휴일
+  List<Holiday> toSubstituteList() {
     return where((element) {
       return element.dateName == "대체 공휴일";
     }).toList();
   }
 
   /// 남은 휴일 수
-  List<Holiday> getRemainingList() {
+  List<Holiday> toRemainingList() {
+    return _toRemainingList();
+  }
+
+  /// 오늘 기준 가장 가까운 휴일
+  List<Holiday> toCloseHolidayList() {
+    List<Holiday> remainingList = _toRemainingList();
+
+    return [];
+  }
+
+  List<Holiday> _toRemainingList() {
     return where((element) {
       return DateTime.parse(element.date).isAfter(DateTime.now());
     }).toList();
   }
 
-  /// 가장 가까운 휴일
+  // 연휴 목록으로 가공
+  List<ConsecutiveHolidays> toConsecutiveHolidaysList() {
+    ///
+    List<Holiday> copyList = [...this];
+    return [];
+  }
 
+  List<Holiday> _getBeforeDays(Holiday pivotDay) {
+    //
+    return [];
+  }
+
+  List<Holiday> _getAfterDays(Holiday pivotDay) {
+    return [];
+  }
+
+  bool _isHoliday(DateTime dateTime) {
+    bool isWeekend = dateTime.weekday == 6 || dateTime.weekday == 6;
+    // firstWhere((element) => element.date == dateTime.);
+    return false;
+  }
 }
