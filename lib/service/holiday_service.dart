@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:holiday/model/display_info/display_info.dart';
 
 import '../client/rest_client.dart';
 import '../database/hive_helper.dart';
@@ -23,8 +22,6 @@ class HolidayService {
     final client = RestClient(dio);
 
     final result = await client.getHolidayList();
-
-    result.toDisplayInfo();
   }
 
   void setDataToDB() {}
