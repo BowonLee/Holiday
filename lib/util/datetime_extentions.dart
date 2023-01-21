@@ -9,9 +9,23 @@ extension DateTimeExtention on DateTime {
     return DateTime(now.year, now.month, now.day);
   }
 
-  /// 현제 시간과 비교하여 상태 반환
+  /// 시간과 비교하여 상태 반환
   DateState getDateState(DateTime dateTime) {
     switch (compareTo(dateTime)) {
+      case -1:
+        return DateState.before;
+      case 0:
+        return DateState.now;
+      case 1:
+        return DateState.after;
+      default:
+        return DateState.none;
+    }
+  }
+
+  /// 현제 시간과 비교하여 상태 반환
+  DateState getDateStateByNow() {
+    switch (compareTo(DateTime.now())) {
       case -1:
         return DateState.before;
       case 0:
