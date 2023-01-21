@@ -1,3 +1,4 @@
+import 'package:holiday/model/event_date/event_date.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 
 import '../consecutive_holidays/consecutive_holidays.dart';
@@ -64,7 +65,9 @@ extension HolidayListDivideExtension on List<Holiday> {
 
     return result;
   }
+}
 
+extension HolidayListParseExtension on List<Holiday> {
   /// 주말을 제외한 모든 휴일
   List<Holiday> toWithoutWeekend() {
     return where((element) {
@@ -85,41 +88,54 @@ extension HolidayListDivideExtension on List<Holiday> {
     return _toRemainingList();
   }
 
-  /// 오늘 기준 가장 가까운 휴일
-  List<Holiday> toCloseHolidayList() {
-    List<Holiday> remainingList = _toRemainingList();
-
-    return [];
-  }
-
   List<Holiday> _toRemainingList() {
     return where((element) {
       return element.toDatetime().isAfter(DateTime.now());
     }).toList();
   }
 
+  List<EventDate> _toEventDateList() {
+    return map((holiday) => holiday.toEventDate()).toList();
+  }
+
   // 연휴 목록으로 가공
   List<ConsecutiveHolidays> toConsecutiveHolidaysList() {
-    ///
-    List<Holiday> copyList = [...this];
+    // 현제 리스트를 카피하는 리스트 생성
+    // 1. 해당일 기준으로 검사 시작
+    // 2. 해당일 시점 휴일 검사
+    // 3. 해당일 뒤로 검사 및
+    // 4. 이미 포함 된 휴일은 제거
+    List<EventDate> eventDateList = _toEventDateList();
+
     return [];
   }
 
-  List<Holiday> _getBeforeDays(Holiday pivotDay) {
+  ConsecutiveHolidays _getConsecutiveHolidays(Holiday pivotDay) {
+    List<EventDate> eventDateList = _toEventDateList();
+    String title = "";
+    List<EventDate> result = [];
+
+    return ConsecutiveHolidays(
+        title: title, dateList: result, state: DateState.after);
+  }
+
+  List<EventDate> _getBeforeDays(Holiday pivotDay) {
     // 1. 반복문 시작
-    // 2. 하루씩 뒤로 간다.
+    // 2. 하루씩 앞으로로 간다.
     // 3. 해당일이 휴일아면 result 에 추가한 뒤 1로
     // 4. 해당일이 휴일이 아니면 반복 종료
-    List<Holiday> result = [pivotDay];
+    List<EventDate> result = [
+      pivotDay.toEventDate(pivotDay.toDatetime().getDateStateByNow())
+    ];
     Holiday current = pivotDay.copyWith();
 
-    while (_isHoliday(current)) {
-      // result.
-    }
-    return [];
+    current.toDatetime().add(const Duration(days: 1));
+    while (_isHoliday(current)) {}
+
+    return result;
   }
 
-  List<Holiday> _getAfterDays(Holiday pivotDay) {
+  List<EventDate> _getAfterDays(Holiday pivotDay) {
     // 1. 반복문 시작
     // 2. 하루씩 앞으로 간다.
     // 3. 해당일이 휴일아면 result 에 추가한 뒤 1로
