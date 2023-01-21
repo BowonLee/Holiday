@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:holiday/model/event_date/EventDate.dart';
 
-import '../holiday/holiday.dart';
+import '../../util/datetime_extentions.dart';
 
 part 'consecutive_holidays.freezed.dart';
 
@@ -8,10 +9,8 @@ part 'consecutive_holidays.freezed.dart';
 class ConsecutiveHolidays with _$ConsecutiveHolidays {
   factory ConsecutiveHolidays(
       {required String title,
-      required List<Holiday> holidayList,
-      required ConsecutiveHolidaysState state}) = _ConsecutiveHolidays;
+      required List<EventDate> holidayList,
+      required DateState state}) = _ConsecutiveHolidays;
 
   ConsecutiveHolidays._();
 }
-
-enum ConsecutiveHolidaysState { before, now, after }
