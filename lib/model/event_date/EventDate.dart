@@ -3,6 +3,7 @@ import 'package:holiday/util/datetime_extentions.dart';
 
 part 'EventDate.freezed.dart';
 
+/// 주말, 공휴일, 휴가를 포함하는 Event 추가
 @freezed
 class EventDate with _$EventDate {
   factory EventDate(
