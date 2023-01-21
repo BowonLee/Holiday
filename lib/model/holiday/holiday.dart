@@ -1,5 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+import 'package:holiday/util/datetime_extentions.dart';
+
+import '../event_date/EventDate.dart';
 
 /// date : "2022-01-01"
 /// dateName : "1월1일"
@@ -25,5 +28,12 @@ abstract class Holiday with _$Holiday {
 
   DateTime toDatetime() {
     return DateTime.parse(date);
+  }
+
+  EventDate toEventDate([DateState? state]) {
+    return EventDate(
+        datetime: DateTime.parse(date),
+        name: dateName,
+        state: state ?? DateState.none);
   }
 }
