@@ -4,10 +4,7 @@ import 'package:holiday/util/datetime_extentions.dart';
 
 import '../event_date/event_date.dart';
 
-/// date : "2022-01-01"
-/// dateName : "1월1일"
-/// dateKind : "국경일"
-/// isHoliday : true
+/// 공휴일, 국경일
 part 'holiday.freezed.dart';
 part 'holiday.g.dart';
 
@@ -30,10 +27,11 @@ abstract class Holiday with _$Holiday {
     return DateTime.parse(date);
   }
 
-  EventDate toEventDate([DateState? state]) {
+  EventDate toEventDate([DateState state = DateState.none]) {
     return EventDate(
         datetime: DateTime.parse(date),
         name: dateName,
-        state: state ?? DateState.none);
+        type: EventDateType.holiday,
+        state: state);
   }
 }

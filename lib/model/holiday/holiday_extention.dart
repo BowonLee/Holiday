@@ -1,7 +1,6 @@
 import 'package:holiday/model/event_date/event_date.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 
-import '../consecutive_holidays/consecutive_holidays.dart';
 import 'holiday.dart';
 
 /// list를 사용하여 표현되는 타입
@@ -96,51 +95,6 @@ extension HolidayListParseExtension on List<Holiday> {
 
   List<EventDate> _toEventDateList() {
     return map((holiday) => holiday.toEventDate()).toList();
-  }
-
-  // 연휴 목록으로 가공
-  List<ConsecutiveHolidays> toConsecutiveHolidaysList() {
-    // 현제 리스트를 카피하는 리스트 생성
-    // 1. 해당일 기준으로 검사 시작
-    // 2. 해당일 시점 휴일 검사
-    // 3. 해당일 뒤로 검사 및
-    // 4. 이미 포함 된 휴일은 제거
-    List<EventDate> eventDateList = _toEventDateList();
-
-    return [];
-  }
-
-  ConsecutiveHolidays _getConsecutiveHolidays(Holiday pivotDay) {
-    List<EventDate> eventDateList = _toEventDateList();
-    String title = "";
-    List<EventDate> result = [];
-
-    return ConsecutiveHolidays(
-        title: title, dateList: result, state: DateState.after);
-  }
-
-  List<EventDate> _getBeforeDays(Holiday pivotDay) {
-    // 1. 반복문 시작
-    // 2. 하루씩 앞으로로 간다.
-    // 3. 해당일이 휴일아면 result 에 추가한 뒤 1로
-    // 4. 해당일이 휴일이 아니면 반복 종료
-    List<EventDate> result = [
-      pivotDay.toEventDate(pivotDay.toDatetime().getDateStateByNow())
-    ];
-    Holiday current = pivotDay.copyWith();
-
-    current.toDatetime().add(const Duration(days: 1));
-    while (_isHoliday(current)) {}
-
-    return result;
-  }
-
-  List<EventDate> _getAfterDays(Holiday pivotDay) {
-    // 1. 반복문 시작
-    // 2. 하루씩 앞으로 간다.
-    // 3. 해당일이 휴일아면 result 에 추가한 뒤 1로
-    // 4. 해당일이 휴일이 아니면 반복 종료
-    return [];
   }
 
   bool _isHoliday(Holiday holiday) {

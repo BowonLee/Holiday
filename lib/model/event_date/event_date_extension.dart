@@ -1,5 +1,7 @@
 import 'package:holiday/model/event_date/event_date.dart';
-import 'package:holiday/util/datetime_extentions.dart';
+
+import '../../util/datetime_extentions.dart';
+import '../consecutive_holidays/consecutive_holidays.dart';
 
 extension EventDateListExtention on List<EventDate> {
   DateState getDateStateByNow() {
@@ -28,5 +30,10 @@ extension EventDateListParseExtention on List<EventDate> {
 
   List<DateState> toDateStateList() {
     return map((e) => e.state).toList();
+  }
+
+  List<ConsecutiveHolidays> toConsecutiveHolidaysList() {
+    List<EventDate> tempDate = [...this];
+    return [];
   }
 }
