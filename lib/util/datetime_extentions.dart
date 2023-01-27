@@ -1,5 +1,10 @@
 extension DateTimeExtention on DateTime {
-  /// past 1 , now 0, future -1
+  /// compare by yyyymmdd past -1 , same 0, future 1
+  int compareByDate(DateTime date) {
+    return compareTo(date);
+  }
+
+  /// past -1 , same 0, future 1
   int compareDateString(String date) {
     return DateTime.parse(date).compareTo(getNowDate());
   }
@@ -35,6 +40,10 @@ extension DateTimeExtention on DateTime {
       default:
         return DateState.none;
     }
+  }
+
+  bool isWeekend() {
+    return weekday == 6 || weekday == 7;
   }
 }
 

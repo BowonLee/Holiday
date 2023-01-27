@@ -15,6 +15,15 @@ class EventDate with _$EventDate {
   }) = _EventDate;
 
   EventDate._();
+
+  // EventDate fromWeekendDateTime()
+  factory EventDate.fromWeekendDateTime(DateTime dateTime) {
+    return EventDate(
+        datetime: dateTime,
+        name: "주말",
+        type: EventDateType.weekend,
+        state: dateTime.getDateStateByNow());
+  }
 }
 
 enum EventDateType { holiday, weekend, event }

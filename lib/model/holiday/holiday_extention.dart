@@ -93,7 +93,7 @@ extension HolidayListParseExtension on List<Holiday> {
     }).toList();
   }
 
-  List<EventDate> _toEventDateList() {
+  List<EventDate> toEventDateList() {
     return map((holiday) => holiday.toEventDate()).toList();
   }
 

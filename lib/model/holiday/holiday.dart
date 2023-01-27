@@ -32,6 +32,6 @@ abstract class Holiday with _$Holiday {
         datetime: DateTime.parse(date),
         name: dateName,
         type: EventDateType.holiday,
-        state: state);
+        state: DateTime.parse(date).getDateStateByNow());
   }
 }

@@ -85,9 +85,9 @@ class _HomePageState extends State<_HomePage> {
 }
 
 class _HomeBody extends StatefulWidget {
-  List<Holiday> holidayList;
-  late Map<int, List<Holiday>> _holidayListMapByYear;
-  late int _currentYear;
+  final List<Holiday> holidayList;
+  late final Map<int, List<Holiday>> _holidayListMapByYear;
+  late final int _currentYear;
   _HomeBody({Key? key, required this.holidayList}) : super(key: key) {
     _holidayListMapByYear = holidayList.divideByYear();
     _currentYear = _holidayListMapByYear.keys.first;
