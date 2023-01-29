@@ -1,14 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc.dart';
 import 'package:holiday/bloc/holiday_state.dart';
+import 'package:holiday/component/holiday_info_component.dart';
+import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:logger/logger.dart';
 
 import '../bloc/holiday_event.dart';
 import '../client/rest_client.dart';
+import '../component/consecutive_holidays_list.dart';
 import '../repository/holiday_repository.dart';
 import 'custom_error_widget.dart';
 
@@ -28,7 +32,10 @@ class HomeWidget extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           HolidayBloc(repository: HolidayRepository(client: _client)),
-      child: const MaterialApp(home: _HomePage()),
+      child: MaterialApp(
+          theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
+          darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
+          home: _HomePage()),
     );
   }
 }
@@ -72,7 +79,7 @@ class _HomePageState extends State<_HomePage> {
             return const CircularProgressIndicator();
           } else if (state is Empty) {
             // empty container
-            return const Text("정보 없음");
+            return _EmptyWidget();
           } else if (state is Loaded) {
             return _HomeBody(holidayList: state.holidayList);
           }
@@ -84,10 +91,21 @@ class _HomePageState extends State<_HomePage> {
   }
 }
 
+class _EmptyWidget extends StatelessWidget {
+  const _EmptyWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("정보 없음");
+  }
+}
+
 class _HomeBody extends StatefulWidget {
   final List<Holiday> holidayList;
   late final Map<int, List<Holiday>> _holidayListMapByYear;
-  late final int _currentYear;
+  late int _currentYear;
   _HomeBody({Key? key, required this.holidayList}) : super(key: key) {
     _holidayListMapByYear = holidayList.divideByYear();
     _currentYear = _holidayListMapByYear.keys.first;
@@ -105,75 +123,38 @@ class _HomeBodyState extends State<_HomeBody> {
     });
   }
 
-  List<Holiday> _getCurrentList() {
-    return widget._holidayListMapByYear[widget._currentYear] ?? [];
-  }
+  List<Holiday> _getCurrentList() =>
+      widget._holidayListMapByYear[widget._currentYear] ?? [];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(DateTime.now().toString()),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: widget._holidayListMapByYear.keys
-              .map<Widget>((year) => TextButton(
-                  onPressed: () => {_onClickYearButton(year)},
-                  child: Text(year.toString())))
-              .toList(),
-        ),
-        _InfoContainer(
-                year: widget._currentYear, holidayList: _getCurrentList())
-            .build(),
-        Expanded(
-            child: ListView.separated(
-          itemBuilder: (_, index) => Text("${_getCurrentList()[index]}"),
-          separatorBuilder: (_, index) => const Divider(
-            height: 1,
-            color: Colors.black,
-          ),
-          itemCount: _getCurrentList().length,
-        ))
-      ],
-    );
-  }
-}
-
-class _InfoContainer {
-  List<Holiday> holidayList;
-  int year;
-  _InfoContainer({required this.year, required this.holidayList});
-
-  Widget build() {
-    // Logger().i(displayInfo.year);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Center(
-            child: Text("$year 의 휴일입니다."),
-          ),
+          Text(DateTime.now().toString()),
           Row(
-            children: [
-              const Text("총 휴일 수 : "),
-              Text(holidayList.length.toString())
-            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: widget._holidayListMapByYear.keys
+                .map<Widget>((year) => TextButton(
+                      onPressed: () => {_onClickYearButton(year)},
+                      child: Text(
+                        year.toString(),
+                        style: TextStyle(
+                            fontWeight: widget._currentYear == year
+                                ? FontWeight.w900
+                                : FontWeight.w500,
+                            fontSize: widget._currentYear == year ? 20 : 15),
+                      ),
+                    ))
+                .toList(),
           ),
-          Row(
-            children: [
-              const Text("주말을 제외한 휴일 수 : "),
-              Text(holidayList.toWithoutWeekend().length.toString())
-            ],
-          ),
-          Row(
-            children: [
-              const Text("남은 휴일 수 : "),
-              Text(holidayList
-                  .toWithoutWeekend()
-                  .toRemainingList()
-                  .length
-                  .toString())
-            ],
+          HolidayInfoComponent(holidayList: _getCurrentList()),
+          ConsecutiveHolidaysListComponent(
+            consecutiveHolidaysList: _getCurrentList()
+                .toWithoutWeekend()
+                .toEventDateList()
+                .toConsecutiveHolidaysList(),
           )
         ],
       ),

@@ -45,6 +45,12 @@ extension DateTimeExtention on DateTime {
   bool isWeekend() {
     return weekday == 6 || weekday == 7;
   }
+
+  String getWeekendString() {
+    var weeks = ['월', '화', '수', '목', '금', '토', '일'];
+
+    return weeks[weekday - 1];
+  }
 }
 
 enum DateState { before, now, after, none }
