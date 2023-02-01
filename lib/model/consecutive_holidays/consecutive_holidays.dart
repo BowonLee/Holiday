@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:holiday/model/event_date/event_date.dart';
-import 'package:logger/logger.dart';
 
 import '../../util/datetime_extentions.dart';
 
@@ -22,16 +21,11 @@ class ConsecutiveHolidays with _$ConsecutiveHolidays {
         .toSet()
         .join(",");
 
-    Logger().i(list);
-    // if (now.datetime.add(const Duration(days: -1)).isWeekend()) {
-    //   // now.datetime.add(Duration(days: -1)
-    //   dateList.add(EventDate.fromWeekendDateTime(
-    //       now.datetime.add(const Duration(days: -1))));
-    //   dateList.add(EventDate.fromWeekendDateTime(
-    //       now.datetime.add(const Duration(days: -2))));
-    // }
-    // UnimplementedError();
+    if (list.length > 1) {
+      holidaysString += " 연휴";
+    }
+
     return ConsecutiveHolidays(
-        title: "$holidaysString 연휴", dateList: list, state: DateState.none);
+        title: "$holidaysString", dateList: list, state: DateState.none);
   }
 }
