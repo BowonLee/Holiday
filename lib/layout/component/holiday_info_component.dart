@@ -38,23 +38,10 @@ class HolidayInfoComponent extends StatelessWidget {
                     .toString())
               ],
             ),
-            Row(
-              children: [
-                Text("다음 휴일까지  ${_getNextDateDiff().inDays.toString()}일 남았습니다")
-              ],
-            ),
           ],
         ),
       ),
     );
-  }
-
-  Duration _getNextDateDiff() {
-    return holidayList
-        .toWithoutWeekend()
-        .toRemainingList()[0]
-        .date
-        .difference(DateTime.now());
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc.dart';
 import 'package:holiday/bloc/holiday_state.dart';
+import 'package:holiday/layout/component/next_consecutive_holidays.dart';
 import 'package:holiday/layout/theme/red_wine.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday.dart';
@@ -30,8 +31,8 @@ class HomeWidget extends StatelessWidget {
     RestClient _client = RestClient(dio);
 
     return MaterialApp(
-      theme: redWineThemeLight,
-      darkTheme: redWineThemeDark,
+      theme: midNightThemeLight,
+      darkTheme: midNightThemeDark,
       home: BlocProvider(
           create: (_) => HolidayBloc(
                 repository: HolidayRepository(client: _client),
@@ -151,13 +152,18 @@ class _HomeBodyState extends State<_HomeBody> {
                 .toList(),
           ),
           HolidayInfoComponent(holidayList: _getCurrentList()),
+          NextConsecutiveHolidays(
+              consecutiveHolidays: _getCurrentList()
+                  .toWithoutWeekend()
+                  .toRemainingList()
+                  .toEventDateList()
+                  .toConsecutiveHolidaysList()[0]),
           Expanded(
             child: ConsecutiveHolidaysListComponent(
-              consecutiveHolidaysList: _getCurrentList()
-                  .toWithoutWeekend()
-                  .toEventDateList()
-                  .toConsecutiveHolidaysList(),
-            ),
+                consecutiveHolidaysList: _getCurrentList()
+                    .toWithoutWeekend()
+                    .toEventDateList()
+                    .toConsecutiveHolidaysList()),
           )
         ],
       ),
