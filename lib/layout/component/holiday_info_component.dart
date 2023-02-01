@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
@@ -18,7 +17,9 @@ class HolidayInfoComponent extends StatelessWidget {
             Row(
               children: [
                 const Text("총 휴일 수 : "),
-                Text(holidayList.length.toString())
+                Text(
+                  holidayList.length.toString(),
+                )
               ],
             ),
             Row(
@@ -39,8 +40,7 @@ class HolidayInfoComponent extends StatelessWidget {
             ),
             Row(
               children: [
-                const Text("다음 휴일까지 "),
-                Text(_getNextDateDiff().inDays.toString())
+                Text("다음 휴일까지  ${_getNextDateDiff().inDays.toString()}일 남았습니다")
               ],
             ),
           ],
@@ -50,8 +50,10 @@ class HolidayInfoComponent extends StatelessWidget {
   }
 
   Duration _getNextDateDiff() {
-    return DateTime.parse(
-            holidayList.toWithoutWeekend().toRemainingList()[0].date)
+    return holidayList
+        .toWithoutWeekend()
+        .toRemainingList()[0]
+        .date
         .difference(DateTime.now());
   }
 }

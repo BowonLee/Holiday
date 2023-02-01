@@ -3,6 +3,7 @@ import 'package:holiday/bloc/holiday_event.dart';
 import 'package:holiday/bloc/holiday_state.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
+import 'package:logger/logger.dart';
 
 import '../repository/holiday_repository.dart';
 
@@ -25,6 +26,7 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayState> {
       // Logger().i(resp);
       emitter(Loaded(holidayList: resp));
     } catch (e) {
+      Logger().i(e);
       emitter(Error(message: e.toString()));
     }
   }

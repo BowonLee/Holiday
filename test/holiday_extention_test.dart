@@ -5,17 +5,30 @@ import 'package:holiday/model/holiday/holiday_extention.dart';
 void main() {
   List<Holiday> mockList = [
     Holiday(
-        date: "2023-01-20", dateName: "설날", dateKind: "공휴일", isHoliday: true),
+        date: DateTime(2022, 01, 20),
+        dateName: "설날",
+        dateKind: "공휴일",
+        isHoliday: true),
     Holiday(
-        date: "2023-01-21", dateName: "설날", dateKind: "공휴일", isHoliday: true),
+        date: DateTime(2022, 01, 21),
+        dateName: "설날",
+        dateKind: "공휴일",
+        isHoliday: true),
     Holiday(
-        date: "2023-01-22", dateName: "설날", dateKind: "공휴일", isHoliday: true),
+        date: DateTime(2022, 01, 22),
+        dateName: "설날",
+        dateKind: "공휴일",
+        isHoliday: true),
     Holiday(
-        date: "2023-01-23", dateName: "설날", dateKind: "공휴일", isHoliday: true),
+        date: DateTime(2022, 01, 23),
+        dateName: "설날",
+        dateKind: "공휴일",
+        isHoliday: true),
     Holiday(
-        date: "2023-03-01", dateName: "삼일절", dateKind: "공휴일", isHoliday: true),
-    Holiday(
-        date: "2024-03-01", dateName: "삼일절", dateKind: "공휴일", isHoliday: true),
+        date: DateTime(2022, 03, 1),
+        dateName: "삼일절",
+        dateKind: "공휴일",
+        isHoliday: true),
   ];
 
   test("divide_year", () {
@@ -50,7 +63,10 @@ void main() {
 
   test("toDateTIme", () {
     var temp = Holiday(
-        date: "20230120", dateName: "test", dateKind: "test", isHoliday: true);
+        date: DateTime(2023, 1, 20),
+        dateName: "test",
+        dateKind: "test",
+        isHoliday: true);
     expect(temp.toDatetime(), DateTime(2023, 1, 20));
   });
 }

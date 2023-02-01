@@ -23,13 +23,12 @@ void main() {
     // var display = DisplayInfo().fromHolidayList(year, origin)
 
     List<Holiday> withoutWeekend = result.where((element) {
-      int weekday = DateTime.parse(element.date).weekday;
+      int weekday = element.date.weekday;
       return weekday != 6 && weekday != 7;
     }).toList();
 
     List<Holiday> remaining = withoutWeekend
-        .where(
-            (element) => DateTime.parse(element.date).isAfter(DateTime.now()))
+        .where((element) => element.date.isAfter(DateTime.now()))
         .toList();
 
     // final temp = remaining.fromHolidayList(year, origin)

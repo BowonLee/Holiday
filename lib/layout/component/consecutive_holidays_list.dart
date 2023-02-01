@@ -12,21 +12,15 @@ class ConsecutiveHolidaysListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-          itemBuilder: (_, index) => ConsecutiveHolidaysListItemComponent(
-              consecutiveHolidays: consecutiveHolidaysList[index]),
-          separatorBuilder: (_, index) => const Divider(
-                height: 1,
-                color: Colors.black,
-              ),
-          itemCount: consecutiveHolidaysList.length),
-    );
+    return ListView.builder(
+        itemBuilder: (_, index) => _ConsecutiveHolidaysListItemComponent(
+            consecutiveHolidays: consecutiveHolidaysList[index]),
+        itemCount: consecutiveHolidaysList.length);
   }
 }
 
-class ConsecutiveHolidaysListItemComponent extends StatelessWidget {
-  const ConsecutiveHolidaysListItemComponent(
+class _ConsecutiveHolidaysListItemComponent extends StatelessWidget {
+  const _ConsecutiveHolidaysListItemComponent(
       {Key? key, required this.consecutiveHolidays})
       : super(key: key);
 
@@ -35,6 +29,7 @@ class ConsecutiveHolidaysListItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -67,8 +62,8 @@ class ConsecutiveHolidaysListItemComponent extends StatelessWidget {
   }
 
   Widget buildDateItem(EventDate eventDate) => Container(
-      decoration: BoxDecoration(border: Border.all()),
-      child: Padding(
+          // decoration: BoxDecoration(border: Border.all()),
+          child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [

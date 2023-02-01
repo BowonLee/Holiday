@@ -12,7 +12,7 @@ part 'holiday.g.dart';
 abstract class Holiday with _$Holiday {
   @HiveType(typeId: 1, adapterName: "HolidayAdapter")
   factory Holiday({
-    @JsonKey(name: "date", required: true) @HiveField(0) required String date,
+    @JsonKey(name: "date", required: true) @HiveField(0) required DateTime date,
     @HiveField(1) required String dateName,
     @HiveField(2) required String dateKind,
     @HiveField(3) required bool isHoliday,
@@ -24,14 +24,14 @@ abstract class Holiday with _$Holiday {
   Holiday._();
 
   DateTime toDatetime() {
-    return DateTime.parse(date);
+    return date;
   }
 
   EventDate toEventDate([DateState state = DateState.none]) {
     return EventDate(
-        datetime: DateTime.parse(date),
+        datetime: date,
         name: dateName,
         type: EventDateType.holiday,
-        state: DateTime.parse(date).getDateStateByNow());
+        state: date.getDateStateByNow());
   }
 }

@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:logger/logger.dart';
@@ -19,12 +16,15 @@ class HiveHelper {
   }
 
   initHiveManager() async {
-    if (Platform.isAndroid || Platform.isIOS) {
-      Logger().i("device");
-      await Hive.initFlutter();
-    } else {
-      // await Hive.init(path);
-    }
+    await Hive.initFlutter();
+    // if (Platform.isAndroid || Platform.isIOS) {
+    //   Logger().i("device");
+    //   await Hive.initFlutter();
+    // } else {
+    //   Logger().i("web");
+    //   // Hive.init(Directory.current.path);
+    //
+    // }
 
     Hive.registerAdapter(HolidayAdapter());
     await openHolidayBox();
@@ -63,7 +63,6 @@ class HiveHelper {
  *
  *
  */
-
 
 /**
  *  해당 정보를 받은 시점

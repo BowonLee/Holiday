@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc.dart';
 import 'package:holiday/bloc/holiday_state.dart';
-import 'package:holiday/component/holiday_info_component.dart';
+import 'package:holiday/layout/theme/red_wine.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
@@ -12,8 +11,9 @@ import 'package:logger/logger.dart';
 
 import '../bloc/holiday_event.dart';
 import '../client/rest_client.dart';
-import '../component/consecutive_holidays_list.dart';
 import '../repository/holiday_repository.dart';
+import 'component/consecutive_holidays_list.dart';
+import 'component/holiday_info_component.dart';
 import 'custom_error_widget.dart';
 
 /// 홈 화면 구성
@@ -29,13 +29,14 @@ class HomeWidget extends StatelessWidget {
     Dio dio = Dio();
     RestClient _client = RestClient(dio);
 
-    return BlocProvider(
-      create: (_) =>
-          HolidayBloc(repository: HolidayRepository(client: _client)),
-      child: MaterialApp(
-          theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
-          darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
-          home: _HomePage()),
+    return MaterialApp(
+      theme: redWineThemeLight,
+      darkTheme: redWineThemeDark,
+      home: BlocProvider(
+          create: (_) => HolidayBloc(
+                repository: HolidayRepository(client: _client),
+              ),
+          child: _HomePage()),
     );
   }
 }
@@ -76,7 +77,7 @@ class _HomePageState extends State<_HomePage> {
             );
           } else if (state is Loading) {
             // loading indicator
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else if (state is Empty) {
             // empty container
             return _EmptyWidget();
@@ -150,11 +151,13 @@ class _HomeBodyState extends State<_HomeBody> {
                 .toList(),
           ),
           HolidayInfoComponent(holidayList: _getCurrentList()),
-          ConsecutiveHolidaysListComponent(
-            consecutiveHolidaysList: _getCurrentList()
-                .toWithoutWeekend()
-                .toEventDateList()
-                .toConsecutiveHolidaysList(),
+          Expanded(
+            child: ConsecutiveHolidaysListComponent(
+              consecutiveHolidaysList: _getCurrentList()
+                  .toWithoutWeekend()
+                  .toEventDateList()
+                  .toConsecutiveHolidaysList(),
+            ),
           )
         ],
       ),

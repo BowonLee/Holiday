@@ -101,7 +101,7 @@ extension HolidayListParseExtension on List<Holiday> {
     DateTime dateTime = holiday.toDatetime();
     bool isWeekend = dateTime.weekday == 6 || dateTime.weekday == 7;
     int find =
-        indexWhere((element) => dateTime.compareDateString(element.date) == 0);
+        indexWhere((element) => dateTime.compareByDate(element.date) == 0);
 
     return isWeekend && find != -1;
   }
