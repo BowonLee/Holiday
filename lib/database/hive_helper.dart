@@ -17,14 +17,6 @@ class HiveHelper {
 
   initHiveManager() async {
     await Hive.initFlutter();
-    // if (Platform.isAndroid || Platform.isIOS) {
-    //   Logger().i("device");
-    //   await Hive.initFlutter();
-    // } else {
-    //   Logger().i("web");
-    //   // Hive.init(Directory.current.path);
-    //
-    // }
 
     Hive.registerAdapter(HolidayAdapter());
     await openHolidayBox();
