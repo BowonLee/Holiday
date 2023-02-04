@@ -153,14 +153,14 @@ class _HomeBodyState extends State<_HomeBody> {
           ),
           HolidayInfoComponent(holidayList: _getCurrentList()),
           NextConsecutiveHolidays(
-              consecutiveHolidays: _getCurrentList()
+              consecutiveHolidays: widget.holidayList
                   .toWithoutWeekend()
                   .toRemainingList()
                   .toEventDateList()
                   .toConsecutiveHolidaysList()[0]),
           Expanded(
             child: ConsecutiveHolidaysListComponent(
-                consecutiveHolidaysList: _getCurrentList()
+                consecutiveHolidaysList: widget.holidayList
                     .toWithoutWeekend()
                     .toEventDateList()
                     .toConsecutiveHolidaysList()),
