@@ -12,7 +12,8 @@ class ConsecutiveHolidaysListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+
+    return ListView.separated(
         itemBuilder: (_, index) {
           if (index == consecutiveHolidaysList.length) {
             return SizedBox(
@@ -24,6 +25,12 @@ class ConsecutiveHolidaysListComponent extends StatelessWidget {
             highLight: false,
           );
         },
-        itemCount: consecutiveHolidaysList.length + 1);
+        itemCount: consecutiveHolidaysList.length + 1,
+
+      separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 5,
+          );
+    },);
   }
 }
