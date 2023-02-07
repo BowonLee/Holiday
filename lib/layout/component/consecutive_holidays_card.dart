@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holiday/util/datetime_extentions.dart';
+import 'package:logger/logger.dart';
 
 import '../../model/consecutive_holidays/consecutive_holidays.dart';
 import '../../model/event_date/event_date.dart';
@@ -14,22 +15,22 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Card(
       shadowColor: Theme.of(context).shadowColor,
-      elevation: 5,
+      // color: Theme.of(context).pri,
+      elevation: 2,
       child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    Colors.white.withOpacity(0.4), BlendMode.modulate),
-                image: NetworkImage(
-                    "https://t1.daumcdn.net/cfile/tistory/9990A1485E4E39752A?original"))),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8,
+            vertical: 16
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if(consecutiveHolidays.state == DateState.before)
+                const Text("지나간 휴일입니다."),
               Row(
                 children: [
                   Text(
@@ -58,31 +59,39 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: consecutiveHolidays.dateList
-                      .map<Widget>((eventDate) => buildDateItem(eventDate))
+                      .map<Widget>((eventDate) => buildDateItem(context,eventDate))
                       .toList(),
                 ),
               ),
-              Row(
-                children: [],
-              ),
+
             ],
           ),
         ),
       ),
     );
   }
+  Widget buildDateItem(BuildContext context,EventDate eventDate) {
 
-  Widget buildDateItem(EventDate eventDate) => Container(
-          // decoration: BoxDecoration(border: Border.all()),
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text("${eventDate.datetime.month}/ "
-                "${eventDate.datetime.day} "
-                "(${eventDate.datetime.getWeekendString()})"),
-            Text(eventDate.name)
-          ],
-        ),
-      ));
+    final isNow = eventDate.state == DateState.now;
+
+    BoxDecoration decoration = BoxDecoration(
+      border: Border.all(
+        color: Theme.of(context).primaryColor
+      ),
+    );
+
+   return Container(
+      decoration:  isNow ?  decoration : null,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text("${eventDate.datetime.month}/ "
+                  "${eventDate.datetime.day} "
+                  "(${eventDate.datetime.getWeekendString()})"),
+              Text(eventDate.name)
+            ],
+          ),
+        ));
+  }
 }
