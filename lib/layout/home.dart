@@ -28,6 +28,10 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Dio dio = Dio();
+    dio.options = BaseOptions(
+        connectTimeout: 100
+    );
+
     RestClient _client = RestClient(dio);
 
     return MaterialApp(
@@ -64,9 +68,7 @@ class _HomePageState extends State<_HomePage> {
 
   Scaffold buildScaffold() {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("올해의 쉬는 날"),
-      ),
+
       body: BlocBuilder<HolidayBloc, HolidayState>(
         builder: (_, state) {
           // Logger().i(state);
@@ -121,7 +123,6 @@ class _HomeBodyState extends State<_HomeBody> {
   _onClickYearButton(int year) {
     setState(() {
       widget._currentYear = year;
-      Logger().i(year);
     });
   }
 
@@ -130,43 +131,73 @@ class _HomeBodyState extends State<_HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Text(DateTime.now().toString()),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: widget._holidayListMapByYear.keys
-                .map<Widget>((year) => TextButton(
-                      onPressed: () => {_onClickYearButton(year)},
-                      child: Text(
-                        year.toString(),
-                        style: TextStyle(
-                            fontWeight: widget._currentYear == year
-                                ? FontWeight.w900
-                                : FontWeight.w500,
-                            fontSize: widget._currentYear == year ? 20 : 15),
-                      ),
-                    ))
-                .toList(),
+    return Container(
+
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+             mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+            Expanded(
+              child: Image.asset('assets/img/holiday.png',
+              width: MediaQuery.of(context).size.width/2,),
+            ),
+              Expanded(
+                child: Text("${DateTime.now().year}년 ${DateTime.now().month}월 ${DateTime.now().day}일",
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w700
+                ),),
+              ),
+              Expanded(
+                child: NextConsecutiveHolidays(
+                    consecutiveHolidays: widget.holidayList
+                        .toWithoutWeekend()
+                        .toRemainingList()
+                        .toEventDateList()
+                        .toConsecutiveHolidaysList()[0]),
+              ),
+
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: widget._holidayListMapByYear.keys
+                      .map<Widget>((year) => TextButton(
+                            onPressed: () => {_onClickYearButton(year)},
+                            child: Text(
+                              year.toString(),
+                              style: TextStyle(
+                                  fontWeight: widget._currentYear == year
+                                      ? FontWeight.w900
+                                      : FontWeight.w500,
+                                  fontSize: widget._currentYear == year ? 30 : 20),
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ),
+              Expanded(child: HolidayInfoComponent(year: widget._currentYear,holidayList: _getCurrentList())),
+              Expanded(
+                child: ConsecutiveHolidaysListComponent(
+                    consecutiveHolidaysList: widget.holidayList
+                        .toWithoutWeekend()
+                        .toEventDateList()
+                        .toConsecutiveHolidaysList()),
+              )
+            ],
           ),
-          HolidayInfoComponent(holidayList: _getCurrentList()),
-          NextConsecutiveHolidays(
-              consecutiveHolidays: widget.holidayList
-                  .toWithoutWeekend()
-                  .toRemainingList()
-                  .toEventDateList()
-                  .toConsecutiveHolidaysList()[0]),
-          Expanded(
-            child: ConsecutiveHolidaysListComponent(
-                consecutiveHolidaysList: widget.holidayList
-                    .toWithoutWeekend()
-                    .toEventDateList()
-                    .toConsecutiveHolidaysList()),
-          )
-        ],
+        ),
       ),
     );
+  }
+
+  BoxDecoration buildBoxDecoration() {
+    return BoxDecoration(
+        image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.4), BlendMode.modulate),
+            image: NetworkImage(
+                "https://www.harangmall.kr/web/product/big//excel/KoreaRabbitB-SmartTok-002-img-Main.jpg")));
   }
 }
