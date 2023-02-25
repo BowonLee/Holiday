@@ -8,26 +8,26 @@ import 'package:logger/logger.dart';
 import '../repository/holiday_repository.dart';
 
 //
-class HolidayBloc extends Bloc<HolidayEvent, HolidayState> {
+class HolidayBloc extends Bloc<HolidayEvent, GetHolidayState> {
   final HolidayRepository repository;
 
-  HolidayBloc({required this.repository}) : super(Empty()) {
+  HolidayBloc({required this.repository}) : super(HolidayEmpty()) {
     on<ListHolidayEvent>(_listHolidayEventListener);
   }
 
   void _listHolidayEventListener(
-      ListHolidayEvent event, Emitter<HolidayState> emitter) async {
+      ListHolidayEvent event, Emitter<GetHolidayState> emitter) async {
     try {
-      emitter(Loading());
+      emitter(GetHolidayLoading());
       final resp = await repository.getHolidayList();
 
       resp.toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
 
       // Logger().i(resp);
-      emitter(Loaded(holidayList: resp));
+      emitter(GetHolidayLoaded(holidayList: resp));
     } catch (e) {
       Logger().i(e);
-      emitter(Error(message: e.toString()));
+      emitter(GetHolidayError(message: e.toString()));
     }
   }
 }
