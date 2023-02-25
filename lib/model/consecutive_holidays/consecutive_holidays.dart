@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:holiday/model/event_date/event_date.dart';
+import 'package:logger/logger.dart';
 
 import '../../util/datetime_extentions.dart';
 
@@ -25,7 +26,29 @@ class ConsecutiveHolidays with _$ConsecutiveHolidays {
       holidaysString += " 연휴";
     }
 
+
+
+
+    /// 연휴 마지막날의 상태가 bofore라면 before
+    /// 연휴 의 첫날이 after인경우 after
+
+
+
+    DateState currentState = DateState.none;
+
+    if(list.indexWhere((element) => element.state == DateState.now) != -1) {
+      currentState = DateState.now;
+    } else if(list.last.state == DateState.before) {
+      currentState = DateState.before;
+    } else if(list.first.state == DateState.after) {
+      currentState = DateState.after;
+    }
+
+
+
     return ConsecutiveHolidays(
-        title: "$holidaysString", dateList: list, state: DateState.none);
+        title: "$holidaysString", dateList: list, state: currentState);
   }
+
+
 }
