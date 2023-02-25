@@ -10,17 +10,44 @@ class NextConsecutiveHolidays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("다음 휴일까지"),
-        SizedBox(
-          height: 10,
-        ),
-        ConsecutiveHolidaysCardComponent(
-            consecutiveHolidays: consecutiveHolidays, highLight: true)
-      ],
+    double defaultFontSize = 25;
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 16
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("${consecutiveHolidays.title}까지 ",
+              style: TextStyle(
+                fontSize: defaultFontSize,
+              ),),
+              Text("${_getDiffOfNextHoliday()}일",
+                  style: TextStyle(
+                    fontSize: defaultFontSize + 10,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor
+                  )),
+              Text(" 남았습니다.",
+                  style: TextStyle(
+                    fontSize: defaultFontSize,
+                  ))
+            ],
+          ),
+          // SizedBox(
+          //   height: 10,
+          // ),
+          // ConsecutiveHolidaysCardComponent(consecutiveHolidays: consecutiveHolidays,
+          //     highLight: true)
+
+        ],
+      ),
     );
   }
 
-  _getDiffOfNextHoliday() {}
+  _getDiffOfNextHoliday() {
+    return consecutiveHolidays.dateList[0].datetime.difference(DateTime.now()).inDays;
+  }
 }
