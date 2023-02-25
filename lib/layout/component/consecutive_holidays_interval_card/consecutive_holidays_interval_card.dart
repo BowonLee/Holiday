@@ -30,12 +30,8 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
     final endDateTime = nextDate;
     final now = DateTime.now();
 
-    final full = startDateTime
-        .difference(endDateTime)
-        .inDays;
-    final current = startDateTime
-        .difference(now)
-        .inDays;
+    final full = startDateTime.difference(endDateTime).inDays;
+    final current = startDateTime.difference(now).inDays;
 
     Logger().i("$full $current ${current / full}");
 
@@ -59,10 +55,7 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
           ),
           Container(
             color: Colors.black,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             height: 10,
           ),
           Row(
@@ -101,10 +94,10 @@ class _AnimateProgressBar extends StatefulWidget {
 
 class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 2),
+    upperBound: widget.percentage,
     vsync: this,
-  )
-    ..repeat();
+  )..repeat();
 
   @override
   void initState() {
@@ -116,19 +109,35 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
     return buildAnimatedBuilder();
   }
 
+  AnimatedContainer buildAnimatedContainer() {
+    bool trigger = false;
+
+    final goal = MediaQuery.of(context).size.width * widget.percentage;
+    // Logger().i(MediaQuery.of(context).size.width, goal);
+    return AnimatedContainer(
+      duration: Duration(seconds: 3),
+      child: Container(
+          decoration: BoxDecoration(color: Colors.red),
+          alignment: AlignmentDirectional.topEnd,
+          child: Text("\u{1f60e}", style: TextStyle(fontSize: 30))),
+      onEnd: () {
+        // trigger = !trigger;
+      },
+      width: trigger ? goal : 0,
+    );
+  }
 
   AnimatedBuilder buildAnimatedBuilder() {
     return AnimatedBuilder(
       animation: _controller,
-      child: Icon(Icons.add),
+      child: Container(
+          decoration: BoxDecoration(color: Colors.red),
+          child: Text("\u{1f60e}", style: TextStyle(fontSize: 30))),
       builder: (context, child) {
         return Transform.translate(
           offset: Offset(
               _controller.value *
-                  MediaQuery
-                      .of(context)
-                      .size
-                      .width *
+                  MediaQuery.of(context).size.width *
                   widget.percentage,
               0),
           child: child,
