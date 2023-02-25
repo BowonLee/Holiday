@@ -53,11 +53,11 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Container(
-            color: Colors.black,
-            width: MediaQuery.of(context).size.width,
-            height: 10,
-          ),
+          // Container(
+          //   color: Theme.of(context).primaryColor,
+          //   width: MediaQuery.of(context).size.width,
+          //   height: 10,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -97,7 +97,7 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
     duration: const Duration(seconds: 2),
     upperBound: widget.percentage,
     vsync: this,
-  )..repeat();
+  )..forward();
 
   @override
   void initState() {
@@ -106,20 +106,20 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return buildAnimatedBuilder();
+    return buildAnimatedContainer();
   }
 
   AnimatedContainer buildAnimatedContainer() {
-    bool trigger = false;
+    bool trigger = true;
 
     final goal = MediaQuery.of(context).size.width * widget.percentage;
     // Logger().i(MediaQuery.of(context).size.width, goal);
     return AnimatedContainer(
       duration: Duration(seconds: 3),
       child: Container(
-          decoration: BoxDecoration(color: Colors.red),
+          decoration: BoxDecoration(color: Colors.blueAccent),
           alignment: AlignmentDirectional.topEnd,
-          child: Text("\u{1f60e}", style: TextStyle(fontSize: 30))),
+          child: Text("\u{1F3C2}", style: TextStyle(fontSize: 30))),
       onEnd: () {
         // trigger = !trigger;
       },
@@ -130,9 +130,8 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
   AnimatedBuilder buildAnimatedBuilder() {
     return AnimatedBuilder(
       animation: _controller,
-      child: Container(
-          decoration: BoxDecoration(color: Colors.red),
-          child: Text("\u{1f60e}", style: TextStyle(fontSize: 30))),
+      child:
+          Container(child: Text("\u{1F3C2}", style: TextStyle(fontSize: 30))),
       builder: (context, child) {
         return Transform.translate(
           offset: Offset(
