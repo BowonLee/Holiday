@@ -1,0 +1,157 @@
+import 'package:collection/collection.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:holiday/bloc/holiday_bloc.dart';
+import 'package:holiday/bloc/holiday_state.dart';
+import 'package:holiday/layout/component/consecutive_holidays_card.dart';
+import 'package:holiday/layout/component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
+import 'package:holiday/layout/component/next_consecutive_holidays.dart';
+import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
+import 'package:holiday/model/event_date/event_date_extension.dart';
+import 'package:holiday/model/holiday/holiday.dart';
+import 'package:holiday/model/holiday/holiday_extention.dart';
+import 'package:holiday/repository/holiday_repository.dart';
+import 'package:holiday/util/datetime_extentions.dart';
+
+import '../../bloc/holiday_event.dart';
+import '../../client/rest_client.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Dio dio = Dio();
+    dio.options = BaseOptions(connectTimeout: 100);
+
+    RestClient _client = RestClient(dio);
+    HolidayRepository holidayRepository = HolidayRepository(client: _client);
+
+    return BlocProvider(
+      create: (_) => HolidayBloc(
+        repository: holidayRepository,
+      ),
+      child: const _HomeBuilder(),
+    );
+  }
+}
+
+class _HomeBuilder extends StatefulWidget {
+  const _HomeBuilder({Key? key}) : super(key: key);
+
+  @override
+  State<_HomeBuilder> createState() => _HomeBuilderState();
+}
+
+class _HomeBuilderState extends State<_HomeBuilder> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<HolidayBloc>(context)
+        .add(ListHolidayEvent(holidayList: []));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<HolidayBloc, GetHolidayState>(
+        builder: (_, state) {
+          if (state is GetHolidayError) {
+            return Container();
+          }
+          if (state is HolidayEmpty) {
+            return Container();
+          }
+          if (state is GetHolidayLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is GetHolidayLoaded) {
+            return _HomeView(holidayList: state.holidayList);
+          }
+          return Container();
+        },
+      ),
+    );
+  }
+}
+
+class _HomeView extends StatelessWidget {
+  const _HomeView({Key? key, required this.holidayList}) : super(key: key);
+
+  final List<Holiday> holidayList;
+
+  @override
+  Widget build(BuildContext context) {
+    final consecutiveHolidaysList = holidayList
+        .toWithoutWeekend()
+        .toEventDateList()
+        .toConsecutiveHolidaysList();
+
+    final current = consecutiveHolidaysList
+        .firstWhereOrNull((element) => element.state == DateState.now);
+
+    final prev = consecutiveHolidaysList
+        .lastWhere((element) => element.state == DateState.before);
+
+    final next = consecutiveHolidaysList
+        .firstWhere((element) => element.state == DateState.after);
+
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: current == null
+                  ? _WaitingHolidayScreen(
+                      prev: prev,
+                      next: next,
+                    )
+                  : _OnHolidayScreen(
+                      current: current,
+                    ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OnHolidayScreen extends StatelessWidget {
+  const _OnHolidayScreen({Key? key, required this.current}) : super(key: key);
+
+  final ConsecutiveHolidays current;
+
+  @override
+  Widget build(BuildContext context) {
+    return ConsecutiveHolidaysCardComponent(
+        consecutiveHolidays: current, highLight: true);
+  }
+}
+
+class _WaitingHolidayScreen extends StatelessWidget {
+  const _WaitingHolidayScreen(
+      {Key? key, required this.prev, required this.next})
+      : super(key: key);
+
+  final ConsecutiveHolidays prev;
+  final ConsecutiveHolidays next;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ConsecutiveHolidaysIntervalCard.fromConsecutiveHolidays(
+            last: prev, next: next),
+        NextConsecutiveHolidays(consecutiveHolidays: next),
+        ConsecutiveHolidaysCardComponent(
+          consecutiveHolidays: next,
+          highLight: true,
+        )
+      ],
+    );
+  }
+}

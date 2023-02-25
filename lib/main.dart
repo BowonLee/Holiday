@@ -1,15 +1,18 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:holiday/layout/view/home_page.dart';
+import 'package:holiday/theme/red_wine.dart';
 
 import 'database/hive_helper.dart';
 import 'firebase_options.dart';
-import 'layout/home.dart';
 
 void main() async {
   await preInit();
 
-  runApp(const HomeWidget());
+  runApp(MaterialApp(
+      theme: midNightThemeLight,
+      darkTheme: midNightThemeDark,
+      home: const HomePage()));
 }
 
 Future<void> preInit() async {
@@ -22,6 +25,4 @@ Future<void> preInit() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-
 }
