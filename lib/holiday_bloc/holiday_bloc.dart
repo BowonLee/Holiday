@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:holiday/bloc/holiday_event.dart';
-import 'package:holiday/bloc/holiday_state.dart';
+import 'package:holiday/holiday_bloc/holiday_event.dart';
+import 'package:holiday/holiday_bloc/holiday_state.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:logger/logger.dart';

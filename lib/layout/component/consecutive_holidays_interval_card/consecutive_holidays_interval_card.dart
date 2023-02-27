@@ -99,9 +99,22 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
     vsync: this,
   )..forward();
 
+  bool trigger = false;
+
   @override
   void initState() {
     super.initState();
+  }
+
+  initTrigger() async {
+    Future.delayed(
+      Duration(milliseconds: 500),
+      () {
+        setState(() {
+          trigger = true;
+        });
+      },
+    );
   }
 
   @override
@@ -109,21 +122,38 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
     return buildAnimatedContainer();
   }
 
-  AnimatedContainer buildAnimatedContainer() {
-    bool trigger = true;
-
+  Widget buildAnimatedContainer() {
     final goal = MediaQuery.of(context).size.width * widget.percentage;
+    initTrigger();
     // Logger().i(MediaQuery.of(context).size.width, goal);
-    return AnimatedContainer(
-      duration: Duration(seconds: 3),
-      child: Container(
-          decoration: BoxDecoration(color: Colors.blueAccent),
-          alignment: AlignmentDirectional.topEnd,
-          child: Text("\u{1F3C2}", style: TextStyle(fontSize: 30))),
-      onEnd: () {
-        // trigger = !trigger;
-      },
-      width: trigger ? goal : 0,
+    return Stack(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 50,
+          decoration: BoxDecoration(
+            // color: Colors.blue,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.blue, width: 2),
+          ),
+        ),
+        AnimatedContainer(
+          curve: Curves.bounceOut,
+          duration: Duration(seconds: 2),
+          child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.blue,
+              ),
+              alignment: AlignmentDirectional.bottomEnd,
+              child: const Text("\u{1F3C2}", style: TextStyle(fontSize: 30))),
+          onEnd: () {
+            // trigger = !trigger;
+          },
+          width: trigger ? goal : 0,
+          height: 50,
+        ),
+      ],
     );
   }
 

@@ -26,6 +26,8 @@ class HolidayRepository {
         HiveHelper().saveAll(_fromServer);
         return _fromServer;
       } on Exception catch (_, exception) {
+
+        Logger().e(exception);
         final json = await _parseJsonFromAsset();
 
         return json.map<Holiday>((item) => Holiday.fromJson(item)).toList();

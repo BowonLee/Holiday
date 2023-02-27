@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:holiday/bloc/holiday_bloc.dart';
-import 'package:holiday/bloc/holiday_state.dart';
+import 'package:holiday/holiday_bloc/holiday_bloc.dart';
+import 'package:holiday/holiday_bloc/holiday_state.dart';
 import 'package:holiday/layout/component/consecutive_holidays_card.dart';
 import 'package:holiday/layout/component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
 import 'package:holiday/layout/component/next_consecutive_holidays.dart';
@@ -14,8 +14,8 @@ import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/repository/holiday_repository.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 
-import '../../bloc/holiday_event.dart';
 import '../../client/rest_client.dart';
+import '../../holiday_bloc/holiday_event.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -144,6 +144,16 @@ class _WaitingHolidayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Text(
+            "${DateTime.now().year}년 ${DateTime.now().month}월 ${DateTime.now().day}일",
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontWeight: FontWeight.w700),
+          ),
+        ),
         ConsecutiveHolidaysIntervalCard.fromConsecutiveHolidays(
             last: prev, next: next),
         NextConsecutiveHolidays(consecutiveHolidays: next),

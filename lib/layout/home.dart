@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:holiday/bloc/holiday_bloc.dart';
-import 'package:holiday/bloc/holiday_state.dart';
+import 'package:holiday/holiday_bloc/holiday_bloc.dart';
+import 'package:holiday/holiday_bloc/holiday_state.dart';
 import 'package:holiday/layout/component/next_consecutive_holidays.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 
-import '../bloc/holiday_event.dart';
 import '../client/rest_client.dart';
+import '../holiday_bloc/holiday_event.dart';
 import '../repository/holiday_repository.dart';
-import '../theme/red_wine.dart';
+import '../theme/flex_theme.dart';
 import 'component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
 import 'component/consecutive_holidays_list.dart';
 import 'component/holiday_info_component.dart';

@@ -15,9 +15,7 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shadowColor: Theme.of(context).shadowColor,
-      // color: Theme.of(context).pri,
-      elevation: 2,
+      elevation: 1,
       color: Theme.of(context)
           .cardColor
           .withOpacity(consecutiveHolidays.state == DateState.before ? 0 : 0.7),
@@ -36,19 +34,26 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w600),
+                        ?.copyWith(fontWeight: FontWeight.w600, fontSize: 30),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text(
-                      consecutiveHolidays.dateList.length.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.w700),
-                    ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    consecutiveHolidays.dateList.length.toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w700, fontSize: 25),
                   ),
-                  Text(" 일동안 쉴 수 있습니다.")
+                  Text(
+                    " 일동안 쉴 수 있습니다.",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+                  )
                 ],
               ),
               const SizedBox(height: 10),
@@ -82,10 +87,13 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text("${eventDate.datetime.month}/ "
-                  "${eventDate.datetime.day} "
-                  "(${eventDate.datetime.getWeekendString()})"),
-              Text(eventDate.name)
+              Text(
+                "${eventDate.datetime.month}. "
+                "${eventDate.datetime.day} "
+                "(${eventDate.datetime.getWeekendString()})",
+                style: TextStyle(fontSize: 20),
+              ),
+              Text(eventDate.name, style: TextStyle(fontSize: 20))
             ],
           ),
         ));
