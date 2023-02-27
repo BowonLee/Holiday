@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday/layout/view/home_page.dart';
-import 'package:holiday/theme/red_wine.dart';
+import 'package:holiday/theme/flex_theme.dart';
 
 import 'database/hive_helper.dart';
 import 'firebase_options.dart';
