@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
+import 'package:holiday/util/datetime_extentions.dart';
 
 class NextConsecutiveHolidays extends StatelessWidget {
   const NextConsecutiveHolidays({Key? key, required this.consecutiveHolidays})
@@ -46,7 +47,7 @@ class NextConsecutiveHolidays extends StatelessWidget {
 
   _getDiffOfNextHoliday() {
     return consecutiveHolidays.dateList[0].datetime
-        .difference(DateTime.now())
+        .difference(DateTime.now().getNowDate())
         .inDays;
   }
 }

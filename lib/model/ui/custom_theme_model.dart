@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-class ThemeModel {
+class CustomThemeModel {
+  final String name;
   final String emoji;
-  final String backgroundColor;
-  final ThemeData? themeData;
+  final Color backgroundColor;
+  final ThemeData? themeLightData;
+  final ThemeData? themeDarkData;
 
-  ThemeModel(
-      {required this.emoji, required this.backgroundColor, this.themeData});
+  CustomThemeModel(
+      {required this.name,
+      required this.emoji,
+      required this.backgroundColor,
+      this.themeLightData,
+      this.themeDarkData});
 }
