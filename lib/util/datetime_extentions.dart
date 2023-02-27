@@ -9,6 +9,7 @@ extension DateTimeExtention on DateTime {
     return DateTime.parse(date).compareTo(getNowDate());
   }
 
+  /// 시간 없는 날짜 반환
   DateTime getNowDate() {
     var now = DateTime.now();
     return DateTime(now.year, now.month, now.day);
