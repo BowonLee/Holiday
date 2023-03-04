@@ -1,30 +1,39 @@
 part of 'theme_cubit.dart';
 
-abstract class ThemeState {}
+abstract class ThemeStateBase {}
+
+class ThemeState {
+  late CustomThemeModel currentThemeModel;
+  List<CustomThemeModel> themeModelList = [
+    springTheme,
+    summerTheme,
+    autumnTheme,
+    winterTheme
+  ];
+
+  ThemeState({required this.currentThemeModel});
+}
 
 class ThemeInitial extends ThemeState {
-  late final CustomThemeModel themeModel;
-
-  ThemeInitial() {
+  ThemeInitial() : super(currentThemeModel: springTheme) {
     final now = DateTime.now();
 
     if (now.month == 3 || now.month == 4 || now.month == 5) {
-      themeModel = springTheme;
+      currentThemeModel = springTheme;
     }
     if (now.month == 6 || now.month == 7 || now.month == 8) {
-      themeModel = summerTheme;
+      currentThemeModel = summerTheme;
     }
     if (now.month == 9 || now.month == 10 || now.month == 11) {
-      themeModel = autumnTheme;
+      currentThemeModel = autumnTheme;
     }
     if (now.month == 12 || now.month == 1 || now.month == 2) {
-      themeModel = winterTheme;
+      currentThemeModel = winterTheme;
     }
   }
 }
 
 class ThemeChange extends ThemeState {
-  final CustomThemeModel themeModel;
-
-  ThemeChange({required this.themeModel});
+  ThemeChange({required CustomThemeModel themeModel})
+      : super(currentThemeModel: themeModel);
 }
