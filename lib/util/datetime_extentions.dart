@@ -31,7 +31,7 @@ extension DateTimeExtention on DateTime {
 
   /// 현제 시간과 비교하여 상태 반환
   DateState getDateStateByNow() {
-    switch (compareTo(DateTime.now())) {
+    switch (compareByDate(getNowDate())) {
       case -1:
         return DateState.before;
       case 0:
