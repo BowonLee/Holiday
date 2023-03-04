@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/layout/view/home_page.dart';
-import 'package:holiday/theme/flex_theme.dart';
+import 'package:holiday/theme_cubit/theme_cubit.dart';
+import 'package:logger/logger.dart';
 
 import 'database/hive_helper.dart';
 import 'firebase_options.dart';
@@ -9,10 +11,17 @@ import 'firebase_options.dart';
 void main() async {
   await preInit();
 
-  runApp(MaterialApp(
-      theme: midNightThemeLight,
-      darkTheme: midNightThemeDark,
-      home: const HomePage()));
+  runApp(BlocProvider(
+    create: (_) => ThemeCubit(),
+    child: BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return MaterialApp(
+            theme: state.currentThemeModel.themeLightData,
+            darkTheme: state.currentThemeModel.themeDarkData,
+            home: const HomePage());
+      },
+    ),
+  ));
 }
 
 Future<void> preInit() async {
@@ -21,6 +30,8 @@ Future<void> preInit() async {
    * 정보 업데이트해야하는지 확인
    *
    */
+
+  Logger().i(DateTime.now());
   await HiveHelper().initHiveManager();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

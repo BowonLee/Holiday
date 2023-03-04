@@ -13,9 +13,11 @@ import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/repository/holiday_repository.dart';
 import 'package:holiday/util/datetime_extentions.dart';
+import 'package:logger/logger.dart';
 
 import '../../client/rest_client.dart';
 import '../../holiday_bloc/holiday_event.dart';
+import '../../theme_cubit/theme_cubit.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -92,30 +94,47 @@ class _HomeView extends StatelessWidget {
     final current = consecutiveHolidaysList
         .firstWhereOrNull((element) => element.state == DateState.now);
 
+    Logger().i(consecutiveHolidaysList);
+
     final prev = consecutiveHolidaysList
         .lastWhere((element) => element.state == DateState.before);
 
     final next = consecutiveHolidaysList
         .firstWhere((element) => element.state == DateState.after);
 
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: current == null
-                  ? _WaitingHolidayScreen(
-                      prev: prev,
-                      next: next,
-                    )
-                  : _OnHolidayScreen(
-                      current: current,
-                    ),
-            )
-          ],
-        ),
-      ),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      'assets/img/${state.currentThemeModel.assetFilename}'),
+                  fit: BoxFit.cover,
+                  opacity: 0.7)),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: ThemeChangeButtons(),
+                  ),
+                  SliverToBoxAdapter(
+                    child: current == null
+                        ? _WaitingHolidayScreen(
+                            prev: prev,
+                            next: next,
+                          )
+                        : _OnHolidayScreen(
+                            current: current,
+                          ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -162,6 +181,45 @@ class _WaitingHolidayScreen extends StatelessWidget {
           highLight: true,
         )
       ],
+    );
+  }
+}
+
+class ThemeChangeButtons extends StatelessWidget {
+  const ThemeChangeButtons({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          ...state.themeModelList
+              .map((themeModel) => Padding(
+                    padding: const EdgeInsets.only(right: 4),
+                    child: ClipOval(
+                      child: Material(
+                        color: themeModel.themeDarkData.primaryColor,
+                        // Button color
+                        child: InkWell(
+                          splashColor: Colors.black, // Splash color
+                          onTap: () {
+                            context.read<ThemeCubit>().themeChange(themeModel);
+                          },
+                          child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Center(
+                                  child: Text(
+                                "${themeModel.emoji}",
+                                style: TextStyle(fontSize: 20),
+                              ))),
+                        ),
+                      ),
+                    ),
+                  ))
+              .toList()
+        ]);
+      },
     );
   }
 }
