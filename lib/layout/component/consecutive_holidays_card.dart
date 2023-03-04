@@ -21,7 +21,7 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
           .withOpacity(consecutiveHolidays.state == DateState.before ? 0 : 0.7),
       child: Container(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
