@@ -1,5 +1,9 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
+import 'package:holiday/theme_cubit/theme_cubit.dart';
 import 'package:logger/logger.dart';
 
 class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
@@ -50,14 +54,9 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
           _AnimateProgressBar(
             percentage: _getPercentage(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          // Container(
-          //   color: Theme.of(context).primaryColor,
-          //   width: MediaQuery.of(context).size.width,
-          //   height: 10,
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -119,10 +118,16 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return buildAnimatedContainer();
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        final emoji = state.currentThemeModel.emoji;
+        final color = state.currentThemeModel.themeDarkData.primaryColor;
+        return buildAnimatedContainer(emoji, color);
+      },
+    );
   }
 
-  Widget buildAnimatedContainer() {
+  Widget buildAnimatedContainer(String emoji, Color color) {
     final goal = MediaQuery.of(context).size.width * widget.percentage;
     initTrigger();
     // Logger().i(MediaQuery.of(context).size.width, goal);
@@ -132,21 +137,28 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
           width: MediaQuery.of(context).size.width,
           height: 50,
           decoration: BoxDecoration(
-            // color: Colors.blue,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.blue, width: 2),
+            border: Border.all(color: color, width: 2),
           ),
         ),
         AnimatedContainer(
           curve: Curves.bounceOut,
           duration: Duration(seconds: 2),
           child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.blue,
-              ),
-              alignment: AlignmentDirectional.bottomEnd,
-              child: const Text("\u{1F3C2}", style: TextStyle(fontSize: 30))),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: color,
+            ),
+            alignment: AlignmentDirectional.bottomEnd,
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.rotationY(math.pi)..translate(-30.0, 0.0, 0.0),
+              child: Text(emoji,
+                  style: const TextStyle(
+                    fontSize: 30,
+                  )),
+            ),
+          ),
           onEnd: () {
             // trigger = !trigger;
           },
