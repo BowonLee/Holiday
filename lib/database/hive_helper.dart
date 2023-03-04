@@ -4,6 +4,8 @@ import 'package:logger/logger.dart';
 
 const String HOLIDAY_BOX = "HOLYDAY_BOX";
 
+const String META_BOX = "META_BOX";
+
 class HiveHelper {
   static final HiveHelper _singleton = HiveHelper._internal();
 

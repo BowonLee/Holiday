@@ -2,7 +2,7 @@ part of 'theme_cubit.dart';
 
 abstract class ThemeStateBase {}
 
-class ThemeState {
+class ThemeState extends ThemeStateBase {
   late CustomThemeModel currentThemeModel;
   List<CustomThemeModel> themeModelList = [
     springTheme,

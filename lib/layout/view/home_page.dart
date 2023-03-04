@@ -194,24 +194,27 @@ class ThemeChangeButtons extends StatelessWidget {
       builder: (context, state) {
         return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           ...state.themeModelList
-              .map((themeModel) => Padding(
+              .map((currentThemeModel) => Padding(
                     padding: const EdgeInsets.only(right: 4),
                     child: ClipOval(
                       child: Material(
-                        color: themeModel.themeDarkData.primaryColor,
+                        color: currentThemeModel.themeDarkData.primaryColor,
+
                         // Button color
                         child: InkWell(
                           splashColor: Colors.black, // Splash color
                           onTap: () {
-                            context.read<ThemeCubit>().themeChange(themeModel);
+                            context
+                                .read<ThemeCubit>()
+                                .themeChange(currentThemeModel);
                           },
                           child: SizedBox(
                               width: 40,
                               height: 40,
                               child: Center(
                                   child: Text(
-                                "${themeModel.emoji}",
-                                style: TextStyle(fontSize: 20),
+                                currentThemeModel.emoji,
+                                style: const TextStyle(fontSize: 20),
                               ))),
                         ),
                       ),
