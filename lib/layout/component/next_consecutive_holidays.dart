@@ -15,26 +15,24 @@ class NextConsecutiveHolidays extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${consecutiveHolidays.title}까지 ",
-                style: TextStyle(
-                  fontSize: defaultFontSize,
-                ),
+          Text.rich(TextSpan(
+            style: TextStyle(
+              fontSize: defaultFontSize,
+            ),
+            children: <InlineSpan>[
+              TextSpan(
+                text: "${consecutiveHolidays.title}까지 ",
               ),
-              Text("${_getDiffOfNextHoliday()}일",
-                  style: TextStyle(
-                      fontSize: defaultFontSize + 10,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor)),
-              Text(" 남았습니다.",
-                  style: TextStyle(
-                    fontSize: defaultFontSize,
-                  ))
+              WidgetSpan(
+                child: Text("${_getDiffOfNextHoliday()}일",
+                    style: TextStyle(
+                        fontSize: defaultFontSize + 15,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor)),
+                alignment: PlaceholderAlignment.middle,
+              ),
             ],
-          ),
+          )),
           // SizedBox(
           //   height: 10,
           // ),
