@@ -36,6 +36,12 @@
     "isHoliday": true
   },
   {
+    "date": "2023-05-01",
+    "dateName": "근로자의날",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
     "date": "2023-05-05",
     "dateName": "어린이날",
     "dateKind": "국경일",
