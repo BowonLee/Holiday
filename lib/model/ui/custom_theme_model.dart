@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomThemeModel {
   final String name;
-  final String emoji;
+  final String iconAssetUrl;
   final Color backgroundColor;
   final ThemeData themeLightData;
   final ThemeData themeDarkData;
@@ -10,7 +10,7 @@ class CustomThemeModel {
 
   CustomThemeModel(
       {required this.name,
-      required this.emoji,
+      required this.iconAssetUrl,
       required this.backgroundColor,
       required this.themeLightData,
       required this.themeDarkData,

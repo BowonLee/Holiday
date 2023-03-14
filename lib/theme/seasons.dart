@@ -5,7 +5,7 @@ import 'package:holiday/theme/flex_theme.dart';
 // runner
 final CustomThemeModel springTheme = CustomThemeModel(
     name: "spring",
-    emoji: "\u{1F3C3}",
+    iconAssetUrl: "assets/icon/runner.png",
     backgroundColor: Colors.green,
     themeLightData: dellGenoaGreenLight,
     themeDarkData: dellGenoaGreenDark,
@@ -14,7 +14,7 @@ final CustomThemeModel springTheme = CustomThemeModel(
 // surfer
 final CustomThemeModel summerTheme = CustomThemeModel(
     name: "summer",
-    emoji: "\u{1F3C4}",
+    iconAssetUrl: "assets/icon/surfing.png",
     backgroundColor: Colors.blue,
     themeLightData: aquaBlueLight,
     themeDarkData: aquaBlueDark,
@@ -23,7 +23,7 @@ final CustomThemeModel summerTheme = CustomThemeModel(
 // leaf
 final CustomThemeModel autumnTheme = CustomThemeModel(
     name: "autumn",
-    emoji: "\u{1F342}",
+    iconAssetUrl: "assets/icon/leaf-fall.png",
     backgroundColor: Colors.redAccent,
     themeLightData: redWineThemeLight,
     themeDarkData: redWineThemeDark,
@@ -32,7 +32,7 @@ final CustomThemeModel autumnTheme = CustomThemeModel(
 // snowboard
 final CustomThemeModel winterTheme = CustomThemeModel(
     name: "winter",
-    emoji: "\u{1F3C2}",
+    iconAssetUrl: "assets/icon/snowboard.png",
     backgroundColor: Colors.white,
     themeLightData: midNightThemeLight,
     themeDarkData: midNightThemeDark,

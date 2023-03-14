@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
@@ -39,7 +37,13 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
 
     Logger().i("$full $current ${current / full}");
 
-    return current / full;
+    final result = current / full;
+
+    if (result < 0.1) {
+      return 0.1;
+    }
+
+    return result;
   }
 
   @override
@@ -57,23 +61,23 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Text(lastHolidaysName),
-                  Text("${lastDate.year} ${lastDate.day}")
-                ],
-              ),
-              Column(
-                children: [
-                  Text(nextHolidaysName),
-                  Text("${nextDate.month} ${nextDate.day}")
-                ],
-              )
-            ],
-          )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Column(
+          //       children: [
+          //         Text(lastHolidaysName),
+          //         Text("${lastDate.year} ${lastDate.day}")
+          //       ],
+          //     ),
+          //     Column(
+          //       children: [
+          //         Text(nextHolidaysName),
+          //         Text("${nextDate.month} ${nextDate.day}")
+          //       ],
+          //     )
+          //   ],
+          // )
         ],
       ),
     );
@@ -120,14 +124,14 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        final emoji = state.currentThemeModel.emoji;
+        final emoji = state.currentThemeModel.iconAssetUrl;
         final color = state.currentThemeModel.themeDarkData.primaryColor;
         return buildAnimatedContainer(emoji, color);
       },
     );
   }
 
-  Widget buildAnimatedContainer(String emoji, Color color) {
+  Widget buildAnimatedContainer(String assetUrl, Color color) {
     final goal = MediaQuery.of(context).size.width * widget.percentage;
     initTrigger();
     // Logger().i(MediaQuery.of(context).size.width, goal);
@@ -149,14 +153,11 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(10),
               color: color,
             ),
-            alignment: AlignmentDirectional.bottomEnd,
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.rotationY(math.pi)..translate(-30.0, 0.0, 0.0),
-              child: Text(emoji,
-                  style: const TextStyle(
-                    fontSize: 30,
-                  )),
+            alignment: AlignmentDirectional.centerEnd,
+            child: Image.asset(
+              assetUrl,
+              width: 30,
+              height: 30,
             ),
           ),
           onEnd: () {

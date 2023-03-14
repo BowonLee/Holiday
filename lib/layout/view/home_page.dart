@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/holiday_bloc/holiday_bloc.dart';
 import 'package:holiday/holiday_bloc/holiday_state.dart';
 import 'package:holiday/layout/component/consecutive_holidays_card.dart';
-import 'package:holiday/layout/component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
 import 'package:holiday/layout/component/next_consecutive_holidays.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
@@ -18,6 +17,7 @@ import 'package:logger/logger.dart';
 import '../../client/rest_client.dart';
 import '../../holiday_bloc/holiday_event.dart';
 import '../../theme_cubit/theme_cubit.dart';
+import '../component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -104,34 +104,49 @@ class _HomeView extends StatelessWidget {
 
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        return Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                      'assets/img/${state.currentThemeModel.assetFilename}'),
-                  fit: BoxFit.cover,
-                  opacity: 0.7)),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: ThemeChangeButtons(),
-                  ),
-                  SliverToBoxAdapter(
-                    child: current == null
-                        ? _WaitingHolidayScreen(
-                            prev: prev,
-                            next: next,
-                          )
-                        : _OnHolidayScreen(
-                            current: current,
-                          ),
-                  )
-                ],
+        return SafeArea(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverPersistentHeader(
+                delegate: _SliverAppBarDelegate(prev: prev, next: next),
+                pinned: true,
               ),
-            ),
+              // SliverAppBar(
+              //     expandedHeight: 300,
+              //     pinned: true,
+              //     flexibleSpace: FlexibleSpaceBar(
+              //       background: Container(
+              //         decoration: BoxDecoration(
+              //             image: DecorationImage(
+              //                 image: AssetImage(
+              //                     'assets/img/${state.currentThemeModel
+              //                         .assetFilename}'),
+              //                 fit: BoxFit.cover,
+              //                 opacity: 0.7)),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: Column(
+              //             children: [
+              //               ThemeChangeButtons(),
+              //               // ConsecutiveHolidaysIntervalCard
+              //               // .fromConsecutiveHolidays(
+              //               //     last: prev, next: next),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     )),
+              SliverToBoxAdapter(
+                child: current == null
+                    ? _WaitingHolidayScreen(
+                        prev: prev,
+                        next: next,
+                      )
+                    : _OnHolidayScreen(
+                        current: current,
+                      ),
+              )
+            ],
           ),
         );
       },
@@ -173,12 +188,13 @@ class _WaitingHolidayScreen extends StatelessWidget {
                 ?.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
-        ConsecutiveHolidaysIntervalCard.fromConsecutiveHolidays(
-            last: prev, next: next),
         NextConsecutiveHolidays(consecutiveHolidays: next),
         ConsecutiveHolidaysCardComponent(
           consecutiveHolidays: next,
           highLight: true,
+        ),
+        SizedBox(
+          height: 900,
         )
       ],
     );
@@ -212,9 +228,9 @@ class ThemeChangeButtons extends StatelessWidget {
                               width: 40,
                               height: 40,
                               child: Center(
-                                  child: Text(
-                                currentThemeModel.emoji,
-                                style: const TextStyle(fontSize: 20),
+                                  child: Image.asset(
+                                currentThemeModel.iconAssetUrl,
+                                width: 30,
                               ))),
                         ),
                       ),
@@ -224,5 +240,60 @@ class ThemeChangeButtons extends StatelessWidget {
         ]);
       },
     );
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate({required this.prev, required this.next});
+
+  final ConsecutiveHolidays prev;
+  final ConsecutiveHolidays next;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    // TODO: implement build
+
+    final temp = shrinkOffset > 300;
+
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      'assets/img/${state.currentThemeModel.assetFilename}'),
+                  fit: BoxFit.cover,
+                  opacity: 1)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                ThemeChangeButtons(),
+                SizedBox(
+                  height: 10,
+                ),
+                ConsecutiveHolidaysIntervalCard.fromConsecutiveHolidays(
+                    last: prev, next: next),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  double get maxExtent => 300;
+
+  @override
+  double get minExtent => 150;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    // TODO: implement shouldRebuild
+
+    return maxExtent != oldDelegate.maxExtent ||
+        minExtent != oldDelegate.minExtent;
   }
 }
