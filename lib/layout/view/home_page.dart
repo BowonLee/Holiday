@@ -111,31 +111,6 @@ class _HomeView extends StatelessWidget {
                 delegate: _SliverAppBarDelegate(prev: prev, next: next),
                 pinned: true,
               ),
-              // SliverAppBar(
-              //     expandedHeight: 300,
-              //     pinned: true,
-              //     flexibleSpace: FlexibleSpaceBar(
-              //       background: Container(
-              //         decoration: BoxDecoration(
-              //             image: DecorationImage(
-              //                 image: AssetImage(
-              //                     'assets/img/${state.currentThemeModel
-              //                         .assetFilename}'),
-              //                 fit: BoxFit.cover,
-              //                 opacity: 0.7)),
-              //         child: Padding(
-              //           padding: const EdgeInsets.all(8.0),
-              //           child: Column(
-              //             children: [
-              //               ThemeChangeButtons(),
-              //               // ConsecutiveHolidaysIntervalCard
-              //               // .fromConsecutiveHolidays(
-              //               //     last: prev, next: next),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     )),
               SliverToBoxAdapter(
                 child: current == null
                     ? _WaitingHolidayScreen(
@@ -189,9 +164,12 @@ class _WaitingHolidayScreen extends StatelessWidget {
           ),
         ),
         NextConsecutiveHolidays(consecutiveHolidays: next),
-        ConsecutiveHolidaysCardComponent(
-          consecutiveHolidays: next,
-          highLight: true,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: ConsecutiveHolidaysCardComponent(
+            consecutiveHolidays: next,
+            highLight: true,
+          ),
         ),
         SizedBox(
           height: 900,
@@ -252,10 +230,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // TODO: implement build
-
-    final temp = shrinkOffset > 300;
-
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Container(
@@ -291,8 +265,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    // TODO: implement shouldRebuild
-
     return maxExtent != oldDelegate.maxExtent ||
         minExtent != oldDelegate.minExtent;
   }
