@@ -9,8 +9,9 @@
 .history
 .svn/
 
-*.g.dart
-*.freezed.dart
+
+# public 저장소를 이용하여야 하기에 key파일은 제외
+firebase_options.dart
 
 # IntelliJ related
 *.iml
