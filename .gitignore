@@ -12,6 +12,9 @@
 
 # public 저장소를 이용하여야 하기에 key파일은 제외
 firebase_options.dart
+google-services.json
+firebase_app_id_file.json
+GoogleService-info.plist
 
 # IntelliJ related
 *.iml
