@@ -1,11 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 
 import '../client/rest_client.dart';
 import '../database/hive_helper.dart';
 import '../model/holiday/holiday.dart';
+
+HolidayRepository provideHolidayRepository() {
+  final client = GetIt.instance.get<RestClient>();
+  HolidayRepository holidayRepository = HolidayRepository(client: client);
+  return holidayRepository;
+}
 
 class HolidayRepository {
   RestClient client;
@@ -26,7 +33,6 @@ class HolidayRepository {
         HiveHelper().saveAll(_fromServer);
         return _fromServer;
       } on Exception catch (_, exception) {
-
         Logger().e(exception);
         final json = await _parseJsonFromAsset();
 

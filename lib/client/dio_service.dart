@@ -2,13 +2,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-GetIt locator = GetIt.instance;
-
-void setupLocator() {
-  locator.registerLazySingleton(() => _DioService());
+void setupDio() {
+  GetIt.instance.registerLazySingleton(() => DioService());
 }
 
-class _DioService {
+class DioService {
   final dio = Dio();
 
   // get method
