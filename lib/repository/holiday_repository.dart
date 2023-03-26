@@ -8,7 +8,7 @@ import '../client/rest_client.dart';
 import '../database/hive_helper.dart';
 import '../model/holiday/holiday.dart';
 
-HolidayRepository provideHolidayRepository() {
+HolidayRepository holidayRepositoryProvider() {
   final client = GetIt.instance.get<RestClient>();
   HolidayRepository holidayRepository = HolidayRepository(client: client);
   return holidayRepository;

@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => HolidayBloc(
-        repository: provideHolidayRepository(),
+        repository: holidayRepositoryProvider(),
       ),
       child: const _HomeBuilder(),
     );
