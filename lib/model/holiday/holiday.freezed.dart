@@ -14,6 +14,171 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+HolidayResponse _$HolidayResponseFromJson(Map<String, dynamic> json) {
+  return _HolidayResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$HolidayResponse {
+  List<Holiday> get holidayList => throw _privateConstructorUsedError;
+  DateTime get lastUpdateTime => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $HolidayResponseCopyWith<HolidayResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $HolidayResponseCopyWith<$Res> {
+  factory $HolidayResponseCopyWith(
+          HolidayResponse value, $Res Function(HolidayResponse) then) =
+      _$HolidayResponseCopyWithImpl<$Res, HolidayResponse>;
+  @useResult
+  $Res call({List<Holiday> holidayList, DateTime lastUpdateTime});
+}
+
+/// @nodoc
+class _$HolidayResponseCopyWithImpl<$Res, $Val extends HolidayResponse>
+    implements $HolidayResponseCopyWith<$Res> {
+  _$HolidayResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? holidayList = null,
+    Object? lastUpdateTime = null,
+  }) {
+    return _then(_value.copyWith(
+      holidayList: null == holidayList
+          ? _value.holidayList
+          : holidayList // ignore: cast_nullable_to_non_nullable
+              as List<Holiday>,
+      lastUpdateTime: null == lastUpdateTime
+          ? _value.lastUpdateTime
+          : lastUpdateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_HolidayResponseCopyWith<$Res>
+    implements $HolidayResponseCopyWith<$Res> {
+  factory _$$_HolidayResponseCopyWith(
+          _$_HolidayResponse value, $Res Function(_$_HolidayResponse) then) =
+      __$$_HolidayResponseCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<Holiday> holidayList, DateTime lastUpdateTime});
+}
+
+/// @nodoc
+class __$$_HolidayResponseCopyWithImpl<$Res>
+    extends _$HolidayResponseCopyWithImpl<$Res, _$_HolidayResponse>
+    implements _$$_HolidayResponseCopyWith<$Res> {
+  __$$_HolidayResponseCopyWithImpl(
+      _$_HolidayResponse _value, $Res Function(_$_HolidayResponse) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? holidayList = null,
+    Object? lastUpdateTime = null,
+  }) {
+    return _then(_$_HolidayResponse(
+      holidayList: null == holidayList
+          ? _value._holidayList
+          : holidayList // ignore: cast_nullable_to_non_nullable
+              as List<Holiday>,
+      lastUpdateTime: null == lastUpdateTime
+          ? _value.lastUpdateTime
+          : lastUpdateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_HolidayResponse implements _HolidayResponse {
+  const _$_HolidayResponse(
+      {required final List<Holiday> holidayList, required this.lastUpdateTime})
+      : _holidayList = holidayList;
+
+  factory _$_HolidayResponse.fromJson(Map<String, dynamic> json) =>
+      _$$_HolidayResponseFromJson(json);
+
+  final List<Holiday> _holidayList;
+  @override
+  List<Holiday> get holidayList {
+    if (_holidayList is EqualUnmodifiableListView) return _holidayList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_holidayList);
+  }
+
+  @override
+  final DateTime lastUpdateTime;
+
+  @override
+  String toString() {
+    return 'HolidayResponse(holidayList: $holidayList, lastUpdateTime: $lastUpdateTime)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_HolidayResponse &&
+            const DeepCollectionEquality()
+                .equals(other._holidayList, _holidayList) &&
+            (identical(other.lastUpdateTime, lastUpdateTime) ||
+                other.lastUpdateTime == lastUpdateTime));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_holidayList), lastUpdateTime);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_HolidayResponseCopyWith<_$_HolidayResponse> get copyWith =>
+      __$$_HolidayResponseCopyWithImpl<_$_HolidayResponse>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_HolidayResponseToJson(
+      this,
+    );
+  }
+}
+
+abstract class _HolidayResponse implements HolidayResponse {
+  const factory _HolidayResponse(
+      {required final List<Holiday> holidayList,
+      required final DateTime lastUpdateTime}) = _$_HolidayResponse;
+
+  factory _HolidayResponse.fromJson(Map<String, dynamic> json) =
+      _$_HolidayResponse.fromJson;
+
+  @override
+  List<Holiday> get holidayList;
+  @override
+  DateTime get lastUpdateTime;
+  @override
+  @JsonKey(ignore: true)
+  _$$_HolidayResponseCopyWith<_$_HolidayResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Holiday _$HolidayFromJson(Map<String, dynamic> json) {
   return _Holiday.fromJson(json);
 }

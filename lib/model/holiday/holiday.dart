@@ -6,7 +6,18 @@ import '../event_date/event_date.dart';
 
 /// 공휴일, 국경일
 part 'holiday.freezed.dart';
+
 part 'holiday.g.dart';
+
+@freezed
+abstract class HolidayResponse with _$HolidayResponse {
+  const factory HolidayResponse(
+      {required List<Holiday> holidayList,
+      required DateTime lastUpdateTime}) = _HolidayResponse;
+
+  factory HolidayResponse.fromJson(Map<String, dynamic> json) =>
+      _$HolidayResponseFromJson(json);
+}
 
 @freezed
 abstract class Holiday with _$Holiday {

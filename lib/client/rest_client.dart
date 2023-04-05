@@ -17,5 +17,5 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @POST('/list')
-  Future<List<Holiday>> getHolidayList();
+  Future<HolidayResponse> getHolidayList();
 }

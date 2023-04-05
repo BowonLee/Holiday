@@ -28,10 +28,11 @@ class HolidayRepository {
       Logger().i("from server");
 
       try {
-        List<Holiday> _fromServer = await client.getHolidayList();
+        HolidayResponse _fromServer = await client.getHolidayList();
 
-        HiveHelper().saveAll(_fromServer);
-        return _fromServer;
+        final holidayList = _fromServer.holidayList;
+        HiveHelper().saveAll(holidayList);
+        return holidayList;
       } on Exception catch (_, exception) {
         Logger().e(exception);
         final json = await _parseJsonFromAsset();

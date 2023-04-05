@@ -53,6 +53,20 @@ class HolidayAdapter extends TypeAdapter<_$_Holiday> {
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$_HolidayResponse _$$_HolidayResponseFromJson(Map<String, dynamic> json) =>
+    _$_HolidayResponse(
+      holidayList: (json['holidayList'] as List<dynamic>)
+          .map((e) => Holiday.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      lastUpdateTime: DateTime.parse(json['lastUpdateTime'] as String),
+    );
+
+Map<String, dynamic> _$$_HolidayResponseToJson(_$_HolidayResponse instance) =>
+    <String, dynamic>{
+      'holidayList': instance.holidayList,
+      'lastUpdateTime': instance.lastUpdateTime.toIso8601String(),
+    };
+
 _$_Holiday _$$_HolidayFromJson(Map<String, dynamic> json) {
   $checkKeys(
     json,
