@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:holiday/client/rest_client.dart';
+import 'package:holiday/client/holiday_client.dart';
 import 'package:holiday/layout/view/home_page.dart';
 import 'package:holiday/theme_cubit/theme_cubit.dart';
 import 'package:logger/logger.dart';
@@ -33,7 +33,7 @@ Future<void> preInit() async {
    */
 
   setupDio();
-  setUpClient();
+  setUpHolidayClient();
 
   await HiveHelper().initHiveManager();
   await Firebase.initializeApp(

@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:retrofit/http.dart';
 
+import '../model/metadata/update_datetime.dart';
 import 'dio_service.dart';
 
 part 'metadata_client.g.dart';
@@ -17,5 +18,5 @@ abstract class MetaDataClient {
   factory MetaDataClient(Dio dio, {String baseUrl}) = _MetaDataClient;
 
   @POST('/list')
-  Future<HolidayResponse> getMetadataList();
+  Future<List<UpdateDateTime>> getMetadataList();
 }

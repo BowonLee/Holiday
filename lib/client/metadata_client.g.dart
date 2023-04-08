@@ -21,13 +21,13 @@ class _MetaDataClient implements MetaDataClient {
   String? baseUrl;
 
   @override
-  Future<HolidayResponse> getMetadataList() async {
+  Future<List<UpdateDateTime>> getMetadataList() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<HolidayResponse>(Options(
+        .fetch<List<dynamic>>(_setStreamType<List<UpdateDateTime>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -39,7 +39,9 @@ class _MetaDataClient implements MetaDataClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = HolidayResponse.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => UpdateDateTime.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 
