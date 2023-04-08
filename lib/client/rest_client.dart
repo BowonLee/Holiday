@@ -7,7 +7,7 @@ import 'dio_service.dart';
 
 part 'rest_client.g.dart';
 
-void setUpClient() {
+void setUpHolidayClient() {
   final dio = GetIt.instance.get<DioService>().dio;
   GetIt.instance.registerLazySingleton(() => RestClient(dio));
 }
