@@ -13,7 +13,7 @@ class _MetaDataClient implements MetaDataClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://10.0.2.2:8080/api/holiday';
+    baseUrl ??= 'http://10.0.2.2:8080/api/meta';
   }
 
   final Dio _dio;
@@ -34,7 +34,7 @@ class _MetaDataClient implements MetaDataClient {
     )
             .compose(
               _dio.options,
-              '/meta',
+              '/list',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 
-import '../client/rest_client.dart';
+import '../client/holiday_client.dart';
 import '../database/hive_helper.dart';
 import '../model/holiday/holiday.dart';
 

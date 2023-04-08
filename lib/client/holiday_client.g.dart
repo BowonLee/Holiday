@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'rest_client.dart';
+part of 'holiday_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator

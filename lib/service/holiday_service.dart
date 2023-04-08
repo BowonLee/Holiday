@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../client/rest_client.dart';
+import '../client/holiday_client.dart';
 import '../database/hive_helper.dart';
 
 class HolidayService {

@@ -2,8 +2,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:holiday/client/rest_client.dart';
+import 'package:holiday/client/holiday_client.dart';
 import 'package:holiday/model/holiday/holiday.dart';
+
 // import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -27,9 +28,7 @@ void main() {
       return weekday != 6 && weekday != 7;
     }).toList();
 
-    List<Holiday> remaining = withoutWeekend
-        .where((element) => element.date.isAfter(DateTime.now()))
-        .toList();
+    List<Holiday> remaining = withoutWeekend.where((element) => element.date.isAfter(DateTime.now())).toList();
 
     // final temp = remaining.fromHolidayList(year, origin)
     logger.i(remaining);
