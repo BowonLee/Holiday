@@ -10,7 +10,7 @@ import 'package:holiday/database/hive_helper.dart';
 /// put - key / value 방식을 사용하여 저장을 하며, key는 서버에서 받는 typeName 으로 value는 updatetime으로 잡는다.
 ///
 
-MetadataRepository holidayRepositoryProvider() {
+MetadataRepository metadataRepositoryProvider() {
   final client = GetIt.instance.get<MetaDataClient>();
   MetadataRepository holidayRepository = MetadataRepository(client: client);
   return holidayRepository;
