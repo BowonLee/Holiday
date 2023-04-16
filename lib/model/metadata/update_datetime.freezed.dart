@@ -21,7 +21,7 @@ UpdateDateTime _$UpdateDateTimeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UpdateDateTime {
   String get typeName => throw _privateConstructorUsedError;
-  DateTime get updateDatetime => throw _privateConstructorUsedError;
+  DateTime get updateDateTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $UpdateDateTimeCopyWith<$Res> {
           UpdateDateTime value, $Res Function(UpdateDateTime) then) =
       _$UpdateDateTimeCopyWithImpl<$Res, UpdateDateTime>;
   @useResult
-  $Res call({String typeName, DateTime updateDatetime});
+  $Res call({String typeName, DateTime updateDateTime});
 }
 
 /// @nodoc
@@ -52,16 +52,16 @@ class _$UpdateDateTimeCopyWithImpl<$Res, $Val extends UpdateDateTime>
   @override
   $Res call({
     Object? typeName = null,
-    Object? updateDatetime = null,
+    Object? updateDateTime = null,
   }) {
     return _then(_value.copyWith(
       typeName: null == typeName
           ? _value.typeName
           : typeName // ignore: cast_nullable_to_non_nullable
               as String,
-      updateDatetime: null == updateDatetime
-          ? _value.updateDatetime
-          : updateDatetime // ignore: cast_nullable_to_non_nullable
+      updateDateTime: null == updateDateTime
+          ? _value.updateDateTime
+          : updateDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
   }
@@ -75,7 +75,7 @@ abstract class _$$_UpdateDateTimeCopyWith<$Res>
       __$$_UpdateDateTimeCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String typeName, DateTime updateDatetime});
+  $Res call({String typeName, DateTime updateDateTime});
 }
 
 /// @nodoc
@@ -90,16 +90,16 @@ class __$$_UpdateDateTimeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? typeName = null,
-    Object? updateDatetime = null,
+    Object? updateDateTime = null,
   }) {
     return _then(_$_UpdateDateTime(
       typeName: null == typeName
           ? _value.typeName
           : typeName // ignore: cast_nullable_to_non_nullable
               as String,
-      updateDatetime: null == updateDatetime
-          ? _value.updateDatetime
-          : updateDatetime // ignore: cast_nullable_to_non_nullable
+      updateDateTime: null == updateDateTime
+          ? _value.updateDateTime
+          : updateDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -109,7 +109,7 @@ class __$$_UpdateDateTimeCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UpdateDateTime implements _UpdateDateTime {
   const _$_UpdateDateTime(
-      {required this.typeName, required this.updateDatetime});
+      {required this.typeName, required this.updateDateTime});
 
   factory _$_UpdateDateTime.fromJson(Map<String, dynamic> json) =>
       _$$_UpdateDateTimeFromJson(json);
@@ -117,11 +117,11 @@ class _$_UpdateDateTime implements _UpdateDateTime {
   @override
   final String typeName;
   @override
-  final DateTime updateDatetime;
+  final DateTime updateDateTime;
 
   @override
   String toString() {
-    return 'UpdateDateTime(typeName: $typeName, updateDatetime: $updateDatetime)';
+    return 'UpdateDateTime(typeName: $typeName, updateDateTime: $updateDateTime)';
   }
 
   @override
@@ -131,13 +131,13 @@ class _$_UpdateDateTime implements _UpdateDateTime {
             other is _$_UpdateDateTime &&
             (identical(other.typeName, typeName) ||
                 other.typeName == typeName) &&
-            (identical(other.updateDatetime, updateDatetime) ||
-                other.updateDatetime == updateDatetime));
+            (identical(other.updateDateTime, updateDateTime) ||
+                other.updateDateTime == updateDateTime));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, typeName, updateDatetime);
+  int get hashCode => Object.hash(runtimeType, typeName, updateDateTime);
 
   @JsonKey(ignore: true)
   @override
@@ -156,7 +156,7 @@ class _$_UpdateDateTime implements _UpdateDateTime {
 abstract class _UpdateDateTime implements UpdateDateTime {
   const factory _UpdateDateTime(
       {required final String typeName,
-      required final DateTime updateDatetime}) = _$_UpdateDateTime;
+      required final DateTime updateDateTime}) = _$_UpdateDateTime;
 
   factory _UpdateDateTime.fromJson(Map<String, dynamic> json) =
       _$_UpdateDateTime.fromJson;
@@ -164,7 +164,7 @@ abstract class _UpdateDateTime implements UpdateDateTime {
   @override
   String get typeName;
   @override
-  DateTime get updateDatetime;
+  DateTime get updateDateTime;
   @override
   @JsonKey(ignore: true)
   _$$_UpdateDateTimeCopyWith<_$_UpdateDateTime> get copyWith =>

@@ -34,7 +34,7 @@ class _MetaDataClient implements MetaDataClient {
     )
             .compose(
               _dio.options,
-              '/list',
+              '/updateDate',
               queryParameters: queryParameters,
               data: _data,
             )

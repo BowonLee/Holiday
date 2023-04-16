@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:holiday/bloc/app_init/app_init_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_event.dart';
 
 import 'package:holiday/layout/component/consecutive_holidays_card.dart';
@@ -42,6 +43,7 @@ class _HomeBuilderState extends State<_HomeBuilder> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<AppInitBloc>(context).add(GetMetaDataEvent());
     BlocProvider.of<HolidayBloc>(context).add(GetHolidayEvent());
   }
 

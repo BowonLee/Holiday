@@ -9,11 +9,11 @@ part of 'update_datetime.dart';
 _$_UpdateDateTime _$$_UpdateDateTimeFromJson(Map<String, dynamic> json) =>
     _$_UpdateDateTime(
       typeName: json['typeName'] as String,
-      updateDatetime: DateTime.parse(json['updateDatetime'] as String),
+      updateDateTime: DateTime.parse(json['updateDateTime'] as String),
     );
 
 Map<String, dynamic> _$$_UpdateDateTimeToJson(_$_UpdateDateTime instance) =>
     <String, dynamic>{
       'typeName': instance.typeName,
-      'updateDatetime': instance.updateDatetime.toIso8601String(),
+      'updateDateTime': instance.updateDateTime.toIso8601String(),
     };

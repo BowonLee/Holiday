@@ -12,7 +12,7 @@ class AppMetadata {
 
 @freezed
 class UpdateDateTime with _$UpdateDateTime {
-  const factory UpdateDateTime({required String typeName, required DateTime updateDatetime}) = _UpdateDateTime;
+  const factory UpdateDateTime({required String typeName, required DateTime updateDateTime}) = _UpdateDateTime;
 
   factory UpdateDateTime.fromJson(Map<String, dynamic> json) => _$UpdateDateTimeFromJson(json);
 }

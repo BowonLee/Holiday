@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:holiday/client/metadata_client.dart';
 import 'package:holiday/database/hive_helper.dart';
+import 'package:logger/logger.dart';
 
 /// 최종 업데이트 일자와 같은 메타데이터 관리
 /// 앱 시작 시 최초로 검사하여 이후 작업 사항을 결정한다.
@@ -24,8 +25,9 @@ class MetadataRepository {
   setMetaDataList() async {
     final result = await client.getMetadataList();
 
+    Logger().i(result);
     for (var element in result) {
-      HiveHelper().metaBox?.put(element.typeName, element.updateDatetime);
+      HiveHelper().metaBox?.put(element.typeName, element.updateDateTime);
     }
 
     return result;

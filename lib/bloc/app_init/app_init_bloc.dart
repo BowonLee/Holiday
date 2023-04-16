@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
 import '../../repository/metadata_repository.dart';
@@ -13,7 +14,7 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitState> {
   final MetadataRepository metadataRepository;
 
   AppInitBloc({required this.metadataRepository}) : super(AppInitInitial()) {
-    on<AppInitEvent>((event, emit) {});
+    on<AppInitEvent>(onStartApplication);
   }
 
   onStartApplication(AppInitEvent event, Emitter<AppInitState> emit) async {
@@ -22,9 +23,11 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitState> {
     /// 정보를 업데이트 할 필요하 있는 항목들을 체크한 뒤 해당 상태에 따라 이후 동작을 결정한다.
     emit(AppInitLoading());
     try {
+      Logger().i("app init ");
       await metadataRepository.setMetaDataList();
       emit(AppInitComplete());
     } on Exception catch (e) {
+      Logger().e(e);
       emit(AppInitError(exception: e));
     }
   }

@@ -35,8 +35,6 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
     final full = startDateTime.difference(endDateTime).inDays;
     final current = startDateTime.difference(now).inDays;
 
-    Logger().i("$full $current ${current / full}");
-
     final result = current / full;
 
     if (result < 0.1) {
@@ -173,15 +171,10 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
   AnimatedBuilder buildAnimatedBuilder() {
     return AnimatedBuilder(
       animation: _controller,
-      child:
-          Container(child: Text("\u{1F3C2}", style: TextStyle(fontSize: 30))),
+      child: Container(child: Text("\u{1F3C2}", style: TextStyle(fontSize: 30))),
       builder: (context, child) {
         return Transform.translate(
-          offset: Offset(
-              _controller.value *
-                  MediaQuery.of(context).size.width *
-                  widget.percentage,
-              0),
+          offset: Offset(_controller.value * MediaQuery.of(context).size.width * widget.percentage, 0),
           child: child,
         );
       },

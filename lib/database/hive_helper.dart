@@ -33,7 +33,7 @@ class HiveHelper {
 
   Future openMetaBox() async {
     metaBox = await Hive.openBox(META_BOX);
-    Logger().i(holidayBox);
+    Logger().i(metaBox);
   }
 
   Future save(Holiday value) async {
