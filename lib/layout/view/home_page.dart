@@ -1,9 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:holiday/bloc/holiday_bloc/holiday_event.dart';
 
-import 'package:holiday/holiday_bloc/holiday_bloc.dart';
-import 'package:holiday/holiday_bloc/holiday_state.dart';
 import 'package:holiday/layout/component/consecutive_holidays_card.dart';
 import 'package:holiday/layout/component/next_consecutive_holidays.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
@@ -13,7 +12,8 @@ import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/repository/holiday_repository.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 
-import '../../holiday_bloc/holiday_event.dart';
+import '../../bloc/holiday_bloc/holiday_bloc.dart';
+import '../../bloc/holiday_bloc/holiday_state.dart';
 import '../../theme_cubit/theme_cubit.dart';
 import '../component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
 
@@ -42,8 +42,7 @@ class _HomeBuilderState extends State<_HomeBuilder> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HolidayBloc>(context)
-        .add(ListHolidayEvent(holidayList: []));
+    BlocProvider.of<HolidayBloc>(context).add(GetHolidayEvent());
   }
 
   @override
@@ -78,19 +77,13 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final consecutiveHolidaysList = holidayList
-        .toWithoutWeekend()
-        .toEventDateList()
-        .toConsecutiveHolidaysList();
+    final consecutiveHolidaysList = holidayList.toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
 
-    final current = consecutiveHolidaysList
-        .firstWhereOrNull((element) => element.state == DateState.now);
+    final current = consecutiveHolidaysList.firstWhereOrNull((element) => element.state == DateState.now);
 
-    final prev = consecutiveHolidaysList
-        .lastWhere((element) => element.state == DateState.before);
+    final prev = consecutiveHolidaysList.lastWhere((element) => element.state == DateState.before);
 
-    final next = consecutiveHolidaysList
-        .firstWhere((element) => element.state == DateState.after);
+    final next = consecutiveHolidaysList.firstWhere((element) => element.state == DateState.after);
 
     final afterList = consecutiveHolidaysList
         .where((element) => (element.state == DateState.after))
@@ -117,8 +110,7 @@ class _HomeView extends StatelessWidget {
               ),
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                return ConsecutiveHolidaysCardComponent(
-                    consecutiveHolidays: afterList[index], highLight: false);
+                return ConsecutiveHolidaysCardComponent(consecutiveHolidays: afterList[index], highLight: false);
               }, childCount: afterList.length)),
             ],
           ),
@@ -135,22 +127,18 @@ class _OnHolidayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConsecutiveHolidaysCardComponent(
-        consecutiveHolidays: current, highLight: true);
+    return ConsecutiveHolidaysCardComponent(consecutiveHolidays: current, highLight: true);
   }
 }
 
 class _WaitingHolidayScreen extends StatelessWidget {
-  const _WaitingHolidayScreen({Key? key, required this.consecutiveHolidaysList})
-      : super(key: key);
+  const _WaitingHolidayScreen({Key? key, required this.consecutiveHolidaysList}) : super(key: key);
 
   final List<ConsecutiveHolidays> consecutiveHolidaysList;
 
   @override
   Widget build(BuildContext context) {
-    final afterList = consecutiveHolidaysList
-        .where((element) => element.state == DateState.after)
-        .toList();
+    final afterList = consecutiveHolidaysList.where((element) => element.state == DateState.after).toList();
 
     return Column(
       children: [
@@ -158,10 +146,7 @@ class _WaitingHolidayScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
             "${DateTime.now().year}년 ${DateTime.now().month}월 ${DateTime.now().day}일",
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
         NextConsecutiveHolidays(consecutiveHolidays: afterList.first),
@@ -195,9 +180,7 @@ class ThemeChangeButtons extends StatelessWidget {
                         child: InkWell(
                           splashColor: Colors.black, // Splash color
                           onTap: () {
-                            context
-                                .read<ThemeCubit>()
-                                .themeChange(currentThemeModel);
+                            context.read<ThemeCubit>().themeChange(currentThemeModel);
                           },
                           child: SizedBox(
                               width: 40,
@@ -227,15 +210,13 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   bool showButtonText = true;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(
-                      'assets/img/${state.currentThemeModel.assetFilename}'),
+                  image: AssetImage('assets/img/${state.currentThemeModel.assetFilename}'),
                   fit: BoxFit.cover,
                   opacity: 1)),
           child: Padding(
@@ -246,8 +227,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                 const SizedBox(
                   height: 10,
                 ),
-                ConsecutiveHolidaysIntervalCard.fromConsecutiveHolidays(
-                    last: prev, next: next),
+                ConsecutiveHolidaysIntervalCard.fromConsecutiveHolidays(last: prev, next: next),
               ],
             ),
           ),
@@ -264,7 +244,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return maxExtent != oldDelegate.maxExtent ||
-        minExtent != oldDelegate.minExtent;
+    return maxExtent != oldDelegate.maxExtent || minExtent != oldDelegate.minExtent;
   }
 }

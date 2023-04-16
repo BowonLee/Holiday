@@ -12,6 +12,7 @@ class HiveHelper {
   HiveHelper._internal();
 
   Box<Holiday>? holidayBox;
+  Box? metaBox;
 
   factory HiveHelper() {
     return _singleton;
@@ -22,10 +23,16 @@ class HiveHelper {
 
     Hive.registerAdapter(HolidayAdapter());
     await openHolidayBox();
+    await openMetaBox();
   }
 
   Future openHolidayBox() async {
     holidayBox = await Hive.openBox(HOLIDAY_BOX);
+    Logger().i(holidayBox);
+  }
+
+  Future openMetaBox() async {
+    metaBox = await Hive.openBox(META_BOX);
     Logger().i(holidayBox);
   }
 

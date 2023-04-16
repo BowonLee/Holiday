@@ -23,7 +23,7 @@ void main() {
 
     // var display = DisplayInfo().fromHolidayList(year, origin)
 
-    List<Holiday> withoutWeekend = result.where((element) {
+    List<Holiday> withoutWeekend = result.holidayList.where((element) {
       int weekday = element.date.weekday;
       return weekday != 6 && weekday != 7;
     }).toList();

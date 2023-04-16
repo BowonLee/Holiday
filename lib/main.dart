@@ -7,6 +7,7 @@ import 'package:holiday/theme_cubit/theme_cubit.dart';
 import 'package:logger/logger.dart';
 
 import 'client/dio_service.dart';
+import 'client/metadata_client.dart';
 import 'database/hive_helper.dart';
 import 'firebase_options.dart';
 
@@ -34,6 +35,7 @@ Future<void> preInit() async {
 
   setupDio();
   setUpHolidayClient();
+  setUpMetaClient();
 
   await HiveHelper().initHiveManager();
   await Firebase.initializeApp(
