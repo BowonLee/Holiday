@@ -30,6 +30,7 @@ class HolidayRepository {
       try {
         HolidayResponse _fromServer = await client.getHolidayList();
 
+        Logger().i(_fromServer);
         final holidayList = _fromServer.holidayList;
         HiveHelper().saveAll(holidayList);
         return holidayList;
