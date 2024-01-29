@@ -152,11 +152,7 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
               color: color,
             ),
             alignment: AlignmentDirectional.centerEnd,
-            child: Image.asset(
-              assetUrl,
-              width: 30,
-              height: 30,
-            ),
+            child: Container(),
           ),
           onEnd: () {
             // trigger = !trigger;

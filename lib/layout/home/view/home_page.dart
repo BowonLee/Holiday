@@ -13,10 +13,10 @@ import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/repository/holiday_repository.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 
-import '../../bloc/holiday_bloc/holiday_bloc.dart';
-import '../../bloc/holiday_bloc/holiday_state.dart';
-import '../../theme_cubit/theme_cubit.dart';
-import '../component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
+import '../../../bloc/holiday_bloc/holiday_bloc.dart';
+import '../../../bloc/holiday_bloc/holiday_state.dart';
+import '../../../theme_cubit/theme_cubit.dart';
+import '../../component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -79,14 +79,19 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// 총 연휴 >
     final consecutiveHolidaysList = holidayList.toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
 
+    /// 지금 연휴 중인지
     final current = consecutiveHolidaysList.firstWhereOrNull((element) => element.state == DateState.now);
 
+    /// 이전 연휴
     final prev = consecutiveHolidaysList.lastWhere((element) => element.state == DateState.before);
 
+    /// 다음 연휴
     final next = consecutiveHolidaysList.firstWhere((element) => element.state == DateState.after);
 
+    /// 다음 연휴 목록
     final afterList = consecutiveHolidaysList
         .where((element) => (element.state == DateState.after))
         .whereIndexed((index, element) => index != 0)
@@ -142,24 +147,21 @@ class _WaitingHolidayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final afterList = consecutiveHolidaysList.where((element) => element.state == DateState.after).toList();
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Text(
             "${DateTime.now().year}년 ${DateTime.now().month}월 ${DateTime.now().day}일",
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
-        ),
-        NextConsecutiveHolidays(consecutiveHolidays: afterList.first),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ConsecutiveHolidaysCardComponent(
+          NextConsecutiveHolidays(consecutiveHolidays: afterList.first),
+          ConsecutiveHolidaysCardComponent(
             consecutiveHolidays: afterList.first,
             highLight: true,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -216,16 +218,16 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/img/${state.currentThemeModel.assetFilename}'),
-                  fit: BoxFit.cover,
-                  opacity: 1)),
+          // decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //         image: AssetImage('assets/img/${state.currentThemeModel.assetFilename}'),
+          //         fit: BoxFit.cover,
+          //         opacity: 1)),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                if (shrinkOffset < 150) const ThemeChangeButtons(),
+                // if (shrinkOffset < 150) const ThemeChangeButtons(),
                 const SizedBox(
                   height: 10,
                 ),

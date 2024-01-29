@@ -3,49 +3,41 @@ import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 
 class NextConsecutiveHolidays extends StatelessWidget {
-  const NextConsecutiveHolidays({Key? key, required this.consecutiveHolidays})
-      : super(key: key);
+  const NextConsecutiveHolidays({Key? key, required this.consecutiveHolidays}) : super(key: key);
 
   final ConsecutiveHolidays consecutiveHolidays;
 
   @override
   Widget build(BuildContext context) {
-    double defaultFontSize = 25;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Column(
-        children: [
-          Text.rich(TextSpan(
-            style: TextStyle(
-              fontSize: defaultFontSize,
+    double defaultFontSize = 20;
+    return Column(
+      children: [
+        Text.rich(TextSpan(
+          style: TextStyle(
+            fontSize: defaultFontSize,
+          ),
+          children: <InlineSpan>[
+            TextSpan(
+              text: "${consecutiveHolidays.title}까지 ",
             ),
-            children: <InlineSpan>[
-              TextSpan(
-                text: "${consecutiveHolidays.title}까지 ",
-              ),
-              WidgetSpan(
-                child: Text("${_getDiffOfNextHoliday()}일",
-                    style: TextStyle(
-                        fontSize: defaultFontSize + 15,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor)),
-                alignment: PlaceholderAlignment.middle,
-              ),
-            ],
-          )),
-          // SizedBox(
-          //   height: 10,
-          // ),
-          // ConsecutiveHolidaysCardComponent(consecutiveHolidays: consecutiveHolidays,
-          //     highLight: true)
-        ],
-      ),
+            WidgetSpan(
+              child: Text("${_getDiffOfNextHoliday()}일",
+                  style: TextStyle(
+                      fontSize: defaultFontSize, fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor)),
+              alignment: PlaceholderAlignment.middle,
+            ),
+          ],
+        )),
+        // SizedBox(
+        //   height: 10,
+        // ),
+        // ConsecutiveHolidaysCardComponent(consecutiveHolidays: consecutiveHolidays,
+        //     highLight: true)
+      ],
     );
   }
 
   _getDiffOfNextHoliday() {
-    return consecutiveHolidays.dateList[0].datetime
-        .difference(DateTime.now().getNowDate())
-        .inDays;
+    return consecutiveHolidays.dateList[0].datetime.difference(DateTime.now().getNowDate()).inDays;
   }
 }
