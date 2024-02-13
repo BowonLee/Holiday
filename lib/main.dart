@@ -11,7 +11,7 @@ import 'client/dio_service.dart';
 import 'client/metadata_client.dart';
 import 'database/hive_helper.dart';
 import 'firebase_options.dart';
-import 'layout/home/view/home_page.dart';
+import 'layout/home/view/home_builder.dart';
 
 void main() async {
   await preInit();

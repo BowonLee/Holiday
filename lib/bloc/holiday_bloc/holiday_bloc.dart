@@ -22,6 +22,7 @@ class HolidayBloc extends Bloc<HolidayEvent, GetHolidayState> {
 
       resp.toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
 
+      Logger().i("run ");
       // Logger().i(resp);
       emitter(GetHolidayLoaded(holidayList: resp));
     } catch (e) {

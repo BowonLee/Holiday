@@ -15,7 +15,7 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -32,7 +32,7 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
               children: [
                 Text(
                   consecutiveHolidays.dateList.length.toString(),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: 25),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
                 Text(
                   " 일동안 쉴 수 있습니다.",
@@ -65,16 +65,16 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
     return Container(
         decoration: isNow ? decoration : null,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5.0),
           child: Column(
             children: [
               Text(
                 "${eventDate.datetime.month}. "
                 "${eventDate.datetime.day} "
                 "(${eventDate.datetime.getWeekendString()})",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 15),
               ),
-              Text(eventDate.name, style: TextStyle(fontSize: 20))
+              Text(eventDate.name, style: TextStyle(fontSize: 15))
             ],
           ),
         ));
