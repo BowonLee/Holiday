@@ -20,10 +20,6 @@ class HolidayBloc extends Bloc<HolidayEvent, GetHolidayState> {
       emitter(GetHolidayLoading());
       final resp = await repository.getHolidayList();
 
-      resp.toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
-
-      Logger().i("run ");
-      // Logger().i(resp);
       emitter(GetHolidayLoaded(holidayList: resp));
     } catch (e) {
       Logger().i(e);
