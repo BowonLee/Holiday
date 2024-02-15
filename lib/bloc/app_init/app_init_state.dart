@@ -1,14 +1,14 @@
 part of 'app_init_bloc.dart';
 
 @immutable
-abstract class AppInitState {}
+abstract class AppInitBlocState {}
 
-class AppInitInitial extends AppInitState {}
+class AppInitInitial extends AppInitBlocState {}
 
-class AppInitLoading extends AppInitState {}
+class AppInitLoading extends AppInitBlocState {}
 
-class AppInitError extends AppInitState {
+class AppInitError extends AppInitBlocState {
   AppInitError({required Exception exception});
 }
 
-class AppInitComplete extends AppInitState {}
+class AppInitComplete extends AppInitBlocState {}
