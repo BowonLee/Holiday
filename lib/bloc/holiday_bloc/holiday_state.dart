@@ -3,17 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 
 @immutable
-abstract class GetHolidayState extends Equatable {}
+abstract class HolidayBlocState extends Equatable {}
 
-class HolidayEmpty extends GetHolidayState {
+class HolidayEmpty extends HolidayBlocState {
   @override
   List<Object?> get props => [];
 }
 
-class GetHolidayError extends GetHolidayState {
-  final message;
+class HolidayError extends HolidayBlocState {
+  final String message;
 
-  GetHolidayError({
+  HolidayError({
     required this.message,
   });
 
@@ -21,15 +21,15 @@ class GetHolidayError extends GetHolidayState {
   List<Object?> get props => [message];
 }
 
-class GetHolidayLoading extends GetHolidayState {
+class HolidayLoading extends HolidayBlocState {
   @override
   List<Object?> get props => [];
 }
 
-class GetHolidayLoaded extends GetHolidayState {
+class HolidayLoaded extends HolidayBlocState {
   final List<Holiday> holidayList;
 
-  GetHolidayLoaded({required this.holidayList});
+  HolidayLoaded({required this.holidayList});
 
   @override
   List<Object?> get props => [holidayList];

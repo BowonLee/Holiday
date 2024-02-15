@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => HolidayBloc(
-        repository: holidayRepositoryProvider(),
+        holidayRepository: holidayRepositoryProvider(),
       ),
       child: const _HomeBuilder(),
     );
@@ -51,19 +51,19 @@ class _HomeBuilderState extends State<_HomeBuilder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<HolidayBloc, GetHolidayState>(
+      body: BlocBuilder<HolidayBloc, HolidayBlocState>(
         builder: (_, state) {
-          if (state is GetHolidayError) {
+          if (state is HolidayError) {
             return Container();
           }
           if (state is HolidayEmpty) {
             return Container();
           }
-          if (state is GetHolidayLoading) {
+          if (state is HolidayLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is GetHolidayLoaded) {
+          if (state is HolidayLoaded) {
             // return HomeView(holidayList: state.holidayList);
           }
           return Container();
