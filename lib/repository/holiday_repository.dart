@@ -23,6 +23,14 @@ class HolidayRepository {
     return HiveHelper().setHolidayList(holidayList);
   }
 
+  setLastUpdateDate(DateTime updateDatetime) {
+    return HiveHelper().setLastHolidayUpdateDatetime(updateDatetime);
+  }
+
+  Future<DateTime> getLastUpdateDatetime() {
+    return HiveHelper().getLastHolidayUpdateDatetime();
+  }
+
   Future<HolidayResponse> getListFromSever() async {
     final holidayList = await client.getHolidayList();
 
