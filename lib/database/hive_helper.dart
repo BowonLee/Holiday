@@ -6,6 +6,8 @@ const String HOLIDAY_BOX = "HOLYDAY_BOX";
 
 const String META_BOX = "META_BOX";
 
+const String lastHolidayUpdateDatetimeKey = "lastHolidayUpdateDatetime";
+
 class HiveHelper {
   static final HiveHelper _singleton = HiveHelper._internal();
 
@@ -52,7 +54,14 @@ class HiveHelper {
     return holidayBox?.clear();
   }
 
-  Future<int>? setLastHolidayUpdateDate() {}
+  Future<void>? setLastHolidayUpdateDatetime(DateTime updateDatetime) {
+    return metaBox?.put(lastHolidayUpdateDatetimeKey, updateDatetime);
+  }
+
+  Future<DateTime> getLastHolidayUpdateDatetime() {
+    return metaBox?.get(lastHolidayUpdateDatetimeKey);
+  }
+
 }
 /**
  * single table
