@@ -19,39 +19,26 @@ class HolidayRepository {
 
   HolidayRepository({required this.client});
 
-  Future setHolidayList() async {}
-
-  Future<List<Holiday>> getHolidayList() async {
-    List<Holiday> fromHive = await HiveHelper().readAll();
-
-    if (fromHive.isEmpty) {
-      Logger().i("from server");
-
-      try {
-        HolidayResponse _fromServer = await client.getHolidayList();
-
-        Logger().i(_fromServer);
-        final holidayList = _fromServer.holidayList;
-        HiveHelper().saveAll(holidayList);
-        return holidayList;
-      } on Exception catch (_, exception) {
-        Logger().e(exception);
-        final json = await _parseJsonFromAsset();
-
-        return json.map<Holiday>((item) => Holiday.fromJson(item)).toList();
-      }
-    } else {
-      Logger().i("from db");
-      return fromHive;
-    }
+  setList(List<Holiday> holidayList) {
+    return HiveHelper().setHolidayList(holidayList);
   }
 
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString('assets/json/holidays.json');
+  Future<HolidayResponse> getListFromSever() async {
+    final holidayList = await client.getHolidayList();
+
+    return holidayList;
   }
 
-  Future<List<dynamic>> _parseJsonFromAsset() async {
-    String jsonString = await _loadFromAsset();
-    return json.decode(jsonString);
+  List<Holiday> getListFromDatabase() {
+    final holidayList = HiveHelper().getHolidayList();
+
+    return holidayList;
+  }
+
+  Future<List<Holiday>> getListFromAsset() async {
+    final asset = await rootBundle.loadString('assets/json/holidays.json');
+    final holidayList = jsonDecode(asset);
+
+    return holidayList;
   }
 }

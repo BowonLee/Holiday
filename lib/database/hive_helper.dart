@@ -26,33 +26,33 @@ class HiveHelper {
     await openMetaBox();
   }
 
-  Future openHolidayBox() async {
+  Future<void> openHolidayBox() async {
     holidayBox = await Hive.openBox(HOLIDAY_BOX);
     Logger().i(holidayBox);
   }
 
-  Future openMetaBox() async {
+  Future<void> openMetaBox() async {
     metaBox = await Hive.openBox(META_BOX);
     Logger().i(metaBox);
   }
 
-  Future save(Holiday value) async {
+  Future<int>? setHoliday(Holiday value) {
     return holidayBox?.add(value);
   }
 
-  Future saveAll(List<Holiday> values) async {
-    Logger().i(holidayBox);
-
+  Future<Iterable<int>>? setHolidayList(List<Holiday> values) {
     return holidayBox?.addAll(values);
   }
 
-  Future<List<Holiday>> readAll() async {
+  List<Holiday> getHolidayList() {
     return holidayBox?.values.toList() ?? [];
   }
 
-  Future clear() async {
+  Future<int>? clearHolidayList() {
     return holidayBox?.clear();
   }
+
+  Future<int>? setLastHolidayUpdateDate() {}
 }
 /**
  * single table
