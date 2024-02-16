@@ -11,4 +11,6 @@ class AppInitError extends AppInitBlocState {
   AppInitError({required Exception exception});
 }
 
-class AppInitComplete extends AppInitBlocState {}
+class AppInitComplete extends AppInitBlocState {
+  AppInitComplete({required bool needUpdateHolidayList});
+}
