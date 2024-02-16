@@ -22,13 +22,8 @@ class MetadataRepository {
 
   MetadataRepository({required this.client});
 
-  setMetaDataList() async {
-    final result = await client.getMetadataList();
-
-    Logger().i(result);
-    for (var element in result) {
-      HiveHelper().metaBox?.put(element.typeName, element.updateDateTime);
-    }
+  getMetaDataList() async {
+    final result = await client.getLastUpdateTimeList();
 
     return result;
   }

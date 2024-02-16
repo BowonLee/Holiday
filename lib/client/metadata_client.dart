@@ -18,5 +18,5 @@ abstract class MetaDataClient {
   factory MetaDataClient(Dio dio, {String baseUrl}) = _MetaDataClient;
 
   @POST('/updateDate')
-  Future<List<UpdateDateTime>> getMetadataList();
+  Future<List<UpdateDateTime>> getLastUpdateTimeList();
 }
