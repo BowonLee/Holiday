@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:holiday/model/holiday/holiday.dart';
 import 'package:logger/logger.dart';
 
 import '../../repository/holiday_repository.dart';
@@ -11,9 +12,10 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
 
   HolidayBloc({required this.holidayRepository}) : super(HolidayEmpty()) {
     on<GetHolidayEvent>(_listHolidayEventListener);
+    on<UpdateHolidayEvent>(_listFromServer);
   }
 
-  void _listHolidayEventListener(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
+  void _listHolidayEventListener(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) {
     emitter(HolidayLoading());
     try {
       final holidayList = holidayRepository.getListFromDatabase();
@@ -25,18 +27,24 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
     }
   }
 
-  void _getNewListFromServer(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
+  void _listFromServer(UpdateHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
     emitter(HolidayLoading());
 
     try {
       final response = await holidayRepository.getListFromSever();
-      final DateTime lastUpdateLocal = await holidayRepository.getLastUpdateDatetime();
+      final DateTime? lastUpdateLocal = await holidayRepository.getLastUpdateDatetime();
 
-      if (lastUpdateLocal.isBefore(response.lastUpdateTime)) {
+      if (lastUpdateLocal == null || lastUpdateLocal.isBefore(response.lastUpdateTime)) {
         holidayRepository.setLastUpdateDate(response.lastUpdateTime);
         holidayRepository.setList(response.holidayList);
       }
       emitter(HolidayLoaded(holidayList: response.holidayList));
-    } catch (e) {}
+    } catch (e) {
+      emitter(HolidayError(message: e.toString()));
+    }
+  }
+
+  Future<List<Holiday>> _getListFromAsset() {
+    return holidayRepository.getListFromAsset();
   }
 }
