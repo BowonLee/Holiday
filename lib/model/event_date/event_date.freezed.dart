@@ -12,7 +12,7 @@ part of 'event_date.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$EventDate {
@@ -75,10 +75,11 @@ class _$EventDateCopyWithImpl<$Res, $Val extends EventDate>
 }
 
 /// @nodoc
-abstract class _$$_EventDateCopyWith<$Res> implements $EventDateCopyWith<$Res> {
-  factory _$$_EventDateCopyWith(
-          _$_EventDate value, $Res Function(_$_EventDate) then) =
-      __$$_EventDateCopyWithImpl<$Res>;
+abstract class _$$EventDateImplCopyWith<$Res>
+    implements $EventDateCopyWith<$Res> {
+  factory _$$EventDateImplCopyWith(
+          _$EventDateImpl value, $Res Function(_$EventDateImpl) then) =
+      __$$EventDateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -86,11 +87,11 @@ abstract class _$$_EventDateCopyWith<$Res> implements $EventDateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_EventDateCopyWithImpl<$Res>
-    extends _$EventDateCopyWithImpl<$Res, _$_EventDate>
-    implements _$$_EventDateCopyWith<$Res> {
-  __$$_EventDateCopyWithImpl(
-      _$_EventDate _value, $Res Function(_$_EventDate) _then)
+class __$$EventDateImplCopyWithImpl<$Res>
+    extends _$EventDateCopyWithImpl<$Res, _$EventDateImpl>
+    implements _$$EventDateImplCopyWith<$Res> {
+  __$$EventDateImplCopyWithImpl(
+      _$EventDateImpl _value, $Res Function(_$EventDateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +102,7 @@ class __$$_EventDateCopyWithImpl<$Res>
     Object? type = null,
     Object? state = null,
   }) {
-    return _then(_$_EventDate(
+    return _then(_$EventDateImpl(
       datetime: null == datetime
           ? _value.datetime
           : datetime // ignore: cast_nullable_to_non_nullable
@@ -124,8 +125,8 @@ class __$$_EventDateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventDate extends _EventDate {
-  _$_EventDate(
+class _$EventDateImpl extends _EventDate {
+  _$EventDateImpl(
       {required this.datetime,
       required this.name,
       this.type = EventDateType.event,
@@ -149,10 +150,10 @@ class _$_EventDate extends _EventDate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventDate &&
+            other is _$EventDateImpl &&
             (identical(other.datetime, datetime) ||
                 other.datetime == datetime) &&
             (identical(other.name, name) || other.name == name) &&
@@ -166,8 +167,8 @@ class _$_EventDate extends _EventDate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EventDateCopyWith<_$_EventDate> get copyWith =>
-      __$$_EventDateCopyWithImpl<_$_EventDate>(this, _$identity);
+  _$$EventDateImplCopyWith<_$EventDateImpl> get copyWith =>
+      __$$EventDateImplCopyWithImpl<_$EventDateImpl>(this, _$identity);
 }
 
 abstract class _EventDate extends EventDate {
@@ -175,7 +176,7 @@ abstract class _EventDate extends EventDate {
       {required final DateTime datetime,
       required final String name,
       final EventDateType type,
-      final DateState state}) = _$_EventDate;
+      final DateState state}) = _$EventDateImpl;
   _EventDate._() : super._();
 
   @override
@@ -188,6 +189,6 @@ abstract class _EventDate extends EventDate {
   DateState get state;
   @override
   @JsonKey(ignore: true)
-  _$$_EventDateCopyWith<_$_EventDate> get copyWith =>
+  _$$EventDateImplCopyWith<_$EventDateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

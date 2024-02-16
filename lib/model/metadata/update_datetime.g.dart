@@ -6,13 +6,14 @@ part of 'update_datetime.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UpdateDateTime _$$_UpdateDateTimeFromJson(Map<String, dynamic> json) =>
-    _$_UpdateDateTime(
+_$UpdateDateTimeImpl _$$UpdateDateTimeImplFromJson(Map<String, dynamic> json) =>
+    _$UpdateDateTimeImpl(
       typeName: json['typeName'] as String,
       updateDateTime: DateTime.parse(json['updateDateTime'] as String),
     );
 
-Map<String, dynamic> _$$_UpdateDateTimeToJson(_$_UpdateDateTime instance) =>
+Map<String, dynamic> _$$UpdateDateTimeImplToJson(
+        _$UpdateDateTimeImpl instance) =>
     <String, dynamic>{
       'typeName': instance.typeName,
       'updateDateTime': instance.updateDateTime.toIso8601String(),

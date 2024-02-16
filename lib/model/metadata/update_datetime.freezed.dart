@@ -12,7 +12,7 @@ part of 'update_datetime.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 UpdateDateTime _$UpdateDateTimeFromJson(Map<String, dynamic> json) {
   return _UpdateDateTime.fromJson(json);
@@ -68,22 +68,22 @@ class _$UpdateDateTimeCopyWithImpl<$Res, $Val extends UpdateDateTime>
 }
 
 /// @nodoc
-abstract class _$$_UpdateDateTimeCopyWith<$Res>
+abstract class _$$UpdateDateTimeImplCopyWith<$Res>
     implements $UpdateDateTimeCopyWith<$Res> {
-  factory _$$_UpdateDateTimeCopyWith(
-          _$_UpdateDateTime value, $Res Function(_$_UpdateDateTime) then) =
-      __$$_UpdateDateTimeCopyWithImpl<$Res>;
+  factory _$$UpdateDateTimeImplCopyWith(_$UpdateDateTimeImpl value,
+          $Res Function(_$UpdateDateTimeImpl) then) =
+      __$$UpdateDateTimeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String typeName, DateTime updateDateTime});
 }
 
 /// @nodoc
-class __$$_UpdateDateTimeCopyWithImpl<$Res>
-    extends _$UpdateDateTimeCopyWithImpl<$Res, _$_UpdateDateTime>
-    implements _$$_UpdateDateTimeCopyWith<$Res> {
-  __$$_UpdateDateTimeCopyWithImpl(
-      _$_UpdateDateTime _value, $Res Function(_$_UpdateDateTime) _then)
+class __$$UpdateDateTimeImplCopyWithImpl<$Res>
+    extends _$UpdateDateTimeCopyWithImpl<$Res, _$UpdateDateTimeImpl>
+    implements _$$UpdateDateTimeImplCopyWith<$Res> {
+  __$$UpdateDateTimeImplCopyWithImpl(
+      _$UpdateDateTimeImpl _value, $Res Function(_$UpdateDateTimeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_UpdateDateTimeCopyWithImpl<$Res>
     Object? typeName = null,
     Object? updateDateTime = null,
   }) {
-    return _then(_$_UpdateDateTime(
+    return _then(_$UpdateDateTimeImpl(
       typeName: null == typeName
           ? _value.typeName
           : typeName // ignore: cast_nullable_to_non_nullable
@@ -107,12 +107,12 @@ class __$$_UpdateDateTimeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UpdateDateTime implements _UpdateDateTime {
-  const _$_UpdateDateTime(
+class _$UpdateDateTimeImpl implements _UpdateDateTime {
+  const _$UpdateDateTimeImpl(
       {required this.typeName, required this.updateDateTime});
 
-  factory _$_UpdateDateTime.fromJson(Map<String, dynamic> json) =>
-      _$$_UpdateDateTimeFromJson(json);
+  factory _$UpdateDateTimeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpdateDateTimeImplFromJson(json);
 
   @override
   final String typeName;
@@ -125,10 +125,10 @@ class _$_UpdateDateTime implements _UpdateDateTime {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateDateTime &&
+            other is _$UpdateDateTimeImpl &&
             (identical(other.typeName, typeName) ||
                 other.typeName == typeName) &&
             (identical(other.updateDateTime, updateDateTime) ||
@@ -142,12 +142,13 @@ class _$_UpdateDateTime implements _UpdateDateTime {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UpdateDateTimeCopyWith<_$_UpdateDateTime> get copyWith =>
-      __$$_UpdateDateTimeCopyWithImpl<_$_UpdateDateTime>(this, _$identity);
+  _$$UpdateDateTimeImplCopyWith<_$UpdateDateTimeImpl> get copyWith =>
+      __$$UpdateDateTimeImplCopyWithImpl<_$UpdateDateTimeImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UpdateDateTimeToJson(
+    return _$$UpdateDateTimeImplToJson(
       this,
     );
   }
@@ -156,10 +157,10 @@ class _$_UpdateDateTime implements _UpdateDateTime {
 abstract class _UpdateDateTime implements UpdateDateTime {
   const factory _UpdateDateTime(
       {required final String typeName,
-      required final DateTime updateDateTime}) = _$_UpdateDateTime;
+      required final DateTime updateDateTime}) = _$UpdateDateTimeImpl;
 
   factory _UpdateDateTime.fromJson(Map<String, dynamic> json) =
-      _$_UpdateDateTime.fromJson;
+      _$UpdateDateTimeImpl.fromJson;
 
   @override
   String get typeName;
@@ -167,6 +168,6 @@ abstract class _UpdateDateTime implements UpdateDateTime {
   DateTime get updateDateTime;
   @override
   @JsonKey(ignore: true)
-  _$$_UpdateDateTimeCopyWith<_$_UpdateDateTime> get copyWith =>
+  _$$UpdateDateTimeImplCopyWith<_$UpdateDateTimeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

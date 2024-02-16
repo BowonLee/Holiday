@@ -12,7 +12,7 @@ part of 'consecutive_holidays.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ConsecutiveHolidays {
@@ -69,22 +69,22 @@ class _$ConsecutiveHolidaysCopyWithImpl<$Res, $Val extends ConsecutiveHolidays>
 }
 
 /// @nodoc
-abstract class _$$_ConsecutiveHolidaysCopyWith<$Res>
+abstract class _$$ConsecutiveHolidaysImplCopyWith<$Res>
     implements $ConsecutiveHolidaysCopyWith<$Res> {
-  factory _$$_ConsecutiveHolidaysCopyWith(_$_ConsecutiveHolidays value,
-          $Res Function(_$_ConsecutiveHolidays) then) =
-      __$$_ConsecutiveHolidaysCopyWithImpl<$Res>;
+  factory _$$ConsecutiveHolidaysImplCopyWith(_$ConsecutiveHolidaysImpl value,
+          $Res Function(_$ConsecutiveHolidaysImpl) then) =
+      __$$ConsecutiveHolidaysImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String title, List<EventDate> dateList, DateState state});
 }
 
 /// @nodoc
-class __$$_ConsecutiveHolidaysCopyWithImpl<$Res>
-    extends _$ConsecutiveHolidaysCopyWithImpl<$Res, _$_ConsecutiveHolidays>
-    implements _$$_ConsecutiveHolidaysCopyWith<$Res> {
-  __$$_ConsecutiveHolidaysCopyWithImpl(_$_ConsecutiveHolidays _value,
-      $Res Function(_$_ConsecutiveHolidays) _then)
+class __$$ConsecutiveHolidaysImplCopyWithImpl<$Res>
+    extends _$ConsecutiveHolidaysCopyWithImpl<$Res, _$ConsecutiveHolidaysImpl>
+    implements _$$ConsecutiveHolidaysImplCopyWith<$Res> {
+  __$$ConsecutiveHolidaysImplCopyWithImpl(_$ConsecutiveHolidaysImpl _value,
+      $Res Function(_$ConsecutiveHolidaysImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$_ConsecutiveHolidaysCopyWithImpl<$Res>
     Object? dateList = null,
     Object? state = null,
   }) {
-    return _then(_$_ConsecutiveHolidays(
+    return _then(_$ConsecutiveHolidaysImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$_ConsecutiveHolidaysCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ConsecutiveHolidays extends _ConsecutiveHolidays {
-  _$_ConsecutiveHolidays(
+class _$ConsecutiveHolidaysImpl extends _ConsecutiveHolidays {
+  _$ConsecutiveHolidaysImpl(
       {required this.title,
       required final List<EventDate> dateList,
       required this.state})
@@ -140,10 +140,10 @@ class _$_ConsecutiveHolidays extends _ConsecutiveHolidays {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ConsecutiveHolidays &&
+            other is _$ConsecutiveHolidaysImpl &&
             (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(other._dateList, _dateList) &&
             (identical(other.state, state) || other.state == state));
@@ -156,8 +156,8 @@ class _$_ConsecutiveHolidays extends _ConsecutiveHolidays {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ConsecutiveHolidaysCopyWith<_$_ConsecutiveHolidays> get copyWith =>
-      __$$_ConsecutiveHolidaysCopyWithImpl<_$_ConsecutiveHolidays>(
+  _$$ConsecutiveHolidaysImplCopyWith<_$ConsecutiveHolidaysImpl> get copyWith =>
+      __$$ConsecutiveHolidaysImplCopyWithImpl<_$ConsecutiveHolidaysImpl>(
           this, _$identity);
 }
 
@@ -165,7 +165,7 @@ abstract class _ConsecutiveHolidays extends ConsecutiveHolidays {
   factory _ConsecutiveHolidays(
       {required final String title,
       required final List<EventDate> dateList,
-      required final DateState state}) = _$_ConsecutiveHolidays;
+      required final DateState state}) = _$ConsecutiveHolidaysImpl;
   _ConsecutiveHolidays._() : super._();
 
   @override
@@ -176,6 +176,6 @@ abstract class _ConsecutiveHolidays extends ConsecutiveHolidays {
   DateState get state;
   @override
   @JsonKey(ignore: true)
-  _$$_ConsecutiveHolidaysCopyWith<_$_ConsecutiveHolidays> get copyWith =>
+  _$$ConsecutiveHolidaysImplCopyWith<_$ConsecutiveHolidaysImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

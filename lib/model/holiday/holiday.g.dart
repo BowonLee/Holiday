@@ -6,17 +6,17 @@ part of 'holiday.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HolidayAdapter extends TypeAdapter<_$_Holiday> {
+class HolidayAdapter extends TypeAdapter<_$HolidayImpl> {
   @override
   final int typeId = 1;
 
   @override
-  _$_Holiday read(BinaryReader reader) {
+  _$HolidayImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_Holiday(
+    return _$HolidayImpl(
       date: fields[0] as DateTime,
       dateName: fields[1] as String,
       dateKind: fields[2] as String,
@@ -25,7 +25,7 @@ class HolidayAdapter extends TypeAdapter<_$_Holiday> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_Holiday obj) {
+  void write(BinaryWriter writer, _$HolidayImpl obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -53,26 +53,28 @@ class HolidayAdapter extends TypeAdapter<_$_Holiday> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_HolidayResponse _$$_HolidayResponseFromJson(Map<String, dynamic> json) =>
-    _$_HolidayResponse(
+_$HolidayResponseImpl _$$HolidayResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$HolidayResponseImpl(
       holidayList: (json['holidayList'] as List<dynamic>)
           .map((e) => Holiday.fromJson(e as Map<String, dynamic>))
           .toList(),
       lastUpdateTime: DateTime.parse(json['lastUpdateTime'] as String),
     );
 
-Map<String, dynamic> _$$_HolidayResponseToJson(_$_HolidayResponse instance) =>
+Map<String, dynamic> _$$HolidayResponseImplToJson(
+        _$HolidayResponseImpl instance) =>
     <String, dynamic>{
       'holidayList': instance.holidayList,
       'lastUpdateTime': instance.lastUpdateTime.toIso8601String(),
     };
 
-_$_Holiday _$$_HolidayFromJson(Map<String, dynamic> json) {
+_$HolidayImpl _$$HolidayImplFromJson(Map<String, dynamic> json) {
   $checkKeys(
     json,
     requiredKeys: const ['date'],
   );
-  return _$_Holiday(
+  return _$HolidayImpl(
     date: DateTime.parse(json['date'] as String),
     dateName: json['dateName'] as String,
     dateKind: json['dateKind'] as String,
@@ -80,7 +82,7 @@ _$_Holiday _$$_HolidayFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$$_HolidayToJson(_$_Holiday instance) =>
+Map<String, dynamic> _$$HolidayImplToJson(_$HolidayImpl instance) =>
     <String, dynamic>{
       'date': instance.date.toIso8601String(),
       'dateName': instance.dateName,

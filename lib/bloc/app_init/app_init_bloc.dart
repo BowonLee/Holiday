@@ -13,10 +13,13 @@ part 'app_init_event.dart';
 part 'app_init_state.dart';
 
 class AppInitBloc extends Bloc<AppInitEvent, AppInitBlocState> {
-  final MetadataRepository metadataRepository;
-  final HolidayRepository holidayRepository;
+  final MetadataRepository _metadataRepository;
+  final HolidayRepository _holidayRepository;
 
-  AppInitBloc({required this.metadataRepository, required this.holidayRepository}) : super(AppInitInitial()) {
+  AppInitBloc({required MetadataRepository metadataRepository, required HolidayRepository holidayRepository})
+      : _holidayRepository = holidayRepository,
+        _metadataRepository = metadataRepository,
+        super(AppInitInitial()) {
     on<AppInitEvent>(onStartApplication);
   }
 
@@ -25,7 +28,7 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitBlocState> {
     /// 정보를 업데이트 할 필요하 있는 항목들을 체크한 뒤 해당 상태에 따라 이후 동작을 결정한다.
     emit(AppInitLoading());
     try {
-      final List<UpdateDateTime> updateTimeList = await metadataRepository.getMetaDataList();
+      final List<UpdateDateTime> updateTimeList = await _metadataRepository.getMetaDataList();
 
       emit(AppInitComplete(
           needUpdateHolidayList: await _checkHolidayMeteData(
@@ -37,7 +40,7 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitBlocState> {
   }
 
   Future<bool> _checkHolidayMeteData(DateTime lastUpdateTimeInResponse) async {
-    final DateTime? lastUpdateDatetime = await holidayRepository.getLastUpdateDatetime();
+    final DateTime? lastUpdateDatetime = await _holidayRepository.getLastUpdateDatetime();
 
     if (lastUpdateDatetime == null || lastUpdateDatetime.isBefore(lastUpdateTimeInResponse)) {
       return false;

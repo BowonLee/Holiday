@@ -12,7 +12,7 @@ part of 'holiday.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 HolidayResponse _$HolidayResponseFromJson(Map<String, dynamic> json) {
   return _HolidayResponse.fromJson(json);
@@ -68,22 +68,22 @@ class _$HolidayResponseCopyWithImpl<$Res, $Val extends HolidayResponse>
 }
 
 /// @nodoc
-abstract class _$$_HolidayResponseCopyWith<$Res>
+abstract class _$$HolidayResponseImplCopyWith<$Res>
     implements $HolidayResponseCopyWith<$Res> {
-  factory _$$_HolidayResponseCopyWith(
-          _$_HolidayResponse value, $Res Function(_$_HolidayResponse) then) =
-      __$$_HolidayResponseCopyWithImpl<$Res>;
+  factory _$$HolidayResponseImplCopyWith(_$HolidayResponseImpl value,
+          $Res Function(_$HolidayResponseImpl) then) =
+      __$$HolidayResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Holiday> holidayList, DateTime lastUpdateTime});
 }
 
 /// @nodoc
-class __$$_HolidayResponseCopyWithImpl<$Res>
-    extends _$HolidayResponseCopyWithImpl<$Res, _$_HolidayResponse>
-    implements _$$_HolidayResponseCopyWith<$Res> {
-  __$$_HolidayResponseCopyWithImpl(
-      _$_HolidayResponse _value, $Res Function(_$_HolidayResponse) _then)
+class __$$HolidayResponseImplCopyWithImpl<$Res>
+    extends _$HolidayResponseCopyWithImpl<$Res, _$HolidayResponseImpl>
+    implements _$$HolidayResponseImplCopyWith<$Res> {
+  __$$HolidayResponseImplCopyWithImpl(
+      _$HolidayResponseImpl _value, $Res Function(_$HolidayResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_HolidayResponseCopyWithImpl<$Res>
     Object? holidayList = null,
     Object? lastUpdateTime = null,
   }) {
-    return _then(_$_HolidayResponse(
+    return _then(_$HolidayResponseImpl(
       holidayList: null == holidayList
           ? _value._holidayList
           : holidayList // ignore: cast_nullable_to_non_nullable
@@ -107,13 +107,13 @@ class __$$_HolidayResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_HolidayResponse implements _HolidayResponse {
-  const _$_HolidayResponse(
+class _$HolidayResponseImpl implements _HolidayResponse {
+  const _$HolidayResponseImpl(
       {required final List<Holiday> holidayList, required this.lastUpdateTime})
       : _holidayList = holidayList;
 
-  factory _$_HolidayResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_HolidayResponseFromJson(json);
+  factory _$HolidayResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HolidayResponseImplFromJson(json);
 
   final List<Holiday> _holidayList;
   @override
@@ -132,10 +132,10 @@ class _$_HolidayResponse implements _HolidayResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HolidayResponse &&
+            other is _$HolidayResponseImpl &&
             const DeepCollectionEquality()
                 .equals(other._holidayList, _holidayList) &&
             (identical(other.lastUpdateTime, lastUpdateTime) ||
@@ -150,12 +150,13 @@ class _$_HolidayResponse implements _HolidayResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HolidayResponseCopyWith<_$_HolidayResponse> get copyWith =>
-      __$$_HolidayResponseCopyWithImpl<_$_HolidayResponse>(this, _$identity);
+  _$$HolidayResponseImplCopyWith<_$HolidayResponseImpl> get copyWith =>
+      __$$HolidayResponseImplCopyWithImpl<_$HolidayResponseImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HolidayResponseToJson(
+    return _$$HolidayResponseImplToJson(
       this,
     );
   }
@@ -164,10 +165,10 @@ class _$_HolidayResponse implements _HolidayResponse {
 abstract class _HolidayResponse implements HolidayResponse {
   const factory _HolidayResponse(
       {required final List<Holiday> holidayList,
-      required final DateTime lastUpdateTime}) = _$_HolidayResponse;
+      required final DateTime lastUpdateTime}) = _$HolidayResponseImpl;
 
   factory _HolidayResponse.fromJson(Map<String, dynamic> json) =
-      _$_HolidayResponse.fromJson;
+      _$HolidayResponseImpl.fromJson;
 
   @override
   List<Holiday> get holidayList;
@@ -175,7 +176,7 @@ abstract class _HolidayResponse implements HolidayResponse {
   DateTime get lastUpdateTime;
   @override
   @JsonKey(ignore: true)
-  _$$_HolidayResponseCopyWith<_$_HolidayResponse> get copyWith =>
+  _$$HolidayResponseImplCopyWith<_$HolidayResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -252,10 +253,10 @@ class _$HolidayCopyWithImpl<$Res, $Val extends Holiday>
 }
 
 /// @nodoc
-abstract class _$$_HolidayCopyWith<$Res> implements $HolidayCopyWith<$Res> {
-  factory _$$_HolidayCopyWith(
-          _$_Holiday value, $Res Function(_$_Holiday) then) =
-      __$$_HolidayCopyWithImpl<$Res>;
+abstract class _$$HolidayImplCopyWith<$Res> implements $HolidayCopyWith<$Res> {
+  factory _$$HolidayImplCopyWith(
+          _$HolidayImpl value, $Res Function(_$HolidayImpl) then) =
+      __$$HolidayImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -266,10 +267,11 @@ abstract class _$$_HolidayCopyWith<$Res> implements $HolidayCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_HolidayCopyWithImpl<$Res>
-    extends _$HolidayCopyWithImpl<$Res, _$_Holiday>
-    implements _$$_HolidayCopyWith<$Res> {
-  __$$_HolidayCopyWithImpl(_$_Holiday _value, $Res Function(_$_Holiday) _then)
+class __$$HolidayImplCopyWithImpl<$Res>
+    extends _$HolidayCopyWithImpl<$Res, _$HolidayImpl>
+    implements _$$HolidayImplCopyWith<$Res> {
+  __$$HolidayImplCopyWithImpl(
+      _$HolidayImpl _value, $Res Function(_$HolidayImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -280,7 +282,7 @@ class __$$_HolidayCopyWithImpl<$Res>
     Object? dateKind = null,
     Object? isHoliday = null,
   }) {
-    return _then(_$_Holiday(
+    return _then(_$HolidayImpl(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -304,16 +306,16 @@ class __$$_HolidayCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 @HiveType(typeId: 1, adapterName: "HolidayAdapter")
-class _$_Holiday extends _Holiday {
-  _$_Holiday(
+class _$HolidayImpl extends _Holiday {
+  _$HolidayImpl(
       {@JsonKey(name: "date", required: true) @HiveField(0) required this.date,
       @HiveField(1) required this.dateName,
       @HiveField(2) required this.dateKind,
       @HiveField(3) required this.isHoliday})
       : super._();
 
-  factory _$_Holiday.fromJson(Map<String, dynamic> json) =>
-      _$$_HolidayFromJson(json);
+  factory _$HolidayImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HolidayImplFromJson(json);
 
   @override
   @JsonKey(name: "date", required: true)
@@ -335,10 +337,10 @@ class _$_Holiday extends _Holiday {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Holiday &&
+            other is _$HolidayImpl &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.dateName, dateName) ||
                 other.dateName == dateName) &&
@@ -356,12 +358,12 @@ class _$_Holiday extends _Holiday {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HolidayCopyWith<_$_Holiday> get copyWith =>
-      __$$_HolidayCopyWithImpl<_$_Holiday>(this, _$identity);
+  _$$HolidayImplCopyWith<_$HolidayImpl> get copyWith =>
+      __$$HolidayImplCopyWithImpl<_$HolidayImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HolidayToJson(
+    return _$$HolidayImplToJson(
       this,
     );
   }
@@ -371,16 +373,13 @@ abstract class _Holiday extends Holiday {
   factory _Holiday(
       {@JsonKey(name: "date", required: true)
       @HiveField(0)
-          required final DateTime date,
-      @HiveField(1)
-          required final String dateName,
-      @HiveField(2)
-          required final String dateKind,
-      @HiveField(3)
-          required final bool isHoliday}) = _$_Holiday;
+      required final DateTime date,
+      @HiveField(1) required final String dateName,
+      @HiveField(2) required final String dateKind,
+      @HiveField(3) required final bool isHoliday}) = _$HolidayImpl;
   _Holiday._() : super._();
 
-  factory _Holiday.fromJson(Map<String, dynamic> json) = _$_Holiday.fromJson;
+  factory _Holiday.fromJson(Map<String, dynamic> json) = _$HolidayImpl.fromJson;
 
   @override
   @JsonKey(name: "date", required: true)
@@ -397,6 +396,6 @@ abstract class _Holiday extends Holiday {
   bool get isHoliday;
   @override
   @JsonKey(ignore: true)
-  _$$_HolidayCopyWith<_$_Holiday> get copyWith =>
+  _$$HolidayImplCopyWith<_$HolidayImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
