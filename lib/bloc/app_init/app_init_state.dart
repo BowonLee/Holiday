@@ -3,14 +3,16 @@ part of 'app_init_bloc.dart';
 @immutable
 abstract class AppInitBlocState {}
 
-class AppInitInitial extends AppInitBlocState {}
+class AppInitBlocInitial extends AppInitBlocState {}
 
-class AppInitLoading extends AppInitBlocState {}
+class AppInitBlocLoading extends AppInitBlocState {}
 
-class AppInitError extends AppInitBlocState {
-  AppInitError({required Exception exception});
+class AppInitBlocError extends AppInitBlocState {
+  AppInitBlocError({required Exception exception});
 }
 
-class AppInitComplete extends AppInitBlocState {
-  AppInitComplete({required bool needUpdateHolidayList});
+class AppInitBlocComplete extends AppInitBlocState {
+  final bool needUpdateHolidayList;
+
+  AppInitBlocComplete({required this.needUpdateHolidayList});
 }

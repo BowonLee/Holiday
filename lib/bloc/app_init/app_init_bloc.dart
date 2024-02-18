@@ -19,33 +19,36 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitBlocState> {
   AppInitBloc({required MetadataRepository metadataRepository, required HolidayRepository holidayRepository})
       : _holidayRepository = holidayRepository,
         _metadataRepository = metadataRepository,
-        super(AppInitInitial()) {
-    on<AppInitEvent>(onStartApplication);
+        super(AppInitBlocInitial()) {
+    on<GetMetaDataEvent>(onStartApplication);
   }
 
-  onStartApplication(AppInitEvent event, Emitter<AppInitBlocState> emit) async {
+  onStartApplication(AppInitEvent event, Emitter<AppInitBlocState> emitter) async {
     /// 앱 시작 시 최초로 정보들을 업데이트 할 수 있는지 확인한다.
     /// 정보를 업데이트 할 필요하 있는 항목들을 체크한 뒤 해당 상태에 따라 이후 동작을 결정한다.
-    emit(AppInitLoading());
+    emitter(AppInitBlocLoading());
     try {
       final List<UpdateDateTime> updateTimeList = await _metadataRepository.getMetaDataListFromServer();
 
-      emit(AppInitComplete(
-          needUpdateHolidayList: await _checkHolidayMeteData(
-              updateTimeList.firstWhere((element) => element.typeName == "HOLIDAY").updateDateTime)));
+      final needUpdate = await _checkHolidayMeteData(
+          updateTimeList.firstWhere((element) => element.typeName == "HOLIDAY").updateDateTime);
+
+      emitter(AppInitBlocComplete(needUpdateHolidayList: true));
     } on Exception catch (e) {
       Logger().e(e);
-      emit(AppInitError(exception: e));
+      emitter(AppInitBlocError(exception: e));
     }
+
+    Logger().i(state);
   }
 
   Future<bool> _checkHolidayMeteData(DateTime lastUpdateTimeInResponse) async {
     final DateTime? lastUpdateDatetime = await _holidayRepository.getLastUpdateDatetime();
 
     if (lastUpdateDatetime == null || lastUpdateDatetime.isBefore(lastUpdateTimeInResponse)) {
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 }

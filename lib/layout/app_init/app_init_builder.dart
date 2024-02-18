@@ -9,8 +9,8 @@ class AppInitBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppInitBloc, AppInitBlocState>(
       builder: (context, state) {
-        if (state is AppInitLoading) {}
-        if (state is AppInitComplete) {}
+        if (state is AppInitBlocLoading) {}
+        if (state is AppInitBlocComplete) {}
         return Container();
       },
     );
