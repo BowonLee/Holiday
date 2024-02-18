@@ -3,12 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
+import 'dart:async' as _i6;
 
 import 'package:holiday/client/holiday_client.dart' as _i3;
 import 'package:holiday/client/metadata_client.dart' as _i2;
 import 'package:holiday/model/holiday/holiday.dart' as _i4;
-import 'package:holiday/repository/holiday_repository.dart' as _i6;
+import 'package:holiday/model/metadata/update_datetime.dart' as _i7;
+import 'package:holiday/repository/holiday_repository.dart' as _i8;
 import 'package:holiday/repository/metadata_repository.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -74,12 +75,23 @@ class MockMetadataRepository extends _i1.Mock
           Invocation.getter(#client),
         ),
       ) as _i2.MetaDataClient);
+
+  @override
+  _i6.Future<List<_i7.UpdateDateTime>> getMetaDataListFromServer() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getMetaDataListFromServer,
+          [],
+        ),
+        returnValue:
+            _i6.Future<List<_i7.UpdateDateTime>>.value(<_i7.UpdateDateTime>[]),
+      ) as _i6.Future<List<_i7.UpdateDateTime>>);
 }
 
 /// A class which mocks [HolidayRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHolidayRepository extends _i1.Mock implements _i6.HolidayRepository {
+class MockHolidayRepository extends _i1.Mock implements _i8.HolidayRepository {
   MockHolidayRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -117,29 +129,29 @@ class MockHolidayRepository extends _i1.Mock implements _i6.HolidayRepository {
       ));
 
   @override
-  _i7.Future<DateTime?> getLastUpdateDatetime() => (super.noSuchMethod(
+  _i6.Future<DateTime?> getLastUpdateDatetime() => (super.noSuchMethod(
         Invocation.method(
           #getLastUpdateDatetime,
           [],
         ),
-        returnValue: _i7.Future<DateTime?>.value(),
-      ) as _i7.Future<DateTime?>);
+        returnValue: _i6.Future<DateTime?>.value(),
+      ) as _i6.Future<DateTime?>);
 
   @override
-  _i7.Future<_i4.HolidayResponse> getListFromSever() => (super.noSuchMethod(
+  _i6.Future<_i4.HolidayResponse> getListFromSever() => (super.noSuchMethod(
         Invocation.method(
           #getListFromSever,
           [],
         ),
         returnValue:
-            _i7.Future<_i4.HolidayResponse>.value(_FakeHolidayResponse_2(
+            _i6.Future<_i4.HolidayResponse>.value(_FakeHolidayResponse_2(
           this,
           Invocation.method(
             #getListFromSever,
             [],
           ),
         )),
-      ) as _i7.Future<_i4.HolidayResponse>);
+      ) as _i6.Future<_i4.HolidayResponse>);
 
   @override
   List<_i4.Holiday> getListFromDatabase() => (super.noSuchMethod(
@@ -151,11 +163,11 @@ class MockHolidayRepository extends _i1.Mock implements _i6.HolidayRepository {
       ) as List<_i4.Holiday>);
 
   @override
-  _i7.Future<List<_i4.Holiday>> getListFromAsset() => (super.noSuchMethod(
+  _i6.Future<List<_i4.Holiday>> getListFromAsset() => (super.noSuchMethod(
         Invocation.method(
           #getListFromAsset,
           [],
         ),
-        returnValue: _i7.Future<List<_i4.Holiday>>.value(<_i4.Holiday>[]),
-      ) as _i7.Future<List<_i4.Holiday>>);
+        returnValue: _i6.Future<List<_i4.Holiday>>.value(<_i4.Holiday>[]),
+      ) as _i6.Future<List<_i4.Holiday>>);
 }
