@@ -33,13 +33,11 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitBlocState> {
       final needUpdate = await _checkHolidayMeteData(
           updateTimeList.firstWhere((element) => element.typeName == "HOLIDAY").updateDateTime);
 
-      emitter(AppInitBlocComplete(needUpdateHolidayList: true));
+      emitter(AppInitBlocComplete(needUpdateHolidayList: needUpdate));
     } on Exception catch (e) {
       Logger().e(e);
       emitter(AppInitBlocError(exception: e));
     }
-
-    Logger().i(state);
   }
 
   Future<bool> _checkHolidayMeteData(DateTime lastUpdateTimeInResponse) async {
