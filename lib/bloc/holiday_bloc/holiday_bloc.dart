@@ -11,11 +11,11 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
   final HolidayRepository holidayRepository;
 
   HolidayBloc({required this.holidayRepository}) : super(HolidayEmpty()) {
-    on<GetHolidayEvent>(_listHolidayEventListener);
+    on<GetHolidayEvent>(_listHolidayFromLocal);
     on<UpdateHolidayEvent>(_listFromServer);
   }
 
-  void _listHolidayEventListener(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) {
+  void _listHolidayFromLocal(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) {
     emitter(HolidayLoading());
     try {
       final holidayList = holidayRepository.getListFromDatabase();
