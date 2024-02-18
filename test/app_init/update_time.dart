@@ -22,8 +22,6 @@ void main() {
   final DateTime mockPivotUpdateTime = DateTime(2024, 5, 5, 12, 30, 30);
   final DateTime mockPastUpdateTime = DateTime(2024, 5, 4, 12, 30, 30);
   final DateTime mockFutureUpdateTime = DateTime(2024, 5, 6, 12, 30, 30);
-  final AppInitBloc appInitBloc =
-      AppInitBloc(metadataRepository: mockMetadataRepository, holidayRepository: mockHolidayRepository);
 
   AppInitBloc generateAppInitBloc() {
     return AppInitBloc(metadataRepository: mockMetadataRepository, holidayRepository: mockHolidayRepository);
