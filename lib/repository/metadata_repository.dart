@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:holiday/client/metadata_client.dart';
 import 'package:holiday/database/hive_helper.dart';
+import 'package:holiday/model/metadata/update_datetime.dart';
 import 'package:logger/logger.dart';
 
 /// 최종 업데이트 일자와 같은 메타데이터 관리
@@ -22,7 +23,7 @@ class MetadataRepository {
 
   MetadataRepository({required this.client});
 
-  getMetaDataList() async {
+  Future<List<UpdateDateTime>> getMetaDataListFromServer() async {
     final result = await client.getLastUpdateTimeList();
 
     return result;

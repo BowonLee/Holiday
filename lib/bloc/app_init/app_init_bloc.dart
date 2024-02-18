@@ -28,7 +28,7 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitBlocState> {
     /// 정보를 업데이트 할 필요하 있는 항목들을 체크한 뒤 해당 상태에 따라 이후 동작을 결정한다.
     emit(AppInitLoading());
     try {
-      final List<UpdateDateTime> updateTimeList = await _metadataRepository.getMetaDataList();
+      final List<UpdateDateTime> updateTimeList = await _metadataRepository.getMetaDataListFromServer();
 
       emit(AppInitComplete(
           needUpdateHolidayList: await _checkHolidayMeteData(
