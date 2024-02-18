@@ -9,12 +9,13 @@ part 'holiday_client.g.dart';
 
 void setUpHolidayClient() {
   final dio = GetIt.instance.get<DioService>().dio;
-  GetIt.instance.registerLazySingleton(() => RestClient(dio));
+
+  GetIt.instance.registerLazySingleton(() => HolidayClient(dio));
 }
 
 @RestApi(baseUrl: "http://10.0.2.2:8080/api/holiday")
-abstract class RestClient {
-  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
+abstract class HolidayClient {
+  factory HolidayClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @POST('/list')
   Future<HolidayResponse> getHolidayList();

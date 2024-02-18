@@ -9,13 +9,13 @@ import '../database/hive_helper.dart';
 import '../model/holiday/holiday.dart';
 
 HolidayRepository holidayRepositoryProvider() {
-  final client = GetIt.instance.get<RestClient>();
+  final client = GetIt.instance.get<HolidayClient>();
   HolidayRepository holidayRepository = HolidayRepository(client: client);
   return holidayRepository;
 }
 
 class HolidayRepository {
-  RestClient client;
+  HolidayClient client;
 
   HolidayRepository({required this.client});
 

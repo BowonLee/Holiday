@@ -19,7 +19,7 @@ class HolidayService {
   Future<void> getHoliday() async {
     final dio = Dio();
 
-    final client = RestClient(dio);
+    final client = HolidayClient(dio);
 
     final result = await client.getHolidayList();
   }
