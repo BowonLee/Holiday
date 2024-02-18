@@ -25,6 +25,10 @@ void main() {
   final AppInitBloc appInitBloc =
       AppInitBloc(metadataRepository: mockMetadataRepository, holidayRepository: mockHolidayRepository);
 
+  AppInitBloc generateAppInitBloc() {
+    return AppInitBloc(metadataRepository: mockMetadataRepository, holidayRepository: mockHolidayRepository);
+  }
+
   group("connection_ok", () {
     final List<UpdateDateTime> mockResponse = [
       UpdateDateTime(typeName: "HOLIDAY", updateDateTime: mockPivotUpdateTime)
@@ -39,7 +43,7 @@ void main() {
       'local_datetime_empty',
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime()).thenAnswer((realInvocation) => Future.value(null));
-        return appInitBloc;
+        return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
@@ -53,7 +57,7 @@ void main() {
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
             .thenAnswer((realInvocation) => Future.value(mockPastUpdateTime));
-        return appInitBloc;
+        return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
@@ -67,7 +71,7 @@ void main() {
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
             .thenAnswer((realInvocation) => Future.value(mockPivotUpdateTime));
-        return appInitBloc;
+        return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
@@ -81,7 +85,7 @@ void main() {
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
             .thenAnswer((realInvocation) => Future.value(mockFutureUpdateTime));
-        return appInitBloc;
+        return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
