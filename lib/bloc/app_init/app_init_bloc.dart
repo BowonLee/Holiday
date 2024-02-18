@@ -35,7 +35,6 @@ class AppInitBloc extends Bloc<AppInitEvent, AppInitBlocState> {
 
       emitter(AppInitBlocComplete(needUpdateHolidayList: needUpdate));
     } on Exception catch (e) {
-      Logger().e(e);
       emitter(AppInitBlocError(exception: e));
     }
   }
