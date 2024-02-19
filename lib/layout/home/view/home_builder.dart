@@ -53,17 +53,19 @@ class _HomeBuilderState extends State<_HomeBuilder> {
     return Scaffold(
       body: BlocBuilder<HolidayBloc, HolidayBlocState>(
         builder: (_, state) {
-          if (state is HolidayError) {
+          if (state is HolidayBlocError) {
+            /// database -> json 순으로 시도하는 로직 실행
             return Container();
           }
           if (state is HolidayEmpty) {
+            ///
             return Container();
           }
-          if (state is HolidayLoading) {
+          if (state is HolidayBlocLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is HolidayLoaded) {
+          if (state is HolidayBlocLoaded) {
             // return HomeView(holidayList: state.holidayList);
           }
           return Container();

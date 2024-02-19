@@ -10,10 +10,10 @@ class HolidayEmpty extends HolidayBlocState {
   List<Object?> get props => [];
 }
 
-class HolidayError extends HolidayBlocState {
+class HolidayBlocError extends HolidayBlocState {
   final String message;
 
-  HolidayError({
+  HolidayBlocError({
     required this.message,
   });
 
@@ -21,15 +21,15 @@ class HolidayError extends HolidayBlocState {
   List<Object?> get props => [message];
 }
 
-class HolidayLoading extends HolidayBlocState {
+class HolidayBlocLoading extends HolidayBlocState {
   @override
   List<Object?> get props => [];
 }
 
-class HolidayLoaded extends HolidayBlocState {
+class HolidayBlocLoaded extends HolidayBlocState {
   final List<Holiday> holidayList;
 
-  HolidayLoaded({required this.holidayList});
+  HolidayBlocLoaded({required this.holidayList});
 
   @override
   List<Object?> get props => [holidayList];

@@ -18,20 +18,20 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
   }
 
   void _listHolidayFromLocal(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
-    emitter(HolidayLoading());
+    emitter(HolidayBlocLoading());
     try {
       final holidayList = holidayRepository.getListFromDatabase();
-      emitter(HolidayLoaded(holidayList: holidayList));
+      emitter(HolidayBlocLoaded(holidayList: holidayList));
     } on HiveError catch (_, e) {
       final holidayList = await _getListFromAsset();
-      emitter(HolidayLoaded(holidayList: holidayList));
+      emitter(HolidayBlocLoaded(holidayList: holidayList));
     } on Exception catch (_, e) {
-      emitter(HolidayError(message: e.toString()));
+      emitter(HolidayBlocError(message: e.toString()));
     }
   }
 
   void _listFromServer(UpdateHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
-    emitter(HolidayLoading());
+    emitter(HolidayBlocLoading());
 
     try {
       final response = await holidayRepository.getListFromSever();
@@ -41,9 +41,9 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
         holidayRepository.setLastUpdateDate(response.lastUpdateTime);
         holidayRepository.setList(response.holidayList);
       }
-      emitter(HolidayLoaded(holidayList: response.holidayList));
+      emitter(HolidayBlocLoaded(holidayList: response.holidayList));
     } catch (e) {
-      emitter(HolidayError(message: e.toString()));
+      emitter(HolidayBlocError(message: e.toString()));
     }
   }
 
