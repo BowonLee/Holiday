@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:holiday/exception/DatabaseException.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:logger/logger.dart';
 
@@ -15,14 +17,15 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
     on<UpdateHolidayEvent>(_listFromServer);
   }
 
-  void _listHolidayFromLocal(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) {
+  void _listHolidayFromLocal(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
     emitter(HolidayLoading());
     try {
       final holidayList = holidayRepository.getListFromDatabase();
-
       emitter(HolidayLoaded(holidayList: holidayList));
-    } catch (e) {
-      Logger().i(e);
+    } on HiveError catch (_, e) {
+      final holidayList = await _getListFromAsset();
+      emitter(HolidayLoaded(holidayList: holidayList));
+    } on Exception catch (_, e) {
       emitter(HolidayError(message: e.toString()));
     }
   }
