@@ -45,7 +45,7 @@ class _HomeBuilderState extends State<_HomeBuilder> {
   void initState() {
     super.initState();
     BlocProvider.of<AppInitBloc>(context).add(GetMetaDataEvent());
-    BlocProvider.of<HolidayBloc>(context).add(GetHolidayEvent());
+    BlocProvider.of<HolidayBloc>(context).add(GetHolidayFromLocalEvent());
   }
 
   @override

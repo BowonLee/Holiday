@@ -13,11 +13,11 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
   final HolidayRepository holidayRepository;
 
   HolidayBloc({required this.holidayRepository}) : super(HolidayEmpty()) {
-    on<GetHolidayEvent>(_listHolidayFromLocal);
-    on<UpdateHolidayEvent>(_listFromServer);
+    on<GetHolidayFromLocalEvent>(_listHolidayFromLocal);
+    on<UpdateAndGetHolidayEvent>(_listFromServer);
   }
 
-  void _listHolidayFromLocal(GetHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
+  void _listHolidayFromLocal(GetHolidayFromLocalEvent event, Emitter<HolidayBlocState> emitter) async {
     emitter(HolidayBlocLoading());
     try {
       final List<Holiday>? holidayList = holidayRepository.getListFromDatabase();
@@ -38,13 +38,13 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
     }
   }
 
-  void _listFromServer(UpdateHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
+  void _listFromServer(UpdateAndGetHolidayEvent event, Emitter<HolidayBlocState> emitter) async {
     emitter(HolidayBlocLoading());
 
     try {
       final response = await holidayRepository.getListFromSever();
       final DateTime? lastUpdateLocal = await holidayRepository.getLastUpdateDatetime();
-      
+
       if (lastUpdateLocal == null || lastUpdateLocal.isBefore(response.lastUpdateTime)) {
         holidayRepository.setLastUpdateDate(response.lastUpdateTime);
         holidayRepository.setList(response.holidayList);
