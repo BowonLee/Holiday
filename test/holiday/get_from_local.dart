@@ -29,7 +29,13 @@ void main() {
   }
 
   group("getDataFromList", () {
+    setUp(() {
+      when(mockHolidayRepository.getListFromAsset()).thenAnswer((realInvocation) => Future.value(mockAssetHolidayList));
+    });
+
     group("databaseEnable", () {
+      group("assetSuccess", () {});
+
       blocTest<HolidayBloc, HolidayBlocState>(
         "database_list",
         build: () {
@@ -37,7 +43,8 @@ void main() {
           return generateHolidayBloc();
         },
         act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
-        expect: () => [
+        expect: () =>
+        [
           isA<HolidayBlocLoading>(),
           isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromDatabase", mockDatabaseHolidayList)
         ],
@@ -53,7 +60,9 @@ void main() {
           when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => null);
           return generateHolidayBloc();
         },
-        expect: () => [
+        act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+        expect: () =>
+        [
           isA<HolidayBlocLoading>(),
           isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
         ],
@@ -69,7 +78,9 @@ void main() {
           when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockEmptyList);
           return generateHolidayBloc();
         },
-        expect: () => [
+        act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+        expect: () =>
+        [
           isA<HolidayBlocLoading>(),
           isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
         ],
