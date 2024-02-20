@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_bloc.dart';
+import 'package:holiday/bloc/holiday_bloc/holiday_event.dart';
 
 import 'package:holiday/bloc/holiday_bloc/holiday_state.dart';
 
@@ -29,12 +30,13 @@ void main() {
 
   group("getDataFromList", () {
     group("databaseEnable", () {
-      blocTest(
+      blocTest<HolidayBloc, HolidayBlocState>(
         "database_list",
         build: () {
           when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockDatabaseHolidayList);
           return generateHolidayBloc();
         },
+        act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
         expect: () => [
           isA<HolidayBlocLoading>(),
           isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromDatabase", mockDatabaseHolidayList)
@@ -45,7 +47,7 @@ void main() {
         },
       );
 
-      blocTest(
+      blocTest<HolidayBloc, HolidayBlocState>(
         "database_null",
         build: () {
           when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => null);
@@ -61,7 +63,7 @@ void main() {
         },
       );
 
-      blocTest(
+      blocTest<HolidayBloc, HolidayBlocState>(
         "database_empty",
         build: () {
           when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockEmptyList);

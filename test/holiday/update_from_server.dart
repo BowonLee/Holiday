@@ -38,7 +38,7 @@ void main() {
 
       blocTest<HolidayBloc, HolidayBlocState>(
         "local is equal",
-        act: (bloc) => bloc.add(UpdateHolidayEvent()),
+        act: (bloc) => bloc.add(UpdateAndGetHolidayEvent()),
         build: () {
           when(mockHolidayRepository.getLastUpdateDatetime())
               .thenAnswer((realInvocation) => Future.value(mockPivotUpdateTime));
@@ -57,7 +57,7 @@ void main() {
 
       blocTest<HolidayBloc, HolidayBlocState>(
         "local is future",
-        act: (bloc) => bloc.add(UpdateHolidayEvent()),
+        act: (bloc) => bloc.add(UpdateAndGetHolidayEvent()),
         build: () {
           when(mockHolidayRepository.getLastUpdateDatetime())
               .thenAnswer((realInvocation) => Future.value(mockFutureUpdateTime));
@@ -76,7 +76,7 @@ void main() {
 
       blocTest<HolidayBloc, HolidayBlocState>(
         "local is past",
-        act: (bloc) => bloc.add(UpdateHolidayEvent()),
+        act: (bloc) => bloc.add(UpdateAndGetHolidayEvent()),
         build: () {
           when(mockHolidayRepository.getLastUpdateDatetime())
               .thenAnswer((realInvocation) => Future.value(mockPastUpdateTime));
@@ -101,7 +101,7 @@ void main() {
 
       blocTest<HolidayBloc, HolidayBlocState>(
         "error in client",
-        act: (bloc) => bloc.add(UpdateHolidayEvent()),
+        act: (bloc) => bloc.add(UpdateAndGetHolidayEvent()),
         build: () {
           return generateHolidayBloc();
         },
