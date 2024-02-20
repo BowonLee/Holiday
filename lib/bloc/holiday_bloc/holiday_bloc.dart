@@ -44,13 +44,13 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
     try {
       final response = await holidayRepository.getListFromSever();
       final DateTime? lastUpdateLocal = await holidayRepository.getLastUpdateDatetime();
-
+      
       if (lastUpdateLocal == null || lastUpdateLocal.isBefore(response.lastUpdateTime)) {
         holidayRepository.setLastUpdateDate(response.lastUpdateTime);
         holidayRepository.setList(response.holidayList);
       }
       emitter(HolidayBlocLoaded(holidayList: response.holidayList));
-    } catch (e) {
+    } on Exception catch (e) {
       emitter(HolidayBlocError(message: e.toString()));
     }
   }
