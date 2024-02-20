@@ -29,13 +29,8 @@ void main() {
   }
 
   group("getDataFromList", () {
-    setUp(() {
-      when(mockHolidayRepository.getListFromAsset()).thenAnswer((realInvocation) => Future.value(mockAssetHolidayList));
-    });
-
+    /// without asset
     group("databaseEnable", () {
-      group("assetSuccess", () {});
-
       blocTest<HolidayBloc, HolidayBlocState>(
         "database_list",
         build: () {
@@ -43,8 +38,7 @@ void main() {
           return generateHolidayBloc();
         },
         act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
-        expect: () =>
-        [
+        expect: () => [
           isA<HolidayBlocLoading>(),
           isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromDatabase", mockDatabaseHolidayList)
         ],
@@ -54,41 +48,79 @@ void main() {
         },
       );
 
-      blocTest<HolidayBloc, HolidayBlocState>(
-        "database_null",
-        build: () {
-          when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => null);
-          return generateHolidayBloc();
-        },
-        act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
-        expect: () =>
-        [
-          isA<HolidayBlocLoading>(),
-          isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
-        ],
-        verify: (bloc) {
-          verify(mockHolidayRepository.getListFromDatabase());
-          verify(mockHolidayRepository.getListFromAsset());
-        },
-      );
+      group("assetSuccess", () {
+        setUp(() {
+          when(mockHolidayRepository.getListFromAsset())
+              .thenAnswer((realInvocation) => Future.value(mockAssetHolidayList));
+        });
 
-      blocTest<HolidayBloc, HolidayBlocState>(
-        "database_empty",
-        build: () {
-          when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockEmptyList);
-          return generateHolidayBloc();
-        },
-        act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
-        expect: () =>
-        [
-          isA<HolidayBlocLoading>(),
-          isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
-        ],
-        verify: (bloc) {
-          verify(mockHolidayRepository.getListFromDatabase());
-          verify(mockHolidayRepository.getListFromAsset());
-        },
-      );
+        blocTest<HolidayBloc, HolidayBlocState>(
+          "database_null",
+          build: () {
+            when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => null);
+            return generateHolidayBloc();
+          },
+          act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+          expect: () => [
+            isA<HolidayBlocLoading>(),
+            isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
+          ],
+          verify: (bloc) {
+            verify(mockHolidayRepository.getListFromDatabase());
+            verify(mockHolidayRepository.getListFromAsset());
+          },
+        );
+
+        blocTest<HolidayBloc, HolidayBlocState>(
+          "database_empty",
+          build: () {
+            when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockEmptyList);
+            return generateHolidayBloc();
+          },
+          act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+          expect: () => [
+            isA<HolidayBlocLoading>(),
+            isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
+          ],
+          verify: (bloc) {
+            verify(mockHolidayRepository.getListFromDatabase());
+            verify(mockHolidayRepository.getListFromAsset());
+          },
+        );
+      });
+      group("assetError", () {
+        setUp(() {
+          when(mockHolidayRepository.getListFromAsset()).thenThrow(Exception("asset error"));
+        });
+
+        blocTest<HolidayBloc, HolidayBlocState>(
+          "database_null",
+          build: () {
+            when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => null);
+            return generateHolidayBloc();
+          },
+          act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+          expect: () => [isA<HolidayBlocLoading>(), isA<HolidayBlocError>()],
+          verify: (bloc) {
+            verify(mockHolidayRepository.getListFromDatabase());
+            verify(mockHolidayRepository.getListFromAsset());
+          },
+        );
+
+        blocTest<HolidayBloc, HolidayBlocState>(
+          "database_empty",
+          build: () {
+            when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockEmptyList);
+            return generateHolidayBloc();
+          },
+          act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+          expect: () => [isA<HolidayBlocLoading>(), isA<HolidayBlocError>()],
+          verify: (bloc) {
+            verify(mockHolidayRepository.getListFromDatabase());
+            verify(mockHolidayRepository.getListFromAsset());
+          },
+        );
+      });
     });
 
     group("databaseDisable", () {});

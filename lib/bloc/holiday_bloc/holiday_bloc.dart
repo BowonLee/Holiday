@@ -20,20 +20,22 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
   void _listHolidayFromLocal(GetHolidayFromLocalEvent event, Emitter<HolidayBlocState> emitter) async {
     emitter(HolidayBlocLoading());
     try {
-      final List<Holiday>? holidayList = holidayRepository.getListFromDatabase();
+      try {
+        final List<Holiday>? holidayList = holidayRepository.getListFromDatabase();
 
-      if (holidayList == null || holidayList.isEmpty) {
-        throw HolidayListEmptyError();
-      } else {
+        if (holidayList == null || holidayList.isEmpty) {
+          throw HolidayListEmptyError();
+        } else {
+          emitter(HolidayBlocLoaded(holidayList: holidayList));
+        }
+      } on HolidayListEmptyError catch (_, e) {
+        final holidayList = await _getListFromAsset();
+        emitter(HolidayBlocLoaded(holidayList: holidayList));
+      } on HiveError catch (_, e) {
+        final holidayList = await _getListFromAsset();
         emitter(HolidayBlocLoaded(holidayList: holidayList));
       }
-    } on HolidayListEmptyError catch (_, e) {
-      final holidayList = await _getListFromAsset();
-      emitter(HolidayBlocLoaded(holidayList: holidayList));
-    } on HiveError catch (_, e) {
-      final holidayList = await _getListFromAsset();
-      emitter(HolidayBlocLoaded(holidayList: holidayList));
-    } on Exception catch (_, e) {
+    } on Exception catch (e) {
       emitter(HolidayBlocError(message: e.toString()));
     }
   }
