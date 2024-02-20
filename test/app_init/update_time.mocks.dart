@@ -26,7 +26,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeMetaDataClient_0 extends _i1.SmartFake implements _i2.MetaDataClient {
+class _FakeMetaDataClient_0 extends _i1.SmartFake
+    implements _i2.MetaDataClient {
   _FakeMetaDataClient_0(
     Object parent,
     Invocation parentInvocation,
@@ -36,8 +37,8 @@ class _FakeMetaDataClient_0 extends _i1.SmartFake implements _i2.MetaDataClient 
         );
 }
 
-class _FakeRestClient_1 extends _i1.SmartFake implements _i3.HolidayClient {
-  _FakeRestClient_1(
+class _FakeHolidayClient_1 extends _i1.SmartFake implements _i3.HolidayClient {
+  _FakeHolidayClient_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -46,7 +47,8 @@ class _FakeRestClient_1 extends _i1.SmartFake implements _i3.HolidayClient {
         );
 }
 
-class _FakeHolidayResponse_2 extends _i1.SmartFake implements _i4.HolidayResponse {
+class _FakeHolidayResponse_2 extends _i1.SmartFake
+    implements _i4.HolidayResponse {
   _FakeHolidayResponse_2(
     Object parent,
     Invocation parentInvocation,
@@ -59,7 +61,8 @@ class _FakeHolidayResponse_2 extends _i1.SmartFake implements _i4.HolidayRespons
 /// A class which mocks [MetadataRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMetadataRepository extends _i1.Mock implements _i5.MetadataRepository {
+class MockMetadataRepository extends _i1.Mock
+    implements _i5.MetadataRepository {
   MockMetadataRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -74,12 +77,14 @@ class MockMetadataRepository extends _i1.Mock implements _i5.MetadataRepository 
       ) as _i2.MetaDataClient);
 
   @override
-  _i6.Future<List<_i7.UpdateDateTime>> getMetaDataListFromServer() => (super.noSuchMethod(
+  _i6.Future<List<_i7.UpdateDateTime>> getMetaDataListFromServer() =>
+      (super.noSuchMethod(
         Invocation.method(
           #getMetaDataListFromServer,
           [],
         ),
-        returnValue: _i6.Future<List<_i7.UpdateDateTime>>.value(<_i7.UpdateDateTime>[]),
+        returnValue:
+            _i6.Future<List<_i7.UpdateDateTime>>.value(<_i7.UpdateDateTime>[]),
       ) as _i6.Future<List<_i7.UpdateDateTime>>);
 }
 
@@ -94,7 +99,7 @@ class MockHolidayRepository extends _i1.Mock implements _i8.HolidayRepository {
   @override
   _i3.HolidayClient get client => (super.noSuchMethod(
         Invocation.getter(#client),
-        returnValue: _FakeRestClient_1(
+        returnValue: _FakeHolidayClient_1(
           this,
           Invocation.getter(#client),
         ),
@@ -110,13 +115,15 @@ class MockHolidayRepository extends _i1.Mock implements _i8.HolidayRepository {
       );
 
   @override
-  dynamic setList(List<_i4.Holiday>? holidayList) => super.noSuchMethod(Invocation.method(
+  dynamic setList(List<_i4.Holiday>? holidayList) =>
+      super.noSuchMethod(Invocation.method(
         #setList,
         [holidayList],
       ));
 
   @override
-  dynamic setLastUpdateDate(DateTime? updateDatetime) => super.noSuchMethod(Invocation.method(
+  dynamic setLastUpdateDate(DateTime? updateDatetime) =>
+      super.noSuchMethod(Invocation.method(
         #setLastUpdateDate,
         [updateDatetime],
       ));
@@ -136,7 +143,8 @@ class MockHolidayRepository extends _i1.Mock implements _i8.HolidayRepository {
           #getListFromSever,
           [],
         ),
-        returnValue: _i6.Future<_i4.HolidayResponse>.value(_FakeHolidayResponse_2(
+        returnValue:
+            _i6.Future<_i4.HolidayResponse>.value(_FakeHolidayResponse_2(
           this,
           Invocation.method(
             #getListFromSever,
@@ -144,15 +152,6 @@ class MockHolidayRepository extends _i1.Mock implements _i8.HolidayRepository {
           ),
         )),
       ) as _i6.Future<_i4.HolidayResponse>);
-
-  @override
-  List<_i4.Holiday> getListFromDatabase() => (super.noSuchMethod(
-        Invocation.method(
-          #getListFromDatabase,
-          [],
-        ),
-        returnValue: <_i4.Holiday>[],
-      ) as List<_i4.Holiday>);
 
   @override
   _i6.Future<List<_i4.Holiday>> getListFromAsset() => (super.noSuchMethod(
