@@ -123,6 +123,57 @@ void main() {
       });
     });
 
-    group("databaseDisable", () {});
+    group("databaseDisable", () {
+      when(mockHolidayRepository.getListFromDatabase()).thenThrow(Exception());
+    });
+
+    blocTest<HolidayBloc, HolidayBlocState>(
+      "asset_enable",
+      build: () {
+        when(mockHolidayRepository.getListFromAsset())
+            .thenAnswer((realInvocation) => Future.value(mockAssetHolidayList));
+        return generateHolidayBloc();
+      },
+      act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+      expect: () => [
+        isA<HolidayBlocLoading>(),
+        isA<HolidayBlocLoaded>().having((state) => state.holidayList, "assetData", mockAssetHolidayList)
+      ],
+      verify: (bloc) {
+        verify(mockHolidayRepository.getListFromDatabase());
+        verify(mockHolidayRepository.getListFromAsset());
+      },
+    );
+
+    blocTest<HolidayBloc, HolidayBlocState>(
+      "asset_empty",
+      build: () {
+        when(mockHolidayRepository.getListFromAsset()).thenAnswer((realInvocation) => Future.value(mockEmptyList));
+        return generateHolidayBloc();
+      },
+      act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+      expect: () => [
+        isA<HolidayBlocLoading>(),
+        isA<HolidayBlocLoaded>().having((state) => state.holidayList, "assetData", mockEmptyList)
+      ],
+      verify: (bloc) {
+        verify(mockHolidayRepository.getListFromDatabase());
+        verify(mockHolidayRepository.getListFromAsset());
+      },
+    );
+
+    blocTest<HolidayBloc, HolidayBlocState>(
+      "asset_error",
+      build: () {
+        when(mockHolidayRepository.getListFromAsset()).thenThrow(Exception());
+        return generateHolidayBloc();
+      },
+      act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
+      expect: () => [isA<HolidayBlocLoading>(), isA<HolidayBlocError>()],
+      verify: (bloc) {
+        verify(mockHolidayRepository.getListFromDatabase());
+        verify(mockHolidayRepository.getListFromAsset());
+      },
+    );
   });
 }
