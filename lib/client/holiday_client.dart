@@ -15,7 +15,7 @@ void setUpHolidayClient() {
 
 @RestApi(baseUrl: "http://10.0.2.2:8080/api/holiday")
 abstract class HolidayClient {
-  factory HolidayClient(Dio dio, {String baseUrl}) = _RestClient;
+  factory HolidayClient(Dio dio, {String baseUrl}) = _HolidayClient;
 
   @POST('/list')
   Future<HolidayResponse> getHolidayList();
