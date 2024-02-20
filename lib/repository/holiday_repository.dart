@@ -37,7 +37,7 @@ class HolidayRepository {
     return holidayList;
   }
 
-  List<Holiday> getListFromDatabase() {
+  List<Holiday>? getListFromDatabase() {
     final holidayList = HiveHelper().getHolidayList();
 
     return holidayList;

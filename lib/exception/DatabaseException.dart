@@ -1,1 +1,1 @@
-class DatabaseException implements Exception {}
+class HolidayListEmptyError extends Error {}

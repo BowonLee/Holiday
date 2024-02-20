@@ -46,8 +46,8 @@ class HiveHelper {
     return holidayBox?.addAll(values);
   }
 
-  List<Holiday> getHolidayList() {
-    return holidayBox?.values.toList() ?? [];
+  List<Holiday>? getHolidayList() {
+    return holidayBox?.values.toList();
   }
 
   Future<int>? clearHolidayList() {
