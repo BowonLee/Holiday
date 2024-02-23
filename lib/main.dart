@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/app_init/app_init_bloc.dart';
 import 'package:holiday/client/holiday_client.dart';
+import 'package:holiday/layout/app_init/app_init_builder.dart';
 import 'package:holiday/repository/holiday_repository.dart';
 
 import 'package:holiday/repository/metadata_repository.dart';
@@ -32,7 +33,7 @@ void main() async {
         return MaterialApp(
             theme: state.currentThemeModel.themeLightData,
             darkTheme: state.currentThemeModel.themeDarkData,
-            home: const HomePage());
+            home: const AppInitBuilder());
       },
     ),
   ));

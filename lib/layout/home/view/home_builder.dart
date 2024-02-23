@@ -19,22 +19,29 @@ import '../../../theme_cubit/theme_cubit.dart';
 import '../../component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
 import 'temp_home.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeBuilder extends StatelessWidget {
+  final bool isNeedUpdateHoliday;
+
+  const HomeBuilder({super.key, required this.isNeedUpdateHoliday});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HolidayBloc(
-        holidayRepository: holidayRepositoryProvider(),
+      create: (_) =>
+          HolidayBloc(
+            holidayRepository: holidayRepositoryProvider(),
+          ),
+      child: _HomeBuilder(
+        isNeedUpdateHoliday: isNeedUpdateHoliday,
       ),
-      child: const _HomeBuilder(),
     );
   }
 }
 
 class _HomeBuilder extends StatefulWidget {
-  const _HomeBuilder({Key? key}) : super(key: key);
+  final bool isNeedUpdateHoliday;
+
+  const _HomeBuilder({super.key, required this.isNeedUpdateHoliday});
 
   @override
   State<_HomeBuilder> createState() => _HomeBuilderState();
@@ -44,7 +51,7 @@ class _HomeBuilderState extends State<_HomeBuilder> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AppInitBloc>(context).add(GetMetaDataEvent());
+
     BlocProvider.of<HolidayBloc>(context).add(GetHolidayFromLocalEvent());
   }
 
@@ -54,11 +61,11 @@ class _HomeBuilderState extends State<_HomeBuilder> {
       body: BlocBuilder<HolidayBloc, HolidayBlocState>(
         builder: (_, state) {
           if (state is HolidayBlocError) {
-            /// database -> json 순으로 시도하는 로직 실행
+            /// 모든 수단을 실패 error state
             return Container();
           }
           if (state is HolidayEmpty) {
-            ///
+            /// equal state loading
             return Container();
           }
           if (state is HolidayBlocLoading) {
