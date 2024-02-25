@@ -45,8 +45,10 @@ class HolidayRepository {
 
   Future<List<Holiday>> getListFromAsset() async {
     final asset = await rootBundle.loadString('assets/json/holidays.json');
-    final holidayList = jsonDecode(asset);
+    final List<dynamic> decodedList = jsonDecode(asset);
 
-    return holidayList;
+    final holidayList = decodedList.map((e) => Holiday.fromJson(e));
+
+    return holidayList.toList();
   }
 }
