@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/app_init/app_init_bloc.dart';
+import 'package:holiday/layout/home/view/home_builder.dart';
 import 'package:holiday/repository/holiday_repository.dart';
 import 'package:holiday/repository/metadata_repository.dart';
+import 'package:logger/logger.dart';
 
 class AppInitBuilder extends StatelessWidget {
   const AppInitBuilder({super.key});
@@ -17,7 +20,6 @@ class AppInitBuilder extends StatelessWidget {
       },
     );
 
-    // BlocProvider<AppInitBloc>();
     return BlocProvider(
       create: (_) =>
           AppInitBloc(metadataRepository: metadataRepositoryProvider(), holidayRepository: holidayRepositoryProvider()),
@@ -34,8 +36,22 @@ class _AppInitBlocBuilder extends StatelessWidget {
     BlocProvider.of<AppInitBloc>(context).add(GetMetaDataEvent());
 
     return BlocBuilder<AppInitBloc, AppInitBlocState>(
+      buildWhen: (previous, current) {
+        return (current is AppInitBlocComplete) || (current is AppInitBlocError);
+      },
       builder: (context, state) {
-        return Container();
+        Logger().i(state);
+        if (state is AppInitBlocComplete) {
+          return HomeBuilder(isNeedUpdateHoliday: state.needUpdateHolidayList);
+        }
+
+        if (state is AppInitBlocError) {
+          return const HomeBuilder(isNeedUpdateHoliday: false);
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
