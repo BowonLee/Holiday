@@ -23,6 +23,8 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
       try {
         final List<Holiday>? holidayList = holidayRepository.getListFromDatabase();
 
+        Logger().i("db");
+        Logger().i(holidayList);
         if (holidayList == null || holidayList.isEmpty) {
           throw HolidayListEmptyError();
         } else {
@@ -58,6 +60,7 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
   }
 
   Future<List<Holiday>> _getListFromAsset() {
+    Logger().i("asset");
     return holidayRepository.getListFromAsset();
   }
 }

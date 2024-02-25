@@ -30,12 +30,10 @@ class HiveHelper {
 
   Future<void> openHolidayBox() async {
     holidayBox = await Hive.openBox(HOLIDAY_BOX);
-    Logger().i(holidayBox);
   }
 
   Future<void> openMetaBox() async {
     metaBox = await Hive.openBox(META_BOX);
-    Logger().i(metaBox);
   }
 
   Future<int>? setHoliday(Holiday value) {
