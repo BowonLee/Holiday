@@ -1,107 +1,5 @@
 [
   {
-    "date": "2023-01-01",
-    "dateName": "1월1일",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-01-21",
-    "dateName": "설날",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-01-22",
-    "dateName": "설날",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-01-23",
-    "dateName": "설날",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-01-24",
-    "dateName": "대체공휴일",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-03-01",
-    "dateName": "삼일절",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-05-01",
-    "dateName": "근로자의날",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-05-05",
-    "dateName": "어린이날",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-05-27",
-    "dateName": "부처님오신날",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-06-06",
-    "dateName": "현충일",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-08-15",
-    "dateName": "광복절",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-09-28",
-    "dateName": "추석",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-09-29",
-    "dateName": "추석",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-09-30",
-    "dateName": "추석",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-10-03",
-    "dateName": "개천절",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-10-09",
-    "dateName": "한글날",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
-    "date": "2023-12-25",
-    "dateName": "기독탄신일",
-    "dateKind": "국경일",
-    "isHoliday": true
-  },
-  {
     "date": "2024-01-01",
     "dateName": "1월1일",
     "dateKind": "국경일",
@@ -205,6 +103,114 @@
   },
   {
     "date": "2024-12-25",
+    "dateName": "기독탄신일",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-01-01",
+    "dateName": "1월1일",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-01-28",
+    "dateName": "설날",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-01-29",
+    "dateName": "설날",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-01-30",
+    "dateName": "설날",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-03-01",
+    "dateName": "삼일절",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-03-03",
+    "dateName": "대체공휴일",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-05-05",
+    "dateName": "어린이날",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-05-05",
+    "dateName": "부처님오신날",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-05-06",
+    "dateName": "대체공휴일",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-06-06",
+    "dateName": "현충일",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-08-15",
+    "dateName": "광복절",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-10-03",
+    "dateName": "개천절",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-10-05",
+    "dateName": "추석",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-10-06",
+    "dateName": "추석",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-10-07",
+    "dateName": "추석",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-10-08",
+    "dateName": "대체공휴일",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-10-09",
+    "dateName": "한글날",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2025-12-25",
     "dateName": "기독탄신일",
     "dateKind": "국경일",
     "isHoliday": true
