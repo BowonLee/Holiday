@@ -12,12 +12,11 @@ import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/repository/holiday_repository.dart';
 import 'package:holiday/util/datetime_extentions.dart';
+import 'package:logger/logger.dart';
 
 import '../../../bloc/holiday_bloc/holiday_bloc.dart';
 import '../../../bloc/holiday_bloc/holiday_state.dart';
-import '../../../theme_cubit/theme_cubit.dart';
-import '../../component/consecutive_holidays_interval_card/consecutive_holidays_interval_card.dart';
-import 'temp_home.dart';
+import 'home_view.dart';
 
 class HomeBuilder extends StatelessWidget {
   final bool isNeedUpdateHoliday;
@@ -27,10 +26,9 @@ class HomeBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          HolidayBloc(
-            holidayRepository: holidayRepositoryProvider(),
-          ),
+      create: (_) => HolidayBloc(
+        holidayRepository: holidayRepositoryProvider(),
+      ),
       child: _HomeBuilder(
         isNeedUpdateHoliday: isNeedUpdateHoliday,
       ),
@@ -60,20 +58,25 @@ class _HomeBuilderState extends State<_HomeBuilder> {
     return Scaffold(
       body: BlocBuilder<HolidayBloc, HolidayBlocState>(
         builder: (_, state) {
+          Logger().i(state);
           if (state is HolidayBlocError) {
             /// 모든 수단을 실패 error state
-            return Container();
+            return const Center(
+              child: Text("오류"),
+            );
           }
           if (state is HolidayEmpty) {
             /// equal state loading
-            return Container();
+            return const Center(
+              child: Text("오류2 empty"),
+            );
           }
           if (state is HolidayBlocLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (state is HolidayBlocLoaded) {
-            // return HomeView(holidayList: state.holidayList);
+            return HomeView();
           }
           return Container();
         },
