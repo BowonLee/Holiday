@@ -11,12 +11,10 @@ part 'holiday.g.dart';
 
 @freezed
 abstract class HolidayResponse with _$HolidayResponse {
-  const factory HolidayResponse(
-      {required List<Holiday> holidayList,
-      required DateTime lastUpdateTime}) = _HolidayResponse;
+  const factory HolidayResponse({required List<Holiday> holidayList, required DateTime lastUpdateTime}) =
+      _HolidayResponse;
 
-  factory HolidayResponse.fromJson(Map<String, dynamic> json) =>
-      _$HolidayResponseFromJson(json);
+  factory HolidayResponse.fromJson(Map<String, dynamic> json) => _$HolidayResponseFromJson(json);
 }
 
 @freezed
@@ -29,20 +27,7 @@ abstract class Holiday with _$Holiday {
     @HiveField(3) required bool isHoliday,
   }) = _Holiday;
 
-  factory Holiday.fromJson(Map<String, dynamic> json) =>
-      _$HolidayFromJson(json);
+  factory Holiday.fromJson(Map<String, dynamic> json) => _$HolidayFromJson(json);
 
   Holiday._();
-
-  DateTime toDatetime() {
-    return date;
-  }
-
-  EventDate toEventDate([DateState state = DateState.none]) {
-    return EventDate(
-        datetime: date,
-        name: dateName,
-        type: EventDateType.holiday,
-        state: date.getDateStateByNow());
-  }
 }

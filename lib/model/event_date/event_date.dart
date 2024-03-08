@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:holiday/model/vacation/vacation.dart';
 
 import '../../util/datetime_extentions.dart';
+import '../holiday/holiday.dart';
 
 part 'event_date.freezed.dart';
 
@@ -18,12 +20,29 @@ class EventDate with _$EventDate {
 
   // EventDate fromWeekendDateTime()
   factory EventDate.fromWeekendDateTime(DateTime dateTime) {
+    return EventDate(datetime: dateTime, name: "주말", type: EventDateType.weekend, state: dateTime.getDateStateByNow());
+  }
+
+  factory EventDate.fromHoliday(Holiday holiday) {
     return EventDate(
-        datetime: dateTime,
-        name: "주말",
-        type: EventDateType.weekend,
-        state: dateTime.getDateStateByNow());
+        datetime: holiday.date,
+        name: holiday.dateName,
+        state: holiday.date.getDateStateByNow(),
+        type: EventDateType.holiday);
+  }
+
+  factory EventDate.fromVacation(Vacation vacation) {
+    return EventDate(
+        datetime: vacation.date,
+        name: vacation.dateName,
+        state: vacation.date.getDateStateByNow(),
+        type: EventDateType.vacation);
   }
 }
 
-enum EventDateType { holiday, weekend, event }
+///
+/// holiday 공휴일
+/// weekend 주말
+/// event 기본값
+/// vacation 휴가
+enum EventDateType { holiday, weekend, event, vacation }

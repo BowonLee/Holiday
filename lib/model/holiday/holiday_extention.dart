@@ -19,7 +19,7 @@ extension HolidayListDivideExtension on List<Holiday> {
     Map<int, List<Holiday>> result = {};
 
     forEach((element) {
-      int year = element.toDatetime().year;
+      int year = element.date.year;
       if (result.containsKey(year)) {
         result[year]?.add(element);
       } else {
@@ -35,7 +35,7 @@ extension HolidayListDivideExtension on List<Holiday> {
     Map<int, List<Holiday>> result = {};
 
     forEach((element) {
-      int month = element.toDatetime().month;
+      int month = element.date.month;
       if (result.containsKey(month)) {
         result[month]?.add(element);
       } else {
@@ -51,8 +51,8 @@ extension HolidayListDivideExtension on List<Holiday> {
     Map<int, List<Holiday>> result = {};
 
     forEach((element) {
-      int year = element.toDatetime().year;
-      int month = element.toDatetime().month;
+      int year = element.date.year;
+      int month = element.date.month;
 
       int format = year * 100 + month;
       if (result.containsKey(format)) {
@@ -70,8 +70,7 @@ extension HolidayListParseExtension on List<Holiday> {
   /// 주말을 제외한 모든 휴일
   List<Holiday> toWithoutWeekend() {
     return where((element) {
-      return element.toDatetime().weekday != 6 &&
-          element.toDatetime().weekday != 7;
+      return element.date.weekday != 6 && element.date.weekday != 7;
     }).toList();
   }
 
@@ -89,19 +88,18 @@ extension HolidayListParseExtension on List<Holiday> {
 
   List<Holiday> _toRemainingList() {
     return where((element) {
-      return element.toDatetime().isAfter(DateTime.now());
+      return element.date.isAfter(DateTime.now());
     }).toList();
   }
 
   List<EventDate> toEventDateList() {
-    return map((holiday) => holiday.toEventDate()).toList();
+    return map((holiday) => EventDate.fromHoliday(holiday)).toList();
   }
 
   bool _isHoliday(Holiday holiday) {
-    DateTime dateTime = holiday.toDatetime();
+    DateTime dateTime = holiday.date;
     bool isWeekend = dateTime.weekday == 6 || dateTime.weekday == 7;
-    int find =
-        indexWhere((element) => dateTime.compareByDate(element.date) == 0);
+    int find = indexWhere((element) => dateTime.compareByDate(element.date) == 0);
 
     return isWeekend && find != -1;
   }
