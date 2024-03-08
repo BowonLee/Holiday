@@ -3,7 +3,7 @@ import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 
 class NextConsecutiveHolidays extends StatelessWidget {
-  const NextConsecutiveHolidays({Key? key, required this.consecutiveHolidays}) : super(key: key);
+  const NextConsecutiveHolidays({super.key, required this.consecutiveHolidays});
 
   final ConsecutiveHolidays consecutiveHolidays;
 
@@ -28,11 +28,6 @@ class NextConsecutiveHolidays extends StatelessWidget {
             ),
           ],
         )),
-        // SizedBox(
-        //   height: 10,
-        // ),
-        // ConsecutiveHolidaysCardComponent(consecutiveHolidays: consecutiveHolidays,
-        //     highLight: true)
       ],
     );
   }
