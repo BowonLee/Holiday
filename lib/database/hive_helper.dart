@@ -1,8 +1,11 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:holiday/model/holiday/holiday.dart';
+import 'package:holiday/model/vacation/vacation.dart';
 import 'package:logger/logger.dart';
 
-const String HOLIDAY_BOX = "HOLYDAY_BOX";
+const String HOLIDAY_BOX = "HOLIDAY_BOX";
+
+const String VACATION_BOX = "VACATION_BOX";
 
 const String META_BOX = "META_BOX";
 
@@ -15,6 +18,7 @@ class HiveHelper {
 
   Box<Holiday>? holidayBox;
   Box? metaBox;
+  Box<Vacation>? vacationBox;
 
   factory HiveHelper() {
     return _singleton;
@@ -34,6 +38,10 @@ class HiveHelper {
 
   Future<void> openMetaBox() async {
     metaBox = await Hive.openBox(META_BOX);
+  }
+
+  Future<void> openVacationBox() async {
+    vacationBox = await Hive.openBox(VACATION_BOX);
   }
 
   Future<int>? setHoliday(Holiday value) {
@@ -58,6 +66,22 @@ class HiveHelper {
 
   Future<DateTime?> getLastHolidayUpdateDatetime() {
     return metaBox?.get(lastHolidayUpdateDatetimeKey);
+  }
+
+  Future<int>? setVacation(Vacation value) {
+    return vacationBox?.add(value);
+  }
+
+  Future<Iterable<int>>? setVacationList(List<Vacation> values) {
+    return vacationBox?.addAll(values);
+  }
+
+  List<Vacation>? getVacationList() {
+    return vacationBox?.values.toList();
+  }
+
+  Future<int>? clearVacationList() {
+    return vacationBox?.clear();
   }
 }
 /**
