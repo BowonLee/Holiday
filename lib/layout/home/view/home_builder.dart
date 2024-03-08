@@ -58,7 +58,6 @@ class _HomeBuilderState extends State<_HomeBuilder> {
     return Scaffold(
       body: BlocBuilder<HolidayBloc, HolidayBlocState>(
         builder: (_, state) {
-          Logger().i(state);
           if (state is HolidayBlocError) {
             /// 모든 수단을 실패 error state
             return const Center(

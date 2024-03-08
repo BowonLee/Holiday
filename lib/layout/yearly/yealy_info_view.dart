@@ -29,8 +29,6 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
 
     final dividedList = holidayState.holidayList.divideByYear();
 
-    Logger().i(dividedList[currentYear]?.divideByMonth());
-
     return SafeArea(
       child: Column(
         children: [
