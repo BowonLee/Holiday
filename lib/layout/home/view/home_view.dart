@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_bloc.dart';
+import 'package:holiday/layout/component/consecutive_holidays_list.dart';
+import 'package:holiday/layout/component/next_consecutive_holidays.dart';
 import 'package:holiday/layout/yearly/yealy_info_view.dart';
+import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
+import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/util/datetime_extentions.dart';
 import 'package:logger/logger.dart';
@@ -18,7 +23,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +34,9 @@ class _HomeViewState extends State<HomeView> {
         onTap: _onBottomSheetTapped,
         currentIndex: _selectedIndex,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "info"),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home2"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home3")
+          BottomNavigationBarItem(icon: Icon(Icons.beach_access), label: "내 휴가")
         ],
       ),
     );
@@ -41,7 +46,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   _currentView() {
-    const viewList = [Text("data"), YearlyInfoView(), Text("2")];
+    const viewList = [YearlyInfoView(), HomeMainView(), Text("2")];
     return viewList[_selectedIndex];
   }
 
@@ -49,6 +54,30 @@ class _HomeViewState extends State<HomeView> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+}
+
+class HomeMainView extends StatelessWidget {
+  const HomeMainView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final HolidayBlocLoaded loadedState = context.read<HolidayBloc>().state as HolidayBlocLoaded;
+
+    final remaining =
+        loadedState.holidayList.toWithoutWeekend().toRemainingList().toEventDateList().toConsecutiveHolidaysList();
+
+    Logger().i(remaining);
+    return Column(
+      children: [
+        _DateStateField(),
+        Expanded(
+          child: ConsecutiveHolidaysListComponent(
+            consecutiveHolidaysList: remaining,
+          ),
+        )
+      ],
+    );
   }
 }
 
@@ -62,24 +91,57 @@ class _DateStateField extends StatelessWidget {
   Widget build(BuildContext context) {
     final HolidayBlocLoaded loadedState = context.read<HolidayBloc>().state as HolidayBlocLoaded;
 
-    final remainingHolidays =
-        loadedState.holidayList.toWithoutWeekend().toRemainingList().toEventDateList().toConsecutiveHolidaysList();
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: _homeMainScreenByDateState(loadedState.holidayList),
+    );
+  }
 
-    final nextHoliday =
-        loadedState.holidayList.toWithoutWeekend().toRemainingList().toEventDateList().toConsecutiveHolidaysList();
-    Logger().i(nextHoliday.first);
+  Widget _homeMainScreenByDateState(List<Holiday> holidayList) {
+    final next = holidayList.toWithoutWeekend().toRemainingList().toEventDateList().toConsecutiveHolidaysList().first;
 
-    return Text(
-        "${nextHoliday.first.title} D - ${nextHoliday.first.dateList.first.datetime.difference(DateTime.now()).inDays} ");
+    final current = holidayList
+        .toWithoutWeekend()
+        .toEventDateList()
+        .toConsecutiveHolidaysList()
+        .where((element) => element.state == DateState.now);
+
+    if (current.isEmpty) {
+      return _NextConsecutiveHolidayState(
+        consecutiveHolidays: next,
+      );
+    } else {
+      return _CurrentConsecutiveHolidayState(
+        consecutiveHolidays: current.first,
+      );
+    }
   }
 }
 
-class _NextHoliday extends StatelessWidget {
-  const _NextHoliday({super.key});
+class _CurrentConsecutiveHolidayState extends StatelessWidget {
+  final ConsecutiveHolidays consecutiveHolidays;
+
+  const _CurrentConsecutiveHolidayState({super.key, required this.consecutiveHolidays});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: [Text("is current")],
+    );
+  }
+}
+
+class _NextConsecutiveHolidayState extends StatelessWidget {
+  final ConsecutiveHolidays consecutiveHolidays;
+
+  const _NextConsecutiveHolidayState({super.key, required this.consecutiveHolidays});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [NextConsecutiveHolidays(consecutiveHolidays: consecutiveHolidays)],
+    );
   }
 }
 
