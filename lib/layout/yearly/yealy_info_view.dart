@@ -31,7 +31,7 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
 
     final dividedList = holidayState.holidayList.divideByYear();
 
-    return SafeArea(
+    return SingleChildScrollView(
       child: Column(
         children: [
           Row(
@@ -46,29 +46,29 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
                   child: Text(e.toString())))
             ],
           ),
-          Container(
-            child: Column(
-              children: [
-                Text("$currentYear"),
-                Text("${DateTime.now()}"),
-                Text("총 휴일 수 ${dividedList[currentYear]?.length}"),
-                Text("주말 제외 휴일 수 ${dividedList[currentYear]?.toWithoutWeekend().length}"),
-                Text("남은 휴일 수 ${dividedList[currentYear]?.toWithoutWeekend().toRemainingList().length}"),
-                ...?dividedList[currentYear]
-                    ?.divideByMonth()
-                    .keys
-                    .map((e) => Text("$e ${dividedList[currentYear]?.divideByMonth()[e]?.length}")),
-              ],
-            ),
+          Column(
+            children: [
+              Text("$currentYear"),
+              Text("${DateTime.now()}"),
+              Text("총 휴일 수 ${dividedList[currentYear]?.length}"),
+              Text("주말 제외 휴일 수 ${dividedList[currentYear]?.toWithoutWeekend().length}"),
+              Text("남은 휴일 수 ${dividedList[currentYear]?.toWithoutWeekend().toRemainingList().length}"),
+              // ...?dividedList[currentYear]
+              //     ?.divideByMonth()
+              //     .keys
+              //     .map((e) => Text("$e ${dividedList[currentYear]?.divideByMonth()[e]?.length}")),
+            ],
           ),
-          Expanded(
-              child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: CalandarView(
-                    startYear: currentYear,
-                    endYear: currentYear,
-                    eventDateList: dividedList[currentYear]!.toEventDateList(),
-                  ))),
+          Padding(
+              padding: EdgeInsets.all(20),
+              child: CalandarView(
+                startYear: currentYear,
+                endYear: currentYear,
+                eventDateList: dividedList[currentYear]!.toEventDateList(),
+              )),
+          SizedBox(
+            height: 1000,
+          )
         ],
       ),
     );

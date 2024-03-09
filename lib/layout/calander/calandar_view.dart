@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday/model/event_date/event_date.dart';
 import 'package:holiday/util/datetime_extentions.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -15,7 +16,8 @@ class CalandarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
-      shouldFillViewport: true,
+      // shouldFillViewport: true,
+
       focusedDay: DateTime.now(),
       firstDay: DateTime.utc(startYear, 1, 1),
       lastDay: DateTime.utc(endYear, 12, 31),
@@ -24,7 +26,7 @@ class CalandarView extends StatelessWidget {
           if (day.isWeekend()) {
             return Center(
               child: Text(
-                day.getWeekendString(),
+                DateFormat('EEE').format(day),
                 style: TextStyle(color: Colors.red),
               ),
             );
