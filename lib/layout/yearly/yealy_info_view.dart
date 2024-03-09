@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:logger/logger.dart';
 
 import '../../bloc/holiday_bloc/holiday_bloc.dart';
 import '../../bloc/holiday_bloc/holiday_state.dart';
+import '../calander/calandar_view.dart';
 
 class YearlyInfoView extends StatefulWidget {
   const YearlyInfoView({super.key});
@@ -55,10 +57,18 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
                 ...?dividedList[currentYear]
                     ?.divideByMonth()
                     .keys
-                    .map((e) => Text("$e ${dividedList[currentYear]?.divideByMonth()[e]?.length}"))
+                    .map((e) => Text("$e ${dividedList[currentYear]?.divideByMonth()[e]?.length}")),
               ],
             ),
-          )
+          ),
+          Expanded(
+              child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: CalandarView(
+                    startYear: currentYear,
+                    endYear: currentYear,
+                    eventDateList: dividedList[currentYear]!.toEventDateList(),
+                  ))),
         ],
       ),
     );

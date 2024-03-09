@@ -1,4 +1,8 @@
 extension DateTimeExtention on DateTime {
+  bool isSameDate(DateTime target) {
+    return (day == target.day && month == target.month && year == target.year);
+  }
+
   /// compare by yyyymmdd past -1 , same 0, future 1
   int compareByDate(DateTime date) {
     return compareTo(date);
