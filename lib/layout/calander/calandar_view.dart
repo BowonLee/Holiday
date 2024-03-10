@@ -16,9 +16,7 @@ class CalandarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
-      // shouldFillViewport: true,
-
-      focusedDay: DateTime.now(),
+      focusedDay: (DateTime.now().year > startYear) ? DateTime.now() : DateTime(startYear),
       firstDay: DateTime.utc(startYear, 1, 1),
       lastDay: DateTime.utc(endYear, 12, 31),
       calendarBuilders: CalendarBuilders(
@@ -59,6 +57,7 @@ class CalandarView extends StatelessWidget {
               ),
             );
           }
+          return null;
         },
       ),
     );
