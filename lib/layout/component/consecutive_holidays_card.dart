@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:holiday/util/datetime_extentions.dart';
+import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 import '../../model/consecutive_holidays/consecutive_holidays.dart';
 import '../../model/event_date/event_date.dart';
@@ -13,70 +15,119 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (consecutiveHolidays.state == DateState.before) const Text("지나간 휴일입니다."),
-            Row(
-              children: [
-                Text(
-                  consecutiveHolidays.title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  consecutiveHolidays.dateList.length.toString(),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
-                ),
-                Text(
-                  " 일동안 쉴 수 있습니다.",
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
-                )
-              ],
-            ),
-            const SizedBox(height: 10),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children:
-                    consecutiveHolidays.dateList.map<Widget>((eventDate) => buildDateItem(context, eventDate)).toList(),
-              ),
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ConsecutiveHolidayTileField(
+            consecutiveHolidays: consecutiveHolidays,
+          ),
+          const SizedBox(height: 10),
+          FoldableConsecutiveHolidayCard(
+            consecutiveHolidays: consecutiveHolidays,
+          ),
+        ],
       ),
     );
   }
+}
 
-  Widget buildDateItem(BuildContext context, EventDate eventDate) {
-    final isNow = eventDate.state == DateState.now;
+class ConsecutiveHolidayTileField extends StatelessWidget {
+  const ConsecutiveHolidayTileField({super.key, required this.consecutiveHolidays});
 
-    BoxDecoration decoration = BoxDecoration(
-      border: Border.all(color: Theme.of(context).primaryColor),
+  final ConsecutiveHolidays consecutiveHolidays;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          consecutiveHolidays.title,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600, fontSize: 15),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(
+          consecutiveHolidays.dateList.length.toString(),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+        ),
+        Text(
+          " 일",
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700, fontSize: 15),
+        ),
+      ],
     );
+  }
+}
 
-    return Container(
-        decoration: isNow ? decoration : null,
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
-            children: [
-              Text(
-                "${eventDate.datetime.month}. "
-                "${eventDate.datetime.day} "
-                "(${eventDate.datetime.getWeekendString()})",
-                style: TextStyle(fontSize: 15),
-              ),
-              Text(eventDate.name, style: TextStyle(fontSize: 15))
-            ],
-          ),
-        ));
+class FoldableConsecutiveHolidayCard extends StatefulWidget {
+  final ConsecutiveHolidays consecutiveHolidays;
+
+  const FoldableConsecutiveHolidayCard({super.key, required this.consecutiveHolidays});
+
+  @override
+  State<FoldableConsecutiveHolidayCard> createState() => _FoldableConsecutiveHolidayCardState();
+}
+
+class _FoldableConsecutiveHolidayCardState extends State<FoldableConsecutiveHolidayCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  bool isFolded = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isFolded
+        ? _FoldedCard(
+            consecutiveHolidays: widget.consecutiveHolidays,
+          )
+        : _ExpandedCard(
+            consecutiveHolidays: widget.consecutiveHolidays,
+          );
+  }
+}
+
+class _FoldedCard extends StatelessWidget {
+  final ConsecutiveHolidays consecutiveHolidays;
+
+  const _FoldedCard({super.key, required this.consecutiveHolidays});
+
+  @override
+  Widget build(BuildContext context) {
+    String dateText = "";
+    Logger().i(consecutiveHolidays.dateList);
+    if (consecutiveHolidays.dateList.length == 1) {
+      dateText = DateFormat("M/d").format(consecutiveHolidays.dateList.first.datetime);
+    } else {
+      dateText =
+          "${DateFormat("M/d").format(consecutiveHolidays.dateList.first.datetime)} ~ ${DateFormat("M/d").format(consecutiveHolidays.dateList.last.datetime)}";
+    }
+
+    return Text(dateText);
+  }
+}
+
+class _ExpandedCard extends StatelessWidget {
+  final ConsecutiveHolidays consecutiveHolidays;
+
+  const _ExpandedCard({super.key, required this.consecutiveHolidays});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
