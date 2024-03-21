@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:holiday/util/datetime_extentions.dart';
+import 'package:intl/intl.dart';
 
 class NextConsecutiveHolidays extends StatelessWidget {
   const NextConsecutiveHolidays({super.key, required this.consecutiveHolidays});
@@ -9,25 +11,38 @@ class NextConsecutiveHolidays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double defaultFontSize = 20;
     return Column(
       children: [
-        Text.rich(TextSpan(
-          style: TextStyle(
-            fontSize: defaultFontSize,
-          ),
-          children: <InlineSpan>[
-            TextSpan(
-              text: "${consecutiveHolidays.title}까지 ",
-            ),
-            WidgetSpan(
-              child: Text("${_getDiffOfNextHoliday()}일",
-                  style: TextStyle(
-                      fontSize: defaultFontSize, fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor)),
-              alignment: PlaceholderAlignment.middle,
-            ),
-          ],
-        )),
+        const SizedBox(
+          height: 70,
+        ),
+        Text(
+          "days",
+          style: GoogleFonts.sunflower(textStyle: TextStyle(fontSize: 18)),
+        ),
+        Text("${_getDiffOfNextHoliday()}",
+            style: GoogleFonts.sriracha(
+                textStyle:
+                    TextStyle(color: Theme.of(context).primaryColor, letterSpacing: 4, fontSize: 120, shadows: <Shadow>[
+              Shadow(
+                offset: Offset(1.0, 1.0),
+                blurRadius: 3.0,
+                color: Theme.of(context).shadowColor,
+              ),
+              Shadow(
+                offset: Offset(1.0, 1.0),
+                blurRadius: 8.0,
+                color: Theme.of(context).shadowColor,
+              ),
+            ]))),
+        Text(
+          consecutiveHolidays.title,
+          style: GoogleFonts.sunflower(textStyle: TextStyle(fontSize: 25)),
+        ),
+        Text(
+          DateFormat("M/d(E)").format(consecutiveHolidays.dateList.first.datetime),
+          style: GoogleFonts.sunflower(textStyle: TextStyle(fontSize: 25)),
+        )
       ],
     );
   }
