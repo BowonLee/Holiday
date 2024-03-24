@@ -17,7 +17,7 @@ class NextConsecutiveHolidays extends StatelessWidget {
           height: 70,
         ),
         Text(
-          "days",
+          "d-day",
           style: GoogleFonts.sunflower(textStyle: TextStyle(fontSize: 18)),
         ),
         Text("${_getDiffOfNextHoliday()}",

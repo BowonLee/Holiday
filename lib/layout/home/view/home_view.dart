@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_bloc.dart';
+import 'package:holiday/layout/calander/calandar_consecutive_holidays.dart';
 import 'package:holiday/layout/calander/calandar_view.dart';
 import 'package:holiday/layout/component/consecutive_holidays_list.dart';
 import 'package:holiday/layout/component/next_consecutive_holidays.dart';
@@ -73,7 +74,7 @@ class _HomeMainViewState extends State<HomeMainView> {
     final List<Holiday> holidayList = (context.read<HolidayBloc>().state as HolidayBlocLoaded).holidayList;
 
     final List<ConsecutiveHolidays> consecutiveHolidaysList =
-        holidayList.toRemainingList().toEventDateList().toConsecutiveHolidaysList();
+        holidayList.toRemainingList().toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
     Logger().i(cursor);
     return Padding(
       padding: const EdgeInsets.all(12.0),
@@ -101,6 +102,7 @@ class _HomeMainViewState extends State<HomeMainView> {
               }
             },
           ),
+          CalandarConsecutiveHolidays(consecutiveHolidays: consecutiveHolidaysList[cursor]),
           HomeOverviewField()
         ],
       ),
