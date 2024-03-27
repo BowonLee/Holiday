@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_bloc.dart';
 import 'package:holiday/layout/calander/calandar_consecutive_holidays.dart';
 import 'package:holiday/layout/calander/calandar_view.dart';
@@ -16,6 +17,7 @@ import 'package:holiday/util/datetime_extentions.dart';
 import 'package:logger/logger.dart';
 
 import '../../../bloc/holiday_bloc/holiday_state.dart';
+import '../../../home_screen_widget/widget_controller.dart';
 import '../../user_vacation/user_vacation.dart';
 
 class HomeView extends StatefulWidget {
@@ -76,6 +78,10 @@ class _HomeMainViewState extends State<HomeMainView> {
     final List<ConsecutiveHolidays> consecutiveHolidaysList =
         holidayList.toRemainingList().toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
     Logger().i(cursor);
+
+    final widgetController = widgetControllerProvider();
+    widgetController.updateSingleDueDateWidget(consecutiveHolidaysList.first);
+
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
