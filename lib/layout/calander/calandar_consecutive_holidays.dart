@@ -14,12 +14,16 @@ class CalandarConsecutiveHolidays extends StatelessWidget {
   Widget build(BuildContext context) {
     Logger().i(getFirstDateOfTheWeek(consecutiveHolidays.dateList.first.datetime));
     Logger().i(getLastDateOfTheWeek(consecutiveHolidays.dateList.last.datetime));
+    final firstDay = getFirstDateOfTheWeek(consecutiveHolidays.dateList.first.datetime);
+    final lastDay = getLastDateOfTheWeek(consecutiveHolidays.dateList.last.datetime);
+
+    Logger().i(lastDay.difference(firstDay).inDays);
     return TableCalendar(
       calendarFormat: CalendarFormat.twoWeeks,
       headerStyle: const HeaderStyle(formatButtonVisible: false, leftChevronVisible: false, rightChevronVisible: false),
       focusedDay: consecutiveHolidays.dateList.first.datetime,
-      firstDay: getFirstDateOfTheWeek(consecutiveHolidays.dateList.first.datetime),
-      lastDay: getLastDateOfTheWeek(consecutiveHolidays.dateList.last.datetime),
+      firstDay: firstDay,
+      lastDay: lastDay,
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, day, focusedDay) {
           if (consecutiveHolidays.dateList.indexWhere((element) => element.datetime.isSameDate(day)) != -1) {
