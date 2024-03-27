@@ -1,18 +1,8 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:holiday/bloc/app_init/app_init_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_event.dart';
 
-import 'package:holiday/layout/component/consecutive_holidays_card.dart';
-import 'package:holiday/layout/component/next_consecutive_holidays.dart';
-import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
-import 'package:holiday/model/event_date/event_date_extension.dart';
-import 'package:holiday/model/holiday/holiday.dart';
-import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/repository/holiday_repository.dart';
-import 'package:holiday/util/datetime_extentions.dart';
-import 'package:logger/logger.dart';
 
 import '../../../bloc/holiday_bloc/holiday_bloc.dart';
 import '../../../bloc/holiday_bloc/holiday_state.dart';
