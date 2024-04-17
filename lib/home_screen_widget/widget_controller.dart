@@ -1,5 +1,6 @@
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:logger/logger.dart';
 
 const androidWidgetName = "SingleDueDateWidget";
 
@@ -8,12 +9,12 @@ WidgetController widgetControllerProvider() {
   return widgetController;
 }
 
-// const String appGroupId = '<YOUR APP GROUP>';
-// const String iOSWidgetName = 'NewsWidgets';
 class WidgetController {
   void updateSingleDueDateWidget(ConsecutiveHolidays holidays) {
     HomeWidget.saveWidgetData<String>('title', holidays.title);
-    // HomeWidget.saveWidgetData<String>('date', "");
+    HomeWidget.saveWidgetData<String>('date', holidays.dateList.first.datetime.toIso8601String());
+
+    Logger().i(holidays.dateList.first.datetime.toString());
     HomeWidget.updateWidget(androidName: androidWidgetName);
   }
 }

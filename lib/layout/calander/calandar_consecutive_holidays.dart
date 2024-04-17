@@ -12,11 +12,13 @@ class CalandarConsecutiveHolidays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Logger().i(getFirstDateOfTheWeek(consecutiveHolidays.dateList.first.datetime));
-    Logger().i(getLastDateOfTheWeek(consecutiveHolidays.dateList.last.datetime));
     final firstDay = getFirstDateOfTheWeek(consecutiveHolidays.dateList.first.datetime);
     final lastDay = getLastDateOfTheWeek(consecutiveHolidays.dateList.last.datetime);
 
+    ///
+    /// lastDay를 기준으로 오늘이 2주 안쪽이라면 전주를 기준으로 표기한다.
+    ///
+    ///
     Logger().i(lastDay.difference(firstDay).inDays);
     return TableCalendar(
       calendarFormat: CalendarFormat.twoWeeks,
