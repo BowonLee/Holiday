@@ -23,11 +23,11 @@ extension DateTimeExtention on DateTime {
   DateState getDateState(DateTime dateTime) {
     switch (compareTo(dateTime)) {
       case -1:
-        return DateState.before;
+        return DateState.past;
       case 0:
         return DateState.now;
       case 1:
-        return DateState.after;
+        return DateState.future;
       default:
         return DateState.none;
     }
@@ -37,11 +37,11 @@ extension DateTimeExtention on DateTime {
   DateState getDateStateByNow() {
     switch (compareByDate(getNowDate())) {
       case -1:
-        return DateState.before;
+        return DateState.past;
       case 0:
         return DateState.now;
       case 1:
-        return DateState.after;
+        return DateState.future;
       default:
         return DateState.none;
     }
@@ -58,4 +58,4 @@ extension DateTimeExtention on DateTime {
   }
 }
 
-enum DateState { before, now, after, none }
+enum DateState { past, now, future, none }
