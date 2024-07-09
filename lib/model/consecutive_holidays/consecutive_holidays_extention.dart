@@ -42,13 +42,13 @@ extension ConsecutiveHolidaysListExtention on List<ConsecutiveHolidays> {
   }
 
   /// 오늘을 기준으로 직전 휴일
-  ConsecutiveHolidays mostRecentItem() {
+  ConsecutiveHolidays getMostRecentItem() {
     return lastWhere(
       (element) => element.state == DateState.past,
     );
   }
 
-  int mostRecentIndex() {
+  int getMostRecentIndex() {
     return lastIndexWhere(
       (element) => element.state == DateState.past,
     );
