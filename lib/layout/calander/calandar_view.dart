@@ -15,8 +15,10 @@ class CalandarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Logger().i(Localizations.localeOf(context).languageCode);
     return TableCalendar(
-      focusedDay: (DateTime.now().year > startYear) ? DateTime.now() : DateTime(startYear),
+      locale: "ko_KR",
+      focusedDay: (DateTime.now().year >= startYear) ? DateTime.now() : DateTime(startYear),
       firstDay: DateTime.utc(startYear, 1, 1),
       lastDay: DateTime.utc(endYear, 12, 31),
       calendarBuilders: CalendarBuilders(
@@ -25,11 +27,15 @@ class CalandarView extends StatelessWidget {
             return Center(
               child: Text(
                 DateFormat('EEE').format(day),
-                style: TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.red),
               ),
             );
           }
           return null;
+        },
+        headerTitleBuilder: (context, day) {
+          // 월 이동시
+          Logger().i(day);
         },
         defaultBuilder: (context, day, focusedDay) {
           if (eventDateList.indexWhere((element) => element.datetime.isSameDate(day)) != -1) {

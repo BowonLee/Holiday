@@ -19,8 +19,9 @@ class CalandarConsecutiveHolidays extends StatelessWidget {
     /// lastDay를 기준으로 오늘이 2주 안쪽이라면 전주를 기준으로 표기한다.
     ///
     ///
-    Logger().i(lastDay.difference(firstDay).inDays);
+    Logger().i(Localizations.localeOf(context).languageCode);
     return TableCalendar(
+      locale: "ko_KR",
       calendarFormat: CalendarFormat.twoWeeks,
       headerStyle: const HeaderStyle(formatButtonVisible: false, leftChevronVisible: false, rightChevronVisible: false),
       focusedDay: consecutiveHolidays.dateList.first.datetime,
