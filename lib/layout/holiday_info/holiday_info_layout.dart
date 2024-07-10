@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:holiday/layout/holiday_info/component/upcoming_consecutive_holidays.dart';
+import 'package:holiday/layout/holiday_info/component/days_until_holiday.dart';
 import 'package:holiday/layout/home/view/home_view.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays_extention.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
@@ -47,7 +47,7 @@ class _HolidayInfoLayoutState extends State<HolidayInfoLayout> {
       padding: const EdgeInsets.all(15),
       child: Column(
         children: [
-          UpComingConsecutiveHolidays(consecutiveHolidays: current),
+          DaysUntilHoliday(consecutiveHolidays: current),
           MoveDateButtonFiled(
             next: next,
             prev: prev,
