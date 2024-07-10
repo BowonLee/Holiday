@@ -7,7 +7,7 @@ import 'package:holiday/bloc/holiday_bloc/holiday_bloc.dart';
 import 'package:holiday/layout/calander/calandar_consecutive_holidays.dart';
 import 'package:holiday/layout/calander/calandar_view.dart';
 import 'package:holiday/layout/component/consecutive_holidays_list.dart';
-import 'package:holiday/layout/component/next_consecutive_holidays.dart';
+import 'package:holiday/layout/holiday_info/component/upcoming_consecutive_holidays.dart';
 import 'package:holiday/layout/yearly/yealy_info_view.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
@@ -18,10 +18,13 @@ import 'package:logger/logger.dart';
 
 import '../../../bloc/holiday_bloc/holiday_state.dart';
 import '../../../home_screen_widget/widget_controller.dart';
+import '../../holiday_info/holiday_info_layout.dart';
 import '../../user_vacation/user_vacation.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  final List<Holiday> holidayList;
+
+  HomeView({super.key, required this.holidayList});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -33,7 +36,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _currentView(),
+      body: _currentView(widget.holidayList),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onBottomSheetTapped,
         currentIndex: _selectedIndex,
@@ -49,8 +52,14 @@ class _HomeViewState extends State<HomeView> {
     // );
   }
 
-  _currentView() {
-    const viewList = [YearlyInfoView(), HomeMainView(), UserVacation()];
+  _currentView(List<Holiday> holidayList) {
+    final viewList = [
+      YearlyInfoView(),
+      HolidayInfoLayout(
+        holidayList: holidayList,
+      ),
+      UserVacation()
+    ];
     return viewList[_selectedIndex];
   }
 
@@ -162,7 +171,7 @@ class _NextConsecutiveHolidayState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [NextConsecutiveHolidays(consecutiveHolidays: consecutiveHolidays)],
+      children: [UpComingConsecutiveHolidays(consecutiveHolidays: consecutiveHolidays)],
     );
   }
 }
