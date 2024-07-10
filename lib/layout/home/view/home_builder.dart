@@ -65,7 +65,9 @@ class _HomeBuilderState extends State<_HomeBuilder> {
           }
 
           if (state is HolidayBlocLoaded) {
-            return HomeView();
+            return HomeView(
+              holidayList: state.holidayList,
+            );
           }
           return Container();
         },
