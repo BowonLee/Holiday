@@ -1,18 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:holiday/layout/holiday_info/component/days_until_holiday.dart';
-import 'package:holiday/layout/home/view/home_view.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays_extention.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
-import 'package:logger/logger.dart';
+import 'package:holiday/util/datetime_extentions.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/consecutive_holidays/consecutive_holidays.dart';
+import '../../model/event_date/event_date.dart';
 import '../../model/holiday/holiday.dart';
 
 part 'part/move_holiday_buttons.dart';
 
 part 'part/current_consecutive_holidays.dart';
+
+part 'part/days_until_holiday.dart';
 
 class HolidayInfoLayout extends StatefulWidget {
   final List<Holiday> holidayList;

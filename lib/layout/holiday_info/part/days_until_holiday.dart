@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
-import 'package:holiday/model/event_date/event_date.dart';
-import 'package:holiday/util/datetime_extentions.dart';
-import 'package:intl/intl.dart';
+part of '../holiday_info_layout.dart';
 
-class UpComingConsecutiveHolidays extends StatelessWidget {
-  const UpComingConsecutiveHolidays({super.key, required this.consecutiveHolidays});
+class DaysUntilHoliday extends StatelessWidget {
+  const DaysUntilHoliday({super.key, required this.consecutiveHolidays});
 
   final ConsecutiveHolidays consecutiveHolidays;
 

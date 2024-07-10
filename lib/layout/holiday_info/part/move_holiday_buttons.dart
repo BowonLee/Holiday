@@ -7,7 +7,11 @@ class MoveDateButtonFiled extends StatefulWidget {
   final VoidCallback onClickNextButton;
 
   const MoveDateButtonFiled(
-      {super.key, required this.next, required this.onClickNextButton, this.prev, required this.onClickPrevButton});
+      {super.key,
+      required this.next,
+      required this.onClickNextButton,
+      required this.prev,
+      required this.onClickPrevButton});
 
   @override
   State<MoveDateButtonFiled> createState() => MoveDateButtonFiledState();
