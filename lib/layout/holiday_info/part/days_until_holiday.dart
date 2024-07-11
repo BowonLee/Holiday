@@ -9,17 +9,6 @@ class DaysUntilHoliday extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 70,
-        ),
-        Text(
-          consecutiveHolidays.title,
-          style: GoogleFonts.sunflower(textStyle: TextStyle(fontSize: 25)),
-        ),
-        Text(
-          _getDateString(consecutiveHolidays.dateList),
-          style: GoogleFonts.sunflower(textStyle: TextStyle(fontSize: 25)),
-        ),
         Text("${_getDiffOfNextHoliday()}",
             style: GoogleFonts.sunflower(
                 textStyle: TextStyle(letterSpacing: 4, fontSize: 120, shadows: <Shadow>[
@@ -36,17 +25,6 @@ class DaysUntilHoliday extends StatelessWidget {
             ]))),
       ],
     );
-  }
-
-  String _getDateString(List<EventDate> dateList) {
-    String dateStr = "";
-    if (dateList.length == 1) {
-      dateStr = DateFormat("M/d(E)").format(dateList.first.datetime);
-    } else {
-      dateStr =
-          "${DateFormat("M/d(E)").format(dateList.first.datetime)} ~ ${DateFormat("M/d(E)").format(dateList.last.datetime)}";
-    }
-    return dateStr;
   }
 
   int _getDiffOfNextHoliday() {

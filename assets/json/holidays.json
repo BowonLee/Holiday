@@ -66,6 +66,24 @@
     "isHoliday": true
   },
   {
+    "date": "2024-07-11",
+    "dateName": "테스트연휴",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2024-07-12",
+    "dateName": "테스트연휴",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
+    "date": "2024-07-13",
+    "dateName": "테스트연휴",
+    "dateKind": "국경일",
+    "isHoliday": true
+  },
+  {
     "date": "2024-08-15",
     "dateName": "광복절",
     "dateKind": "국경일",
