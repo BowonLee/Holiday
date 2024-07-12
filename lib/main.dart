@@ -37,7 +37,9 @@ void main() async {
             darkTheme: state.currentThemeModel.themeDarkData,
             home: const AppInitBuilder(),
             localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: [
               Locale('en', ''), // English, no country code
