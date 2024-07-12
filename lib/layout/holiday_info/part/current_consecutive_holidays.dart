@@ -8,14 +8,18 @@ class CurrentConsecutiveHolidays extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...consecutiveHolidays.dateList.map(
-              (e) => _EventDateComponent(eventDate: e),
-            ),
-          ],
+        ConsecutiveHolidaysTitle(consecutiveHolidays: consecutiveHolidays),
+        ConsecutiveHolidaysPeriod(consecutiveHolidays: consecutiveHolidays),
+        SizedBox(
+          height: 20,
+        ),
+        ConsecutiveHolidaysIntervalCard(
+          lastDate: consecutiveHolidays.dateList.first.datetime,
+          lastHolidaysName: consecutiveHolidays.dateList.first.name,
+          nextDate: consecutiveHolidays.dateList.last.datetime,
+          nextHolidaysName: consecutiveHolidays.dateList.last.name,
         ),
       ],
     );
@@ -29,7 +33,9 @@ class _EventDateComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (eventDate.state == DateState.now) {}
+    if (eventDate.state == DateState.now) {
+      Logger().i(eventDate);
+    }
     return Text(" ${DateFormat("M/d(E)").format(eventDate.datetime)} ");
   }
 }

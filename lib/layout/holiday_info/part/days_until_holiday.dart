@@ -8,10 +8,13 @@ class DaysUntilHoliday extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        ConsecutiveHolidaysTitle(consecutiveHolidays: consecutiveHolidays),
+        ConsecutiveHolidaysPeriod(consecutiveHolidays: consecutiveHolidays),
         Text("${_getDiffOfNextHoliday()}",
             style: GoogleFonts.sunflower(
-                textStyle: TextStyle(letterSpacing: 4, fontSize: 120, shadows: <Shadow>[
+                textStyle: TextStyle(letterSpacing: 4, fontSize: 100, shadows: <Shadow>[
               Shadow(
                 offset: Offset(1.0, 1.0),
                 blurRadius: 3.0,
