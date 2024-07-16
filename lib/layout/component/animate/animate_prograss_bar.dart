@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
   const ConsecutiveHolidaysIntervalCard({
@@ -30,15 +31,15 @@ class ConsecutiveHolidaysIntervalCard extends StatelessWidget {
     final endDateTime = nextDate;
     final now = DateTime.now();
 
-    final full = startDateTime.difference(endDateTime).inDays;
-    final current = startDateTime.difference(now).inDays;
+    final full = endDateTime.difference(startDateTime).inHours + 24;
+    final current = now.difference(startDateTime).inHours;
 
     final result = current / full;
 
     if (result < 0.1) {
       return 0.1;
     }
-
+    Logger().i("$result");
     return result;
   }
 
@@ -122,13 +123,13 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return _buildAnimatedContainer(Theme.of(context).primaryColor);
+    return LayoutBuilder(
+        builder: (context, constraints) =>
+            _buildAnimatedContainer(Theme.of(context).primaryColor, constraints.maxWidth));
   }
 
-  Widget _buildAnimatedContainer(Color color) {
-    final goal = MediaQuery.of(context).size.width * widget.percentage;
-
-    // Logger().i(MediaQuery.of(context).size.width, goal);
+  Widget _buildAnimatedContainer(Color color, double maxWidth) {
+    final goal = maxWidth * widget.percentage;
     return Stack(
       children: [
         Container(
@@ -140,8 +141,13 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
           ),
         ),
         AnimatedContainer(
-          curve: Curves.bounceOut,
-          duration: Duration(seconds: 2),
+          curve: Curves.linear,
+          duration: const Duration(seconds: 2),
+          onEnd: () {
+            // trigger = !trigger;
+          },
+          width: trigger ? goal : 0,
+          height: 50,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -150,11 +156,6 @@ class _State extends State<_AnimateProgressBar> with TickerProviderStateMixin {
             alignment: AlignmentDirectional.centerEnd,
             child: Container(),
           ),
-          onEnd: () {
-            // trigger = !trigger;
-          },
-          width: trigger ? goal : 0,
-          height: 50,
         ),
       ],
     );
