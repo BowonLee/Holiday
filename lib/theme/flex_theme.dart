@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 가을
 final ThemeData redWineThemeLight = FlexThemeData.light(
+  fontFamily: "Sunflower",
   scheme: FlexScheme.redWine,
   surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
   blendLevel: 9,
@@ -18,6 +19,7 @@ final ThemeData redWineThemeLight = FlexThemeData.light(
 );
 
 final ThemeData redWineThemeDark = FlexThemeData.dark(
+  fontFamily: "Sunflower",
   scheme: FlexScheme.redWine,
   surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
   blendLevel: 15,
@@ -31,6 +33,7 @@ final ThemeData redWineThemeDark = FlexThemeData.dark(
 );
 
 final ThemeData midNightThemeLight = FlexThemeData.light(
+  fontFamily: "Sunflower",
   colors: const FlexSchemeColor(
     primary: Color(0xff00296b),
     primaryContainer: Color(0xffa0c2ed),
@@ -56,6 +59,7 @@ final ThemeData midNightThemeLight = FlexThemeData.light(
 );
 
 final ThemeData midNightThemeDark = FlexThemeData.dark(
+  fontFamily: "Sunflower",
   colors: const FlexSchemeColor(
     primary: Color(0xffb1cff5),
     primaryContainer: Color(0xff3873ba),
@@ -79,6 +83,7 @@ final ThemeData midNightThemeDark = FlexThemeData.dark(
 
 // 봄
 final ThemeData dellGenoaGreenLight = FlexThemeData.light(
+  fontFamily: "Sunflower",
   scheme: FlexScheme.dellGenoa,
   surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
   blendLevel: 20,
@@ -94,6 +99,7 @@ final ThemeData dellGenoaGreenLight = FlexThemeData.light(
   useMaterial3: true,
 );
 final ThemeData dellGenoaGreenDark = FlexThemeData.dark(
+  fontFamily: "Sunflower",
   scheme: FlexScheme.dellGenoa,
   surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
   blendLevel: 15,
@@ -108,6 +114,7 @@ final ThemeData dellGenoaGreenDark = FlexThemeData.dark(
 );
 
 final ThemeData aquaBlueLight = FlexThemeData.light(
+  fontFamily: "Sunflower",
   scheme: FlexScheme.aquaBlue,
   surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
   blendLevel: 20,
@@ -124,6 +131,7 @@ final ThemeData aquaBlueLight = FlexThemeData.light(
 );
 
 final ThemeData aquaBlueDark = FlexThemeData.dark(
+  // fontFamily: "Sunflower",
   scheme: FlexScheme.aquaBlue,
   surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
   blendLevel: 15,

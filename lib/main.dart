@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -27,24 +28,26 @@ void main() async {
       ),
       BlocProvider(
         create: (_) => AppInitBloc(
-            metadataRepository: metadataRepositoryProvider(), holidayRepository: holidayRepositoryProvider()),
+            metadataRepository: metadataRepositoryProvider(),
+            holidayRepository: holidayRepositoryProvider()),
       )
     ],
     child: BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return MaterialApp(
-            theme: state.currentThemeModel.themeLightData,
-            darkTheme: state.currentThemeModel.themeDarkData,
-            home: const AppInitBuilder(),
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: [
-              Locale('en', ''), // English, no country code
-              Locale('ko', ''),
-            ]);
+          theme: state.currentThemeModel.themeLightData,
+          darkTheme: state.currentThemeModel.themeDarkData,
+          home: const AppInitBuilder(),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en', ''),
+            Locale('ko', ''),
+          ],
+        );
       },
     ),
   ));
