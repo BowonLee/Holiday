@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:holiday/layout/home/component/action_button.dart';
+import 'package:holiday/layout/home/component/expandable_fab.dart';
 
 import 'package:holiday/layout/yearly/yealy_info_view.dart';
 
@@ -25,19 +28,17 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _currentView(widget.holidayList),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onBottomSheetTapped,
-        currentIndex: _selectedIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "info"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.beach_access), label: "내 휴가")
+      floatingActionButton: ExpandableFab(
+        distance: 120,
+        children: [
+          ActionButton(onPressed: () => _onBottomSheetTapped(1), icon: Icon(Icons.home)),
+          ActionButton(onPressed: () => _onBottomSheetTapped(0), icon: Icon(Icons.calendar_today)),
+          if (!kIsWeb)
+            ActionButton(onPressed: () => _onBottomSheetTapped(2), icon: Icon(Icons.person))
         ],
+        initialOpen: true,
       ),
     );
-    // return Column(
-    //   children: [_DateStateField(), HomeMenuField()],
-    // );
   }
 
   _currentView(List<Holiday> holidayList) {
@@ -48,7 +49,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       UserVacation()
     ];
-    return viewList[_selectedIndex];
+    return SafeArea(child: viewList[_selectedIndex]);
   }
 
   _onBottomSheetTapped(int index) {
