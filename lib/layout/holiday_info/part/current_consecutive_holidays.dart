@@ -12,7 +12,8 @@ class CurrentConsecutiveHolidays extends StatelessWidget {
       children: [
         ConsecutiveHolidaysTitle(consecutiveHolidays: consecutiveHolidays),
         ConsecutiveHolidaysPeriod(consecutiveHolidays: consecutiveHolidays),
-        SizedBox(
+        RemainingTimer(targetDateTime: consecutiveHolidays.dateList.last.datetime),
+        const SizedBox(
           height: 20,
         ),
         ConsecutiveHolidaysIntervalCard(
@@ -24,18 +25,15 @@ class CurrentConsecutiveHolidays extends StatelessWidget {
       ],
     );
   }
-}
 
-class _EventDateComponent extends StatelessWidget {
-  final EventDate eventDate;
-
-  _EventDateComponent({super.key, required this.eventDate});
-
-  @override
-  Widget build(BuildContext context) {
-    if (eventDate.state == DateState.now) {
-      Logger().i(eventDate);
-    }
-    return Text(" ${DateFormat("M/d(E)").format(eventDate.datetime)} ");
+  Text buildRemainingText(EventDate eventDate) {
+    /// 시간을 일 / 시 / 분 / 초로 분리
+    Duration difference = eventDate.datetime.difference(DateTime.now());
+    int days = difference.inDays;
+    int hours = difference.inHours % 24;
+    int minutes = difference.inMinutes % 60;
+    int seconds = difference.inSeconds % 60;
+    String timeStr = "$days일 $hours시간 $minutes분 $seconds초";
+    return Text(timeStr);
   }
 }

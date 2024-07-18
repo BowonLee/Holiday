@@ -26,6 +26,7 @@ class DaysUntilHoliday extends StatelessWidget {
                 color: Theme.of(context).shadowColor,
               ),
             ]))),
+        RemainingTimer(targetDateTime: consecutiveHolidays.dateList.first.datetime)
       ],
     );
   }
