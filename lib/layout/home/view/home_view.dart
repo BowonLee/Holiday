@@ -53,8 +53,10 @@ class _HomeViewState extends State<HomeView> {
   }
 
   _onBottomSheetTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index != _selectedIndex) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 }

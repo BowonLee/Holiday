@@ -40,7 +40,10 @@ class MoveDateButtonFiledState extends State<MoveDateButtonFiled> {
                     ),
                   ],
                 )),
-            Text(widget.prev == null ? "" : widget.prev!.title)
+            Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Text(widget.prev == null ? "" : widget.prev!.title),
+            )
           ],
         ),
         Column(
@@ -60,7 +63,10 @@ class MoveDateButtonFiledState extends State<MoveDateButtonFiled> {
                     ),
                   ],
                 )),
-            Text(widget.next == null ? "" : widget.next!.title)
+            Padding(
+              padding: const EdgeInsets.only(right: 30),
+              child: Text(widget.next == null ? "" : widget.next!.title),
+            )
           ],
         ),
       ],
