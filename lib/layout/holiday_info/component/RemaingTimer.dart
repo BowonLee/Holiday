@@ -46,7 +46,7 @@ class _RemainingTimerState extends State<RemainingTimer> {
     int hours = difference.inHours % 24;
     int minutes = difference.inMinutes % 60;
     int seconds = difference.inSeconds % 60;
-    String timeStr = "$days일 $hours시간 $minutes분 $seconds초";
+    String timeStr = "$days일 $hours시간 $minutes분 $seconds초 남았습니다.";
 
     return timeStr;
   }
