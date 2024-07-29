@@ -11,12 +11,16 @@ class CalandarView extends StatelessWidget {
   final int startYear;
   final int endYear;
 
-  const CalandarView({super.key, required this.eventDateList, required this.startYear, required this.endYear});
+  const CalandarView(
+      {super.key, required this.eventDateList, required this.startYear, required this.endYear});
 
   @override
   Widget build(BuildContext context) {
     Logger().i(Localizations.localeOf(context).languageCode);
     return TableCalendar(
+      headerStyle: const HeaderStyle(
+        formatButtonVisible: false,
+      ),
       locale: "ko_KR",
       focusedDay: (DateTime.now().year >= startYear) ? DateTime.now() : DateTime(startYear),
       firstDay: DateTime.utc(startYear, 1, 1),
@@ -42,7 +46,9 @@ class CalandarView extends StatelessWidget {
             return Center(
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red), shape: BoxShape.circle, color: Colors.redAccent),
+                    border: Border.all(color: Colors.red),
+                    shape: BoxShape.circle,
+                    color: Colors.redAccent),
                 child: SizedBox(
                   width: 30,
                   height: 30,
