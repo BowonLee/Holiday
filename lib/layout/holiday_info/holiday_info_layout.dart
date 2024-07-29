@@ -8,6 +8,7 @@ import 'package:holiday/model/consecutive_holidays/consecutive_holidays_extentio
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:holiday/util/datetime_extentions.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/consecutive_holidays/consecutive_holidays.dart';
 import '../../model/event_date/event_date.dart';
@@ -51,14 +52,36 @@ class _HolidayInfoLayoutState extends State<HolidayInfoLayout> {
     /// 가장 근접한 연휴 정보
     final current = consecutiveHolidayList[indexCursor];
     final prev = indexCursor > 0 ? consecutiveHolidayList[indexCursor - 1] : null;
-    final next = indexCursor < consecutiveHolidayList.length - 1 ? consecutiveHolidayList[indexCursor + 1] : null;
+    final next = indexCursor < consecutiveHolidayList.length - 1
+        ? consecutiveHolidayList[indexCursor + 1]
+        : null;
 
+    widget.holidayList.divideByYear();
+
+    /**
+     * 1안. 분할 시점에 몇번째인지 확인할 수 있는 정보를 저장
+     * 2안. 분할 후 확인.
+     *
+     * 연도별 분할 후 2가지의 리스트를 같이 이동하는 방식으로 조정할 경우 UI 코드가 다소 복잡해질 수 있음
+     * 고유값이 없는 상황이기에, 연휴의 고유값과 휴일의 고유값은 다를 수 있으며 합산되는 경우 단순 비교로 구분할 수 없다.
+     *
+     *
+     */
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "${DateFormat("yyyy M/d(E)").format(DateTime.now())}",
+                style: TextStyle(fontSize: 20),
+              )
+            ],
+          ),
           const SizedBox(
             height: 70,
           ),
@@ -90,7 +113,9 @@ class _HolidayInfoLayoutState extends State<HolidayInfoLayout> {
           ),
           Text("총 ${current.dateList.length} 일 연휴"),
           Text("${current.dateList.first.datetime.year}년 ${indexCursor}번째 연휴"),
-          Text("다음 연휴까지 ${next?.dateList.first.datetime.difference(current.dateList.last.datetime).inDays}일"),
+          Text("올해의 3번째 연"),
+          Text(
+              "다음 연휴까지 ${next?.dateList.first.datetime.difference(current.dateList.last.datetime).inDays}일"),
         ],
       ),
     );
