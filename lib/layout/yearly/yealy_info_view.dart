@@ -38,6 +38,12 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
 
     final dividedList = holidayState.holidayList.divideByYear();
 
+    Future.delayed(
+      Duration(milliseconds: 300),
+      () {
+        _scrollToIndex(4);
+      },
+    );
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -77,7 +83,9 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
           Expanded(
             // height: 30,
             child: ConsecutiveHolidaysListComponent(
-                onTapItem: (item) {},
+                onTapItem: (item) {
+                  Logger().i(item);
+                },
                 scrollController: _listScrollController,
                 consecutiveHolidaysList:
                     dividedList[currentYear]!.toEventDateList().toConsecutiveHolidaysList()),
@@ -87,6 +95,10 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
     );
   }
 
+  /**
+   * 특정 월을 기준으로 가장 가까움 아이템을 찾아주는 항목이 필요하다.
+   * 달력을 해당 연휴의 시작점이 있는 월로 이동시키는 항목이 필요하다.
+   */
   void _scrollToIndex(int index) {
     final position = _listScrollController.position.minScrollExtent +
         (index * 80.0); // Assuming each item has a height of 50.0

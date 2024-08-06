@@ -6,7 +6,7 @@ import 'consecutive_holidays_card.dart';
 typedef ConsecutiveHolidaysItemCallback = void Function(ConsecutiveHolidays);
 
 class ConsecutiveHolidaysListComponent extends StatelessWidget {
-  ConsecutiveHolidaysListComponent(
+  const ConsecutiveHolidaysListComponent(
       {super.key,
       required this.consecutiveHolidaysList,
       required this.onTapItem,

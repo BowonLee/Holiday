@@ -10,9 +10,14 @@ class CalandarView extends StatelessWidget {
   final List<EventDate> eventDateList;
   final int startYear;
   final int endYear;
+  final DateTime? focusDate;
 
   const CalandarView(
-      {super.key, required this.eventDateList, required this.startYear, required this.endYear});
+      {super.key,
+      required this.eventDateList,
+      required this.startYear,
+      required this.endYear,
+      this.focusDate});
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +27,28 @@ class CalandarView extends StatelessWidget {
         formatButtonVisible: false,
       ),
       locale: "ko_KR",
-      focusedDay: (DateTime.now().year >= startYear) ? DateTime.now() : DateTime(startYear),
+      focusedDay: (DateTime.now().year >= startYear) ? DateTime.now() : DateTime(endYear),
       firstDay: DateTime.utc(startYear, 1, 1),
       lastDay: DateTime.utc(endYear, 12, 31),
       calendarBuilders: CalendarBuilders(
-        dowBuilder: (context, day) {
-          if (day.isWeekend()) {
-            return Center(
-              child: Text(
-                DateFormat('EEE').format(day),
-                style: const TextStyle(color: Colors.red),
-              ),
-            );
-          }
-          return null;
-        },
+        // dowBuilder: (context, day) {
+        //   if (day.isWeekend()) {
+        //     return Center(
+        //       child: Text(
+        //         DateFormat('EEE').format(day),
+        //         style: const TextStyle(color: Colors.red),
+        //       ),
+        //     );
+        //   }
+        //   return null;
+        // },
         headerTitleBuilder: (context, day) {
           // 월 이동시
           Logger().i(day);
         },
         defaultBuilder: (context, day, focusedDay) {
           if (eventDateList.indexWhere((element) => element.datetime.isSameDate(day)) != -1) {
+            Logger().i("${day} ??");
             return Center(
               child: Container(
                 decoration: BoxDecoration(
