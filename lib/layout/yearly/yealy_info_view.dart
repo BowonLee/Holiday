@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday/layout/component/consecutive_holidays_list.dart';
+import 'package:holiday/model/consecutive_holidays/consecutive_holidays_extention.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
@@ -11,7 +12,7 @@ import 'package:logger/logger.dart';
 
 import '../../bloc/holiday_bloc/holiday_bloc.dart';
 import '../../bloc/holiday_bloc/holiday_state.dart';
-import '../calander/calandar_view.dart';
+import '../calander/custom_calandar.dart';
 
 part 'part/yearly_buttons.dart';
 
@@ -25,9 +26,11 @@ class YearlyInfoView extends StatefulWidget {
 class _YearlyInfoViewState extends State<YearlyInfoView> {
   int currentYear = DateTime.now().year;
   final ScrollController _listScrollController = ScrollController();
+  DateTime focusDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
+    Logger().i(focusDate);
     final holidayState = context.read<HolidayBloc>().state;
 
     if (holidayState is! HolidayBlocLoaded) {
@@ -38,12 +41,6 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
 
     final dividedList = holidayState.holidayList.divideByYear();
 
-    Future.delayed(
-      Duration(milliseconds: 300),
-      () {
-        _scrollToIndex(4);
-      },
-    );
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -75,16 +72,37 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
           ),
           Padding(
               padding: const EdgeInsets.all(20),
-              child: CalandarView(
+              child: CustomCalandar(
                 startYear: currentYear,
                 endYear: currentYear,
-                eventDateList: dividedList[currentYear]!.toEventDateList(),
+                onClickEventDateItem: (datetime) {
+                  Logger().i(datetime);
+                  final temp = dividedList[currentYear]!
+                      .toEventDateList()
+                      .toConsecutiveHolidaysList()
+                      .findIndexByDatetime(datetime);
+
+                  Logger().i(temp);
+                  _scrollToIndex(temp);
+                },
+                onClickTodayButton: () {
+                  setState(() {
+                    focusDate = DateTime.now();
+                  });
+                },
+                focusDate: focusDate,
+                eventDateList: dividedList[currentYear]!
+                    .toEventDateList()
+                    .toConsecutiveHolidaysList()
+                    .toEventDateList(),
               )),
           Expanded(
             // height: 30,
             child: ConsecutiveHolidaysListComponent(
                 onTapItem: (item) {
-                  Logger().i(item);
+                  setState(() {
+                    focusDate = item.dateList.first.datetime;
+                  });
                 },
                 scrollController: _listScrollController,
                 consecutiveHolidaysList:
