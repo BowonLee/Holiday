@@ -43,7 +43,7 @@ extension ConsecutiveHolidaysParseExtention on List<EventDate> {
             .add(EventDate.fromWeekendDateTime(firstDate.datetime.add(const Duration(days: -1))));
         dateList
             .add(EventDate.fromWeekendDateTime(firstDate.datetime.add(const Duration(days: -2))));
-      } else if (firstDate.datetime.weekday == DateTime.saturday) {
+      } else if (firstDate.datetime.weekday == DateTime.sunday) {
         dateList
             .add(EventDate.fromWeekendDateTime(firstDate.datetime.add(const Duration(days: -1))));
       }
