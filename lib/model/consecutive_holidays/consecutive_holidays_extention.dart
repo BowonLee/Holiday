@@ -1,5 +1,6 @@
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
 import 'package:holiday/model/event_date/event_date.dart';
+import 'package:logger/logger.dart';
 
 import '../../util/datetime_extentions.dart';
 
@@ -20,11 +21,22 @@ extension ConsecutiveHolidaysExtention on ConsecutiveHolidays {
 }
 
 extension ConsecutiveHolidaysListExtention on List<ConsecutiveHolidays> {
-  List<EventDate> getEventDateList() {
+  List<EventDate> toEventDateList() {
     return fold<List<EventDate>>(
       <EventDate>[],
       (previousValue, element) => previousValue..addAll(element.dateList),
     );
+  }
+
+  int findIndexByDatetime(DateTime datetime) {
+    return indexWhere(
+      (consecutiveHolidays) =>
+          consecutiveHolidays.dateList.indexWhere(
+            (element) => element.datetime.compareByDate(datetime) == 1,
+          ) !=
+          -1,
+    );
+    ;
   }
 
   /// 오늘을 기준으로 가장 가까운 연휴 정보 반환
