@@ -39,7 +39,7 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
       );
     }
 
-    final dividedList = holidayState.holidayList.divideByYear();
+    final holidayMapByYear = holidayState.holidayList.divideByYear();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -63,21 +63,21 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
                 Text(
                   "${DateFormat("yyyy M/d(E)").format(DateTime.now())}",
                 ),
-                Text("총 휴일 수 ${dividedList[currentYear]?.length}"),
-                Text("주말 제외 휴일 수 ${dividedList[currentYear]?.toWithoutWeekend().length}"),
+                Text("총 휴일 수 ${holidayMapByYear[currentYear]?.length}"),
+                Text("주말 제외 휴일 수 ${holidayMapByYear[currentYear]?.toWithoutWeekend().length}"),
                 Text(
-                    "남은 휴일 수 ${dividedList[currentYear]?.toWithoutWeekend().toRemainingList().length}"),
+                    "남은 휴일 수 ${holidayMapByYear[currentYear]?.toWithoutWeekend().toRemainingList().length}"),
               ],
             ),
           ),
           Padding(
               padding: const EdgeInsets.all(20),
               child: CustomCalandar(
-                startYear: currentYear,
-                endYear: currentYear,
+                startYear: holidayMapByYear.keys.first,
+                endYear: holidayMapByYear.keys.last,
                 onClickEventDateItem: (datetime) {
                   Logger().i(datetime);
-                  final temp = dividedList[currentYear]!
+                  final temp = holidayMapByYear[currentYear]!
                       .toEventDateList()
                       .toConsecutiveHolidaysList()
                       .findIndexByDatetime(datetime);
@@ -88,10 +88,11 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
                 onClickTodayButton: () {
                   setState(() {
                     focusDate = DateTime.now();
+                    currentYear = DateTime.now().year;
                   });
                 },
                 focusDate: focusDate,
-                eventDateList: dividedList[currentYear]!
+                eventDateList: holidayMapByYear[currentYear]!
                     .toEventDateList()
                     .toConsecutiveHolidaysList()
                     .toEventDateList(),
@@ -101,12 +102,17 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
             child: ConsecutiveHolidaysListComponent(
                 onTapItem: (item) {
                   setState(() {
-                    focusDate = item.dateList.first.datetime;
+                    // 시작년의 최초일보다 작으면
+                    if (holidayMapByYear.keys.first > item.dateList.first.datetime.year) {
+                      focusDate = item.dateList.last.datetime;
+                    } else {
+                      focusDate = item.dateList.first.datetime;
+                    }
                   });
                 },
                 scrollController: _listScrollController,
                 consecutiveHolidaysList:
-                    dividedList[currentYear]!.toEventDateList().toConsecutiveHolidaysList()),
+                    holidayMapByYear[currentYear]!.toEventDateList().toConsecutiveHolidaysList()),
           ),
         ],
       ),
@@ -118,8 +124,7 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
    * 달력을 해당 연휴의 시작점이 있는 월로 이동시키는 항목이 필요하다.
    */
   void _scrollToIndex(int index) {
-    final position = _listScrollController.position.minScrollExtent +
-        (index * 80.0); // Assuming each item has a height of 50.0
+    final position = _listScrollController.position.minScrollExtent + (index * 80.0);
     _listScrollController.animateTo(
       position,
       duration: const Duration(milliseconds: 100),
