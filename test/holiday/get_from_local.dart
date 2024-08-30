@@ -4,9 +4,9 @@ import 'package:holiday/bloc/holiday_bloc/holiday_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_event.dart';
 
 import 'package:holiday/bloc/holiday_bloc/holiday_state.dart';
+import 'package:holiday/domain/holiday/model/holiday.dart';
 
-import 'package:holiday/model/holiday/holiday.dart';
-import 'package:holiday/repository/holiday_repository.dart';
+import 'package:holiday/domain/holiday/repository/holiday_repository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -34,13 +34,15 @@ void main() {
       blocTest<HolidayBloc, HolidayBlocState>(
         "database_list",
         build: () {
-          when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockDatabaseHolidayList);
+          when(mockHolidayRepository.getListFromDatabase())
+              .thenAnswer((realInvocation) => mockDatabaseHolidayList);
           return generateHolidayBloc();
         },
         act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
         expect: () => [
           isA<HolidayBlocLoading>(),
-          isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromDatabase", mockDatabaseHolidayList)
+          isA<HolidayBlocLoaded>()
+              .having((state) => state.holidayList, "fromDatabase", mockDatabaseHolidayList)
         ],
         verify: (bloc) {
           verify(mockHolidayRepository.getListFromDatabase());
@@ -63,7 +65,8 @@ void main() {
           act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
           expect: () => [
             isA<HolidayBlocLoading>(),
-            isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
+            isA<HolidayBlocLoaded>()
+                .having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
           ],
           verify: (bloc) {
             verify(mockHolidayRepository.getListFromDatabase());
@@ -74,13 +77,15 @@ void main() {
         blocTest<HolidayBloc, HolidayBlocState>(
           "database_empty",
           build: () {
-            when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockEmptyList);
+            when(mockHolidayRepository.getListFromDatabase())
+                .thenAnswer((realInvocation) => mockEmptyList);
             return generateHolidayBloc();
           },
           act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
           expect: () => [
             isA<HolidayBlocLoading>(),
-            isA<HolidayBlocLoaded>().having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
+            isA<HolidayBlocLoaded>()
+                .having((state) => state.holidayList, "fromAsset", mockAssetHolidayList)
           ],
           verify: (bloc) {
             verify(mockHolidayRepository.getListFromDatabase());
@@ -110,7 +115,8 @@ void main() {
         blocTest<HolidayBloc, HolidayBlocState>(
           "database_empty",
           build: () {
-            when(mockHolidayRepository.getListFromDatabase()).thenAnswer((realInvocation) => mockEmptyList);
+            when(mockHolidayRepository.getListFromDatabase())
+                .thenAnswer((realInvocation) => mockEmptyList);
             return generateHolidayBloc();
           },
           act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
@@ -137,7 +143,8 @@ void main() {
       act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),
       expect: () => [
         isA<HolidayBlocLoading>(),
-        isA<HolidayBlocLoaded>().having((state) => state.holidayList, "assetData", mockAssetHolidayList)
+        isA<HolidayBlocLoaded>()
+            .having((state) => state.holidayList, "assetData", mockAssetHolidayList)
       ],
       verify: (bloc) {
         verify(mockHolidayRepository.getListFromDatabase());
@@ -148,7 +155,8 @@ void main() {
     blocTest<HolidayBloc, HolidayBlocState>(
       "asset_empty",
       build: () {
-        when(mockHolidayRepository.getListFromAsset()).thenAnswer((realInvocation) => Future.value(mockEmptyList));
+        when(mockHolidayRepository.getListFromAsset())
+            .thenAnswer((realInvocation) => Future.value(mockEmptyList));
         return generateHolidayBloc();
       },
       act: (bloc) => bloc.add(GetHolidayFromLocalEvent()),

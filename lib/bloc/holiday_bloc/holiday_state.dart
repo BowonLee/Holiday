@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:holiday/model/holiday/holiday.dart';
+
+import '../../domain/holiday/model/holiday.dart';
 
 @immutable
 abstract class HolidayBlocState extends Equatable {}

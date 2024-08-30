@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:holiday/bloc/app_init/app_init_bloc.dart';
-import 'package:holiday/model/metadata/update_datetime.dart';
-import 'package:holiday/repository/holiday_repository.dart';
-import 'package:holiday/repository/metadata_repository.dart';
+import 'package:holiday/domain/init/bloc/app_init_bloc.dart';
+import 'package:holiday/domain/init/model/update_datetime.dart';
+import 'package:holiday/domain/holiday/repository/holiday_repository.dart';
+import 'package:holiday/domain/init/client/metadata_repository.dart';
 import 'package:logger/logger.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

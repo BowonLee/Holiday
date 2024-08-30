@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:holiday/model/holiday/holiday.dart';
+
 import 'package:retrofit/http.dart';
 
-import '../model/metadata/update_datetime.dart';
-import 'dio_service.dart';
+import '../domain/init/model/update_datetime.dart';
+import '../core/repository/client/dio_service.dart';
 
 part 'metadata_client.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:holiday/model/holiday/holiday.dart';
-import 'package:holiday/model/holiday/holiday_extention.dart';
+import 'package:holiday/domain/holiday/model/holiday.dart';
+import 'package:holiday/domain/holiday/model/holiday_extention.dart';
 
 void main() {
   List<Holiday> mockList = [

@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_bloc.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_event.dart';
 import 'package:holiday/bloc/holiday_bloc/holiday_state.dart';
-import 'package:holiday/model/holiday/holiday.dart';
-import 'package:holiday/repository/holiday_repository.dart';
+import 'package:holiday/domain/holiday/model/holiday.dart';
+
+import 'package:holiday/domain/holiday/repository/holiday_repository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

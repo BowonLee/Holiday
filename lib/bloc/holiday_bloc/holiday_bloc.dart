@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:holiday/exception/DatabaseException.dart';
-import 'package:holiday/model/holiday/holiday.dart';
+import 'package:holiday/core/exception/database_exception.dart';
+
 import 'package:logger/logger.dart';
 
-import '../../repository/holiday_repository.dart';
+import '../../domain/holiday/model/holiday.dart';
+import '../../domain/holiday/repository/holiday_repository.dart';
 
 import 'holiday_event.dart';
 import 'holiday_state.dart';
@@ -17,7 +18,8 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayBlocState> {
     on<UpdateAndGetHolidayEvent>(_listFromServer);
   }
 
-  void _listHolidayFromLocal(GetHolidayFromLocalEvent event, Emitter<HolidayBlocState> emitter) async {
+  void _listHolidayFromLocal(
+      GetHolidayFromLocalEvent event, Emitter<HolidayBlocState> emitter) async {
     emitter(HolidayBlocLoading());
     try {
       try {
