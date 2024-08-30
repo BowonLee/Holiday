@@ -13,9 +13,9 @@ import '../../../core/util/datetime_extentions.dart';
 import '../model/consecutive_holidays.dart';
 import '../model/event_date.dart';
 import '../model/holiday.dart';
-import 'component/animate_prograss_bar.dart';
+import 'component/animate_prograss_bar_component.dart';
 
-import 'component/RemaingTimer.dart';
+import 'component/remaing_timer_component.dart';
 import 'consecutive_holidays_title.dart';
 
 part './part/move_holiday_buttons.dart';

@@ -1,1 +1,0 @@
-class HolidayListEmptyError extends Error {}
