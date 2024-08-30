@@ -1,16 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:holiday/client/test_client.dart';
+
 import 'package:holiday/layout/component/consecutive_holidays_list.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays_extention.dart';
 import 'package:holiday/model/event_date/event_date_extension.dart';
 import 'package:holiday/model/holiday/holiday.dart';
 import 'package:holiday/model/holiday/holiday_extention.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
 
 import '../../bloc/holiday_bloc/holiday_bloc.dart';
 import '../../bloc/holiday_bloc/holiday_state.dart';
@@ -33,14 +30,6 @@ class _YearlyInfoViewState extends State<YearlyInfoView> {
   @override
   void initState() {
     super.initState();
-    test();
-  }
-
-  test() async {
-    final client = GetIt.instance.get<TestClient>();
-    final temp = await client.getTest();
-    print(temp);
-    Logger().e(temp);
   }
 
   @override
