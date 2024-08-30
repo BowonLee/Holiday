@@ -43,7 +43,8 @@ class _HolidayInfoLayoutState extends State<HolidayInfoLayout> {
   @override
   void initState() {
     super.initState();
-    consecutiveHolidayList = widget.holidayList.toEventDateList().toConsecutiveHolidaysList();
+    consecutiveHolidayList =
+        widget.holidayList.toWithoutWeekend().toEventDateList().toConsecutiveHolidaysList();
     indexCursor = consecutiveHolidayList.getUpcomingIndex();
   }
 
@@ -111,11 +112,10 @@ class _HolidayInfoLayoutState extends State<HolidayInfoLayout> {
           _InformationField(
             consecutiveHolidays: current,
           ),
-          Text("총 ${current.dateList.length} 일 연휴"),
-          Text("${current.dateList.first.datetime.year}년 ${indexCursor}번째 연휴"),
-          Text("올해의 3번째 연"),
+          Text("총 ${current.dateList.length} 일 동안 쉽니다"),
+          Text("${current.dateList.first.datetime.year}년 ${indexCursor + 1}번째 연휴"),
           Text(
-              "다음 연휴까지 ${next?.dateList.first.datetime.difference(current.dateList.last.datetime).inDays}일"),
+              "그 다음 연휴(${next?.title})까지 ${next?.dateList.first.datetime.difference(current.dateList.last.datetime).inDays}일"),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holiday/model/consecutive_holidays/consecutive_holidays.dart';
+import 'package:holiday/util/datetime_extentions.dart';
 
 import 'consecutive_holidays_card.dart';
 
@@ -25,12 +26,12 @@ class ConsecutiveHolidaysListComponent extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (_, index) {
         return ConsecutiveHolidaysCardComponent(
-          onTapItem: () {
-            onTapItem(consecutiveHolidaysList[index]);
-          },
-          consecutiveHolidays: consecutiveHolidaysList[index],
-          highLight: focusedIndex == null ? false : index == focusedIndex,
-        );
+            onTapItem: () {
+              onTapItem(consecutiveHolidaysList[index]);
+            },
+            consecutiveHolidays: consecutiveHolidaysList[index],
+            highLight: (focusedIndex == null) ? false : index == focusedIndex,
+            isPast: consecutiveHolidaysList[index].state == DateState.past);
       },
       itemCount: consecutiveHolidaysList.length,
     );

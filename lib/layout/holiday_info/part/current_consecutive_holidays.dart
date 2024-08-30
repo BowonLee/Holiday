@@ -12,7 +12,6 @@ class CurrentConsecutiveHolidays extends StatelessWidget {
       children: [
         ConsecutiveHolidaysTitle(consecutiveHolidays: consecutiveHolidays),
         ConsecutiveHolidaysPeriod(consecutiveHolidays: consecutiveHolidays),
-        RemainingTimer(targetDateTime: consecutiveHolidays.dateList.last.datetime),
         const SizedBox(
           height: 20,
         ),
@@ -22,6 +21,7 @@ class CurrentConsecutiveHolidays extends StatelessWidget {
           nextDate: consecutiveHolidays.dateList.last.datetime,
           nextHolidaysName: consecutiveHolidays.dateList.last.name,
         ),
+        RemainingTimer(targetDateTime: consecutiveHolidays.dateList.last.datetime),
       ],
     );
   }

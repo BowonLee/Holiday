@@ -9,6 +9,7 @@ import '../../model/consecutive_holidays/consecutive_holidays.dart';
 class ConsecutiveHolidaysCardComponent extends StatelessWidget {
   const ConsecutiveHolidaysCardComponent(
       {super.key,
+      this.isPast,
       required this.consecutiveHolidays,
       required this.highLight,
       required this.onTapItem});
@@ -16,6 +17,7 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
   final ConsecutiveHolidays consecutiveHolidays;
   final bool highLight;
   final VoidCallback onTapItem;
+  final bool? isPast;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +27,17 @@ class ConsecutiveHolidaysCardComponent extends StatelessWidget {
         elevation: highLight ? 8 : 0,
         child: Column(
           children: [
-            ListTile(
-              title: Text(consecutiveHolidays.title),
-              subtitle: (consecutiveHolidays.dateList.length > 1)
-                  ? Text(
-                      "${DateFormat("M/d(E)").format(consecutiveHolidays.dateList.first.datetime)} ~ ${DateFormat("M/d(E)").format(consecutiveHolidays.dateList.last.datetime)}")
-                  : Text(DateFormat("M/d(E)").format(consecutiveHolidays.dateList.first.datetime)),
+            Container(
+              color: (isPast ?? false) ? Colors.grey.withOpacity(0.2) : null,
+              child: ListTile(
+                textColor: (isPast ?? false) ? CupertinoColors.inactiveGray : null,
+                title: Text(consecutiveHolidays.title),
+                subtitle: (consecutiveHolidays.dateList.length > 1)
+                    ? Text(
+                        "${DateFormat("M/d(E)").format(consecutiveHolidays.dateList.first.datetime)} ~ ${DateFormat("M/d(E)").format(consecutiveHolidays.dateList.last.datetime)}")
+                    : Text(
+                        DateFormat("M/d(E)").format(consecutiveHolidays.dateList.first.datetime)),
+              ),
             ),
           ],
         ),
