@@ -30,10 +30,13 @@ void main() {
   group("getAndUpdateListFromServer", () {
     group("response_ok", () {
       setUp(() {
-        when(mockHolidayRepository.getListFromSever()).thenAnswer((realInvocation) =>
-            Future.value(HolidayResponse(holidayList: mockServerHolidayList, lastUpdateTime: mockPivotUpdateTime)));
-        when(mockHolidayRepository.setList(mockServerHolidayList)).thenAnswer((realInvocation) => null);
-        when(mockHolidayRepository.setLastUpdateDate(mockPivotUpdateTime)).thenAnswer((realInvocation) => null);
+        when(mockHolidayRepository.getListFromSever()).thenAnswer((realInvocation) => Future.value(
+            HolidayResponse(
+                holidayList: mockServerHolidayList, lastUpdateTime: mockPivotUpdateTime)));
+        when(mockHolidayRepository.setList(mockServerHolidayList))
+            .thenAnswer((realInvocation) => null);
+        when(mockHolidayRepository.setLastUpdateDate(mockPivotUpdateTime))
+            .thenAnswer((realInvocation) => null);
       });
 
       blocTest<HolidayBloc, HolidayBlocState>(
@@ -41,7 +44,7 @@ void main() {
         act: (bloc) => bloc.add(UpdateAndGetHolidayEvent()),
         build: () {
           when(mockHolidayRepository.getLastUpdateDatetime())
-              .thenAnswer((realInvocation) => Future.value(mockPivotUpdateTime));
+              .thenAnswer((realInvocation) => mockPivotUpdateTime);
           return generateHolidayBloc();
         },
         verify: (bloc) {
@@ -51,7 +54,8 @@ void main() {
         },
         expect: () => [
           isA<HolidayBlocLoading>(),
-          isA<HolidayBlocLoaded>().having((state) => state.holidayList, "description", mockServerHolidayList)
+          isA<HolidayBlocLoaded>()
+              .having((state) => state.holidayList, "description", mockServerHolidayList)
         ],
       );
 
@@ -60,7 +64,7 @@ void main() {
         act: (bloc) => bloc.add(UpdateAndGetHolidayEvent()),
         build: () {
           when(mockHolidayRepository.getLastUpdateDatetime())
-              .thenAnswer((realInvocation) => Future.value(mockFutureUpdateTime));
+              .thenAnswer((realInvocation) => mockFutureUpdateTime);
           return generateHolidayBloc();
         },
         verify: (bloc) {
@@ -70,7 +74,8 @@ void main() {
         },
         expect: () => [
           isA<HolidayBlocLoading>(),
-          isA<HolidayBlocLoaded>().having((state) => state.holidayList, "description", mockServerHolidayList)
+          isA<HolidayBlocLoaded>()
+              .having((state) => state.holidayList, "description", mockServerHolidayList)
         ],
       );
 
@@ -79,7 +84,7 @@ void main() {
         act: (bloc) => bloc.add(UpdateAndGetHolidayEvent()),
         build: () {
           when(mockHolidayRepository.getLastUpdateDatetime())
-              .thenAnswer((realInvocation) => Future.value(mockPastUpdateTime));
+              .thenAnswer((realInvocation) => mockPastUpdateTime);
           return generateHolidayBloc();
         },
         verify: (bloc) {
@@ -89,7 +94,8 @@ void main() {
         },
         expect: () => [
           isA<HolidayBlocLoading>(),
-          isA<HolidayBlocLoaded>().having((state) => state.holidayList, "description", mockServerHolidayList)
+          isA<HolidayBlocLoaded>()
+              .having((state) => state.holidayList, "description", mockServerHolidayList)
         ],
       );
     });

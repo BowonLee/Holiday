@@ -24,7 +24,8 @@ void main() {
   final DateTime mockFutureUpdateTime = DateTime(2024, 5, 6, 12, 30, 30);
 
   AppInitBloc generateAppInitBloc() {
-    return AppInitBloc(metadataRepository: mockMetadataRepository, holidayRepository: mockHolidayRepository);
+    return AppInitBloc(
+        metadataRepository: mockMetadataRepository, holidayRepository: mockHolidayRepository);
   }
 
   group("connection_ok", () {
@@ -40,13 +41,14 @@ void main() {
     blocTest<AppInitBloc, AppInitBlocState>(
       'local_datetime_empty',
       build: () {
-        when(mockHolidayRepository.getLastUpdateDatetime()).thenAnswer((realInvocation) => Future.value(null));
+        when(mockHolidayRepository.getLastUpdateDatetime()).thenAnswer((realInvocation) => null);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
         isA<AppInitBlocLoading>(),
-        isA<AppInitBlocComplete>().having((state) => state.needUpdateHolidayList, "needUpdate", true),
+        isA<AppInitBlocComplete>()
+            .having((state) => state.needUpdateHolidayList, "needUpdate", true),
       ],
     );
 
@@ -54,13 +56,14 @@ void main() {
       'local_datetime_before',
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
-            .thenAnswer((realInvocation) => Future.value(mockPastUpdateTime));
+            .thenAnswer((realInvocation) => mockPastUpdateTime);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
         isA<AppInitBlocLoading>(),
-        isA<AppInitBlocComplete>().having((state) => state.needUpdateHolidayList, "needUpdate", true),
+        isA<AppInitBlocComplete>()
+            .having((state) => state.needUpdateHolidayList, "needUpdate", true),
       ],
     );
 
@@ -68,13 +71,14 @@ void main() {
       'local_datetime_equal',
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
-            .thenAnswer((realInvocation) => Future.value(mockPivotUpdateTime));
+            .thenAnswer((realInvocation) => mockPivotUpdateTime);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
         isA<AppInitBlocLoading>(),
-        isA<AppInitBlocComplete>().having((state) => state.needUpdateHolidayList, "notNeedUpdate", false),
+        isA<AppInitBlocComplete>()
+            .having((state) => state.needUpdateHolidayList, "notNeedUpdate", false),
       ],
     );
 
@@ -82,13 +86,14 @@ void main() {
       'local_datetime_after',
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
-            .thenAnswer((realInvocation) => Future.value(mockFutureUpdateTime));
+            .thenAnswer((realInvocation) => mockFutureUpdateTime);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
       expect: () => [
         isA<AppInitBlocLoading>(),
-        isA<AppInitBlocComplete>().having((state) => state.needUpdateHolidayList, "notNeedUpdate", false),
+        isA<AppInitBlocComplete>()
+            .having((state) => state.needUpdateHolidayList, "notNeedUpdate", false),
       ],
     );
 
@@ -114,7 +119,7 @@ void main() {
     blocTest<AppInitBloc, AppInitBlocState>(
       'local_datetime_empty',
       build: () {
-        when(mockHolidayRepository.getLastUpdateDatetime()).thenAnswer((realInvocation) => Future.value(null));
+        when(mockHolidayRepository.getLastUpdateDatetime()).thenAnswer((realInvocation) => null);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
@@ -128,7 +133,7 @@ void main() {
       'local_datetime_before',
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
-            .thenAnswer((realInvocation) => Future.value(mockPastUpdateTime));
+            .thenAnswer((realInvocation) => mockPastUpdateTime);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
@@ -142,7 +147,7 @@ void main() {
       'local_datetime_equal',
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
-            .thenAnswer((realInvocation) => Future.value(mockPivotUpdateTime));
+            .thenAnswer((realInvocation) => mockPivotUpdateTime);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
@@ -156,7 +161,7 @@ void main() {
       'local_datetime_after',
       build: () {
         when(mockHolidayRepository.getLastUpdateDatetime())
-            .thenAnswer((realInvocation) => Future.value(mockFutureUpdateTime));
+            .thenAnswer((realInvocation) => mockFutureUpdateTime);
         return generateAppInitBloc();
       },
       act: (bloc) => bloc.add(GetMetaDataEvent()),
