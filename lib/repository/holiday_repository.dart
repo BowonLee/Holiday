@@ -27,7 +27,7 @@ class HolidayRepository {
     return HiveHelper().setLastHolidayUpdateDatetime(updateDatetime);
   }
 
-  Future<DateTime?> getLastUpdateDatetime() {
+  DateTime? getLastUpdateDatetime() {
     return HiveHelper().getLastHolidayUpdateDatetime();
   }
 

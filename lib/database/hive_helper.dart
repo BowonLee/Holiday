@@ -64,7 +64,7 @@ class HiveHelper {
     return metaBox?.put(lastHolidayUpdateDatetimeKey, updateDatetime);
   }
 
-  Future<DateTime?> getLastHolidayUpdateDatetime() {
+  DateTime? getLastHolidayUpdateDatetime() {
     return metaBox?.get(lastHolidayUpdateDatetimeKey);
   }
 
