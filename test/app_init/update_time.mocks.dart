@@ -129,15 +129,6 @@ class MockHolidayRepository extends _i1.Mock implements _i8.HolidayRepository {
       ));
 
   @override
-  _i6.Future<DateTime?> getLastUpdateDatetime() => (super.noSuchMethod(
-        Invocation.method(
-          #getLastUpdateDatetime,
-          [],
-        ),
-        returnValue: _i6.Future<DateTime?>.value(),
-      ) as _i6.Future<DateTime?>);
-
-  @override
   _i6.Future<_i4.HolidayResponse> getListFromSever() => (super.noSuchMethod(
         Invocation.method(
           #getListFromSever,
