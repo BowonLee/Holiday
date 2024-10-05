@@ -26,13 +26,24 @@ class _HomeViewState extends State<HomeView> {
       body: _currentView(widget.holidayList),
       floatingActionButton: ExpandableFab(
         distance: 120,
-        children: [
-          ActionButton(onPressed: () => _onBottomSheetTapped(1), icon: Icon(Icons.home)),
-          ActionButton(onPressed: () => _onBottomSheetTapped(0), icon: Icon(Icons.calendar_today)),
-          if (!kIsWeb)
-            ActionButton(onPressed: () => _onBottomSheetTapped(2), icon: Icon(Icons.person))
-        ],
         initialOpen: true,
+        children: [
+          ActionButton(
+              isSelected: _selectedIndex == 1,
+              onPressed: () => _onBottomSheetTapped(1),
+              icon: Icon(
+                Icons.home,
+              )),
+          ActionButton(
+              isSelected: _selectedIndex == 0,
+              onPressed: () => _onBottomSheetTapped(0),
+              icon: Icon(Icons.calendar_today)),
+          if (!kIsWeb)
+            ActionButton(
+                isSelected: _selectedIndex == 2,
+                onPressed: () => _onBottomSheetTapped(2),
+                icon: Icon(Icons.person))
+        ],
       ),
     );
   }
