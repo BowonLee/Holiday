@@ -2,26 +2,31 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+import 'package:holiday/domain/holiday/repository/holiday_hive.dart';
 import 'package:logger/logger.dart';
 
-import '../../../client/holiday_client.dart';
+import 'holiday_client.dart';
 import '../../../core/repository/hive/hive_helper.dart';
 
 import '../model/holiday.dart';
 
 HolidayRepository holidayRepositoryProvider() {
   final client = GetIt.instance.get<HolidayClient>();
-  HolidayRepository holidayRepository = HolidayRepository(client: client);
+  final hiveService = GetIt.instance.get<HolidayHiveService>();
+
+  HolidayRepository holidayRepository =
+      HolidayRepository(client: client, holidayHiveService: hiveService);
   return holidayRepository;
 }
 
 class HolidayRepository {
   HolidayClient client;
+  HolidayHiveService holidayHiveService;
 
-  HolidayRepository({required this.client});
+  HolidayRepository({required this.client, required this.holidayHiveService});
 
   setList(List<Holiday> holidayList) {
-    return HiveHelper().setHolidayList(holidayList);
+    return holidayHiveService.setList(holidayList);
   }
 
   setLastUpdateDate(DateTime updateDatetime) {
@@ -39,7 +44,7 @@ class HolidayRepository {
   }
 
   List<Holiday>? getListFromDatabase() {
-    final holidayList = HiveHelper().getHolidayList();
+    final holidayList = holidayHiveService.getList();
 
     return holidayList;
   }
