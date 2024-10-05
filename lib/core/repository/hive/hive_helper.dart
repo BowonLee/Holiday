@@ -1,9 +1,11 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../domain/holiday/model/holiday.dart';
+import '../../../domain/holiday/repository/holiday_hive.dart';
+import '../../../domain/init/client/metadata_hive.dart';
 import '../../../domain/vacation/model/vacation.dart';
-
-const String HOLIDAY_BOX = "HOLIDAY_BOX";
+import '../../../domain/vacation/repository/vacation_hive.dart';
+import 'hive_impl.dart';
 
 const String VACATION_BOX = "VACATION_BOX";
 
@@ -16,7 +18,6 @@ class HiveHelper {
 
   HiveHelper._internal();
 
-  Box<Holiday>? holidayBox;
   Box? metaBox;
   Box<Vacation>? vacationBox;
 
@@ -28,12 +29,15 @@ class HiveHelper {
     await Hive.initFlutter();
 
     Hive.registerAdapter(HolidayAdapter());
-    await openHolidayBox();
-    await openMetaBox();
+    await openAllBoxes();
   }
 
-  Future<void> openHolidayBox() async {
-    holidayBox = await Hive.openBox(HOLIDAY_BOX);
+  Future<void> openAllBoxes() {
+    return Future.wait([
+      Hive.openBox(HOLIDAY_BOX_NAME),
+      Hive.openBox(VACATION_BOX_NAME),
+      Hive.openBox(METADATA_BOX_NAME)
+    ]);
   }
 
   Future<void> openMetaBox() async {
@@ -44,22 +48,6 @@ class HiveHelper {
     vacationBox = await Hive.openBox(VACATION_BOX);
   }
 
-  Future<int>? setHoliday(Holiday value) {
-    return holidayBox?.add(value);
-  }
-
-  Future<Iterable<int>>? setHolidayList(List<Holiday> values) {
-    return holidayBox?.addAll(values);
-  }
-
-  List<Holiday>? getHolidayList() {
-    return holidayBox?.values.toList();
-  }
-
-  Future<int>? clearHolidayList() {
-    return holidayBox?.clear();
-  }
-
   Future<void>? setLastHolidayUpdateDatetime(DateTime updateDatetime) {
     return metaBox?.put(lastHolidayUpdateDatetimeKey, updateDatetime);
   }
@@ -68,22 +56,11 @@ class HiveHelper {
     return metaBox?.get(lastHolidayUpdateDatetimeKey);
   }
 
-  Future<int>? setVacation(Vacation value) {
-    return vacationBox?.add(value);
-  }
-
   Future<Iterable<int>>? setVacationList(List<Vacation> values) {
     return vacationBox?.addAll(values);
   }
-
-  List<Vacation>? getVacationList() {
-    return vacationBox?.values.toList();
-  }
-
-  Future<int>? clearVacationList() {
-    return vacationBox?.clear();
-  }
 }
+
 /**
  * single table
  * id
