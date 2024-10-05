@@ -25,16 +25,22 @@ class HiveHelper {
     return _singleton;
   }
 
-  initHiveManager() async {
+  /// hive 사용을 위해 앱 시작 전 수행해야 할 작업들
+  runInitTasks() async {
     await Hive.initFlutter();
 
-    Hive.registerAdapter(HolidayAdapter());
+    registerAdapters();
     await openAllBoxes();
+  }
+
+  registerAdapters() {
+    Hive.registerAdapter(HolidayAdapter());
+    Hive.registerAdapter(VacationAdapter());
   }
 
   Future<void> openAllBoxes() {
     return Future.wait([
-      Hive.openBox(HOLIDAY_BOX_NAME),
+      Hive.openBox<Holiday>(HOLIDAY_BOX_NAME),
       Hive.openBox(VACATION_BOX_NAME),
       Hive.openBox(METADATA_BOX_NAME)
     ]);
