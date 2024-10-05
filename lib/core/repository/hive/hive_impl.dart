@@ -11,7 +11,7 @@ abstract class AbstractHiveService<T> {
   }
 
   /// open box and set class attribute
-  Future<void> _setBox() async {
+  _setBox() {
     box = Hive.box<T>(boxName);
   }
 }
